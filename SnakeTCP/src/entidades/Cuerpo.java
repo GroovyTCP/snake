@@ -34,4 +34,8 @@ public class Cuerpo {
 		}
 	}
 	
+	public void crecer() {
+		this.cuerpo.add(new Punto());
+	}
+	
 }
