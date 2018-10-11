@@ -27,4 +27,9 @@ public class Punto {
 		this.y = y;
 	}
 	
+	public Punto() {
+		this.x=0;
+		this.y=0;
+	}
+	
 }
