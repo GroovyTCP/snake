@@ -2,15 +2,10 @@ package testEntidades;
 
 import entidades.Punto;
 import entidades.Cuerpo;
-import entidades.Cabeza;
-
-import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class CuerpoTest {

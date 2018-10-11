@@ -11,7 +11,7 @@ public class Vibora {
 	
 	public Vibora(int puntaje, Cabeza cabeza, Cuerpo cuerpo, String color, boolean muerta,String direccionActual) {
 		super();
-		this.puntaje = puntaje;
+		this.puntaje = 0;
 		this.cabeza = cabeza;
 		this.cuerpo = cuerpo;
 		this.color = color;
@@ -68,7 +68,8 @@ public class Vibora {
 	}
 
 	public void comerFruta(Fruta fruta) {
-		
+		this.puntaje += fruta.getPuntaje();
+		this.cuerpo.crecer();	
 	}
 
 	public void mover(String direccion) {
@@ -79,12 +80,11 @@ public class Vibora {
 		
 		this.cabeza.moverCabeza(direccion);
 		this.cuerpo.moverCuerpo(nuevaPosicion);
+		this.direccionActual=direccion;
 		
 	}
 	
 	public boolean puedeMoverse(String direccion) { ///EVITA QUE GIRE 90 GRADOS :)
-		if(this.direccionActual.equals(direccion))
-			return false;
 		
 		if(this.direccionActual.equals("Izquierda") && direccion.equals("Derecha"))
 			return false;
