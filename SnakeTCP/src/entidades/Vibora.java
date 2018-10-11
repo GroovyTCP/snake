@@ -72,7 +72,33 @@ public class Vibora {
 	}
 
 	public void mover(String direccion) {
+		if(!this.puedeMoverse(direccion))
+			return;
 		
+		Punto nuevaPosicion = this.cabeza.getCabeza();
+		
+		this.cabeza.moverCabeza(direccion);
+		this.cuerpo.moverCuerpo(nuevaPosicion);
+		
+	}
+	
+	public boolean puedeMoverse(String direccion) { ///EVITA QUE GIRE 90 GRADOS :)
+		if(this.direccionActual.equals(direccion))
+			return false;
+		
+		if(this.direccionActual.equals("Izquierda") && direccion.equals("Derecha"))
+			return false;
+		
+		if(this.direccionActual.equals("Derecha") && direccion.equals("Izquierda"))
+			return false;
+		
+		if(this.direccionActual.equals("Arriba") && direccion.equals("Abajo"))
+			return false;
+		
+		if(this.direccionActual.equals("Abajo") && direccion.equals("Arriba"))
+			return false;
+		
+		return true;
 	}
 	
 	public void morir() {

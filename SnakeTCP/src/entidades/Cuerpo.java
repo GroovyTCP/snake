@@ -18,8 +18,20 @@ public class Cuerpo {
 		this.cuerpo = cuerpo;
 	}
 	
-	public void moverCuerpo() {
+	public void moverCuerpo(Punto posicion) {
+		Punto nuevaParte= posicion;
+		Punto aux = new Punto();
 		
+		for(Punto parte : this.cuerpo) {
+			aux.setX(parte.getX());
+			aux.setY(parte.getY());
+			
+			parte.setX(nuevaParte.getX());
+			parte.setY(nuevaParte.getY());
+			
+			nuevaParte.setX(aux.getX());
+			nuevaParte.setY(aux.getY());
+		}
 	}
 	
 }
