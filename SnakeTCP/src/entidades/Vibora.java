@@ -102,6 +102,6 @@ public class Vibora {
 	}
 	
 	public void morir() {
-		
+		this.muerta = true;
 	}
 }
