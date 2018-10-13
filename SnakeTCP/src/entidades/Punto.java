@@ -32,4 +32,14 @@ public class Punto {
 		this.y=0;
 	}
 	
+	public Punto(Punto punto) {
+		this.x = punto.x;
+		this.y = punto.y;
+	}
+	
+	public Punto sumarPunto(Punto punto) {
+		return new Punto(this.x + punto.x,this.y + punto.y);
+	}
+	
+	
 }

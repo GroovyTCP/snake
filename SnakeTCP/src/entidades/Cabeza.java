@@ -16,26 +16,7 @@ public class Cabeza {
 		this.cabeza = cabeza;
 	}
 	
-	public void moverCabeza(String direccion) {
-		
-		switch(direccion) {
-		
-		case "Arriba" :
-			this.cabeza.setY(this.cabeza.getY()+1);
-			break;
-			
-		case "Abajo" :
-			this.cabeza.setY(this.cabeza.getY()-1);
-			break;
-			
-		case "Izquierda" :
-			this.cabeza.setX(this.cabeza.getX()-1);
-			break;
-			
-		case "Derecha" :
-			this.cabeza.setX(this.cabeza.getX()+1);
-			break;
-		}
-		
+	public void moverCabeza(Punto direccion) {
+		this.cabeza = this.cabeza.sumarPunto(direccion);
 	}
 }

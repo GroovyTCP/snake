@@ -12,7 +12,7 @@ public class CabezaTest {
 	public void testmMoverCabezaIzquierda () {
 		Cabeza cabeza = new Cabeza(new Punto(4,1));
 		
-		cabeza.moverCabeza("Izquierda");
+		cabeza.moverCabeza(new Punto(-1,0));
 		
 		Assert.assertEquals(3, cabeza.getCabeza().getX());
 		Assert.assertEquals(1, cabeza.getCabeza().getY());
@@ -23,7 +23,7 @@ public class CabezaTest {
 	public void testmMoverCabezaDerecha () {
 		Cabeza cabeza = new Cabeza(new Punto(4,1));
 		
-		cabeza.moverCabeza("Derecha");
+		cabeza.moverCabeza(new Punto(1,0));
 		
 		Assert.assertEquals(5, cabeza.getCabeza().getX());
 		Assert.assertEquals(1, cabeza.getCabeza().getY());
@@ -34,7 +34,7 @@ public class CabezaTest {
 	public void testmMoverCabezaArriba () {
 		Cabeza cabeza = new Cabeza(new Punto(4,1));
 		
-		cabeza.moverCabeza("Arriba");
+		cabeza.moverCabeza(new Punto(0,1));
 		
 		Assert.assertEquals(4, cabeza.getCabeza().getX());
 		Assert.assertEquals(2, cabeza.getCabeza().getY());
@@ -45,7 +45,7 @@ public class CabezaTest {
 	public void testmMoverCabezaAbajo () {
 		Cabeza cabeza = new Cabeza(new Punto(4,1));
 		
-		cabeza.moverCabeza("Abajo");
+		cabeza.moverCabeza(new Punto(0,-1));
 		
 		Assert.assertEquals(4, cabeza.getCabeza().getX());
 		Assert.assertEquals(0, cabeza.getCabeza().getY());

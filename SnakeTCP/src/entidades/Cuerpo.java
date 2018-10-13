@@ -1,41 +1,55 @@
 package entidades;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Cuerpo {
 
-	private List<Punto> cuerpo;
+	private ArrayList<Punto> cuerpo;
+	private int Cantidad;///puede servir en un futuro
 	
-	public Cuerpo (List<Punto> cuerpo) {
-		this.cuerpo = cuerpo;
+	
+	public int getCantidad() {
+		return Cantidad;
 	}
 
-	public List<Punto> getCuerpo() {
+
+	public void setCantidad(int cantidad) {
+		Cantidad = cantidad;
+	}
+
+
+	public ArrayList<Punto> getCuerpo() {
 		return cuerpo;
 	}
 
-	public void setCuerpo(List<Punto> cuerpo) {
+
+	public void setCuerpo(ArrayList<Punto> cuerpo) {
 		this.cuerpo = cuerpo;
 	}
+
 	
-	public void moverCuerpo(Punto posicion) {
-		Punto nuevaParte= posicion;
+
+	public Cuerpo(ArrayList<Punto> cuerpo) {
+		super();
+		this.cuerpo = cuerpo;
+		this.Cantidad=cuerpo.size();
+	}
+
+	
+	public void moverCuerpo(Punto primerEslabon) {
 		Punto aux = new Punto();
 		
-		for(Punto parte : this.cuerpo) {
-			aux.setX(parte.getX());
-			aux.setY(parte.getY());
-			
-			parte.setX(nuevaParte.getX());
-			parte.setY(nuevaParte.getY());
-			
-			nuevaParte.setX(aux.getX());
-			nuevaParte.setY(aux.getY());
+		for (int i = 0; i < this.cuerpo.size(); i++) {
+			aux = this.cuerpo.get(i);
+			this.cuerpo.set(i, primerEslabon);
+			primerEslabon = aux;
 		}
 	}
 	
-	public void crecer() {
-		this.cuerpo.add(new Punto());
+	///Se debe asignar un punto al crecimiento para saber donde crecer, lo sabe el colisionador
+	public void crecer(Punto puntoCrecimiento) {
+		this.cuerpo.add(new Punto(puntoCrecimiento));
+		this.Cantidad++;
 	}
 	
 }

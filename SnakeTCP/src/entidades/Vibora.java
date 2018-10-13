@@ -7,15 +7,17 @@ public class Vibora {
 	private Cuerpo cuerpo; 
 	private String color;
 	private boolean muerta;
-	private String direccionActual;
+	private Punto direccionActual;
 	
-	public Vibora(int puntaje, Cabeza cabeza, Cuerpo cuerpo, String color, boolean muerta,String direccionActual) {
+	
+	///Este metodo crea una nueva vibora, sin cuerpo solo con cabeza y con el estado de muerta como false
+	public Vibora(int puntaje, Cabeza cabeza, Cuerpo cuerpo, String color,Punto direccionActual) {
 		super();
 		this.puntaje = 0;
 		this.cabeza = cabeza;
 		this.cuerpo = cuerpo;
 		this.color = color;
-		this.muerta = muerta;
+		this.muerta = false;
 		this.direccionActual = direccionActual;
 	}
 
@@ -59,20 +61,21 @@ public class Vibora {
 		this.muerta = muerta;
 	}
 	
-	public String getDireccionActual() {
+	public Punto getDireccionActual() {
 		return direccionActual;
 	}
 
-	public void setDireccionActual(String direccionActual) {
+	public void setDireccionActual(Punto direccionActual) {
 		this.direccionActual = direccionActual;
 	}
-
-	public void comerFruta(Fruta fruta) {
+	
+	///cuando crece, siempre el colisionador debe saber para donde
+	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {
 		this.puntaje += fruta.getPuntaje();
-		this.cuerpo.crecer();	
+		this.cuerpo.crecer(puntoCrecimiento);	
 	}
-
-	public void mover(String direccion) {
+	
+	public void mover(Punto direccion) {
 		if(!this.puedeMoverse(direccion))
 			return;
 		
@@ -84,24 +87,21 @@ public class Vibora {
 		
 	}
 	
-	public boolean puedeMoverse(String direccion) { ///EVITA QUE GIRE 90 GRADOS :)
+	 ///EVITA QUE GIRE 90 GRADOS :) //Esto quizas lo deba saber el colisionador
+	public boolean puedeMoverse(Punto direccion) {
+		///Obtiene el ultimo eslabon de su cuerpo
+		Punto punto1 = this.cuerpo.getCuerpo().get(0);
+		 //Obtiene el punto donde quedaria la cabeza
+		Punto punto2 = this.cabeza.getCabeza().sumarPunto(direccion);
 		
-		if(this.direccionActual.equals("Izquierda") && direccion.equals("Derecha"))
+		///Si son iguales no puede moverse
+		if(punto1.equals(punto2))
 			return false;
-		
-		if(this.direccionActual.equals("Derecha") && direccion.equals("Izquierda"))
-			return false;
-		
-		if(this.direccionActual.equals("Arriba") && direccion.equals("Abajo"))
-			return false;
-		
-		if(this.direccionActual.equals("Abajo") && direccion.equals("Arriba"))
-			return false;
-		
 		return true;
 	}
 	
 	public void morir() {
 		this.muerta = true;
 	}
+	
 }

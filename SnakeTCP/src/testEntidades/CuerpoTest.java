@@ -15,13 +15,13 @@ public class CuerpoTest {
 	public void moverCuerpo() {
 		///Inicialmente la cabeza esta en (4,1)
 		///La cabeza ya se movio hacia arriba
-		List<Punto> partes = new ArrayList<>();
+		ArrayList<Punto> partes = new ArrayList<>();
 
 		partes.add(new Punto(5,1));
 		partes.add(new Punto(6,1));
 		partes.add(new Punto(6,2));		
 		
-		List<Punto> resultado = new ArrayList<>();
+		ArrayList<Punto> resultado = new ArrayList<>();
 		
 		resultado.add(new Punto(4,1));
 		resultado.add(new Punto(5,1));
@@ -45,13 +45,13 @@ public class CuerpoTest {
 		///Inicialmente la cabeza esta en (0,0)
 		///La cabeza se muovió hacia abajo
 		
-		List<Punto> partes = new ArrayList<>();
+		ArrayList<Punto> partes = new ArrayList<>();
 
 		partes.add(new Punto(0,1));
 		partes.add(new Punto(1,1));
 		partes.add(new Punto(2,1));		
 		
-		List<Punto> resultado = new ArrayList<>();
+		ArrayList<Punto> resultado = new ArrayList<>();
 		
 		resultado.add(new Punto(0,0));
 		resultado.add(new Punto(0,1));
