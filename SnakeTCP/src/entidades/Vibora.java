@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.ArrayList;
+
 public class Vibora {
 
 	private int puntaje;
@@ -11,7 +13,7 @@ public class Vibora {
 	
 	
 	///Este metodo crea una nueva vibora, sin cuerpo solo con cabeza y con el estado de muerta como false
-	public Vibora(int puntaje, Cabeza cabeza, Cuerpo cuerpo, String color,Punto direccionActual) {
+	public Vibora(Cabeza cabeza, Cuerpo cuerpo, String color,Punto direccionActual) {
 		super();
 		this.puntaje = 0;
 		this.cabeza = cabeza;
@@ -21,6 +23,15 @@ public class Vibora {
 		this.direccionActual = direccionActual;
 	}
 
+	public Vibora(Cabeza cabeza, String color,Punto direccionActual) {
+		this.puntaje = 0;
+		this.cabeza = cabeza;
+		this.cuerpo = new Cuerpo(new ArrayList<Punto>());
+		this.color = color;
+		this.muerta = false;
+		this.direccionActual = direccionActual;
+	}
+	
 	public int getPuntaje() {
 		return puntaje;
 	}
@@ -78,6 +89,9 @@ public class Vibora {
 	public void mover(Punto direccion) {
 		if(!this.puedeMoverse(direccion))
 			return;
+		
+		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
+			direccion = this.direccionActual;
 		
 		Punto nuevaPosicion = this.cabeza.getCabeza();
 		

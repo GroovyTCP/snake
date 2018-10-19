@@ -27,8 +27,8 @@ public class ChoqueTest {
 		partes2.add(new Punto (4,1));
 		Cuerpo cuerpo2 = new Cuerpo(partes2);
 		
-		Vibora v1 = new Vibora(0,new Cabeza(new Punto(2,0)),cuerpo1,"rojo",new Punto(-1,0));
-		Vibora v2 = new Vibora(0,new Cabeza(new Punto(2,1)),cuerpo2,"azul",new Punto(-1,0));
+		Vibora v1 = new Vibora(new Cabeza(new Punto(2,0)),cuerpo1,"rojo",new Punto(-1,0));
+		Vibora v2 = new Vibora(new Cabeza(new Punto(2,1)),cuerpo2,"azul",new Punto(-1,0));
 		
 		Vibora[] viboritas = new Vibora[2];
 		viboritas[0] = v1;
