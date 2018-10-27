@@ -7,34 +7,11 @@ public class Cuerpo {
 	private ArrayList<Punto> cuerpo;
 	private int cantidad;///puede servir en un futuro
 	
-	
-	public int getCantidad() {
-		return cantidad;
-	}
-
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-
-	public ArrayList<Punto> getCuerpo() {
-		return cuerpo;
-	}
-
-
-	public void setCuerpo(ArrayList<Punto> cuerpo) {
-		this.cuerpo = cuerpo;
-	}
-
-	
-
 	public Cuerpo(ArrayList<Punto> cuerpo) {
 		super();
 		this.cuerpo = cuerpo;
 		this.cantidad=cuerpo.size();
 	}
-
 	
 	public void moverCuerpo(Punto primerEslabon) {
 		Punto aux = new Punto();
@@ -52,6 +29,22 @@ public class Cuerpo {
 		this.cantidad++;
 	}
 
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public ArrayList<Punto> getCuerpo() {
+		return cuerpo;
+	}
+
+	public void setCuerpo(ArrayList<Punto> cuerpo) {
+		this.cuerpo = cuerpo;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

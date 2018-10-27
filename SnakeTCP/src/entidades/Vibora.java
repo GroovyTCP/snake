@@ -32,6 +32,44 @@ public class Vibora {
 		this.direccionActual = direccionActual;
 	}
 	
+	///cuando crece, siempre el colisionador debe saber para donde
+	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {
+		this.puntaje += fruta.getPuntaje();
+		this.cuerpo.crecer(puntoCrecimiento);	
+	}
+	
+	public void mover(Punto direccion) {
+		if(!this.puedeMoverse(direccion))
+			return;
+		
+		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
+			direccion = this.direccionActual;
+		
+		Punto nuevaPosicion = this.cabeza.getCabeza();
+		
+		this.cabeza.moverCabeza(direccion);
+		this.cuerpo.moverCuerpo(nuevaPosicion);
+		this.direccionActual=direccion;
+		
+	}
+	
+	 ///EVITA QUE GIRE 90 GRADOS :) //Esto quizas lo deba saber el colisionador
+	public boolean puedeMoverse(Punto direccion) {
+		///Obtiene el ultimo eslabon de su cuerpo
+		Punto punto1 = this.cuerpo.getCuerpo().get(0);
+		 //Obtiene el punto donde quedaria la cabeza
+		Punto punto2 = this.cabeza.getCabeza().sumarPunto(direccion);
+		
+		///Si son iguales no puede moverse
+		if(punto1.equals(punto2))
+			return false;
+		return true;
+	}
+	
+	public void morir() {
+		this.muerta = true;
+	}
+	
 	public int getPuntaje() {
 		return puntaje;
 	}
@@ -78,44 +116,6 @@ public class Vibora {
 
 	public void setDireccionActual(Punto direccionActual) {
 		this.direccionActual = direccionActual;
-	}
-	
-	///cuando crece, siempre el colisionador debe saber para donde
-	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {
-		this.puntaje += fruta.getPuntaje();
-		this.cuerpo.crecer(puntoCrecimiento);	
-	}
-	
-	public void mover(Punto direccion) {
-		if(!this.puedeMoverse(direccion))
-			return;
-		
-		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
-			direccion = this.direccionActual;
-		
-		Punto nuevaPosicion = this.cabeza.getCabeza();
-		
-		this.cabeza.moverCabeza(direccion);
-		this.cuerpo.moverCuerpo(nuevaPosicion);
-		this.direccionActual=direccion;
-		
-	}
-	
-	 ///EVITA QUE GIRE 90 GRADOS :) //Esto quizas lo deba saber el colisionador
-	public boolean puedeMoverse(Punto direccion) {
-		///Obtiene el ultimo eslabon de su cuerpo
-		Punto punto1 = this.cuerpo.getCuerpo().get(0);
-		 //Obtiene el punto donde quedaria la cabeza
-		Punto punto2 = this.cabeza.getCabeza().sumarPunto(direccion);
-		
-		///Si son iguales no puede moverse
-		if(punto1.equals(punto2))
-			return false;
-		return true;
-	}
-	
-	public void morir() {
-		this.muerta = true;
 	}
 	
 }

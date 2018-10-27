@@ -5,7 +5,7 @@ import java.util.Random;
 public class Mapa {
 
 	private Vibora[] viboras;
-	private Fruta[] frutas;
+//	private Fruta[] frutas;
 	private int largo;
 	private int ancho;
 	///private String mapa[][];
@@ -14,30 +14,6 @@ public class Mapa {
 		super();
 		this.viboras = viboras;
 		this.largo = largo;
-		this.ancho = ancho;
-	}
-
-	public Vibora[] getViboras() {
-		return viboras;
-	}
-
-	public void setViboras(Vibora[] viboras) {
-		this.viboras = viboras;
-	}
-
-	public int getLargo() {
-		return largo;
-	}
-
-	public void setLargo(int largo) {
-		this.largo = largo;
-	}
-
-	public int getAncho() {
-		return ancho;
-	}
-
-	public void setAncho(int ancho) {
 		this.ancho = ancho;
 	}
 
@@ -82,11 +58,31 @@ public class Mapa {
 			///Si hay otro cuerpo o cabeza la queda
 			if(hayCuerpo(vibora.getCabeza().getCabeza()))
 				vibora.morir();
-			
-
-			
-
 		}
+	}
+	
+	public Vibora[] getViboras() {
+		return viboras;
+	}
+
+	public void setViboras(Vibora[] viboras) {
+		this.viboras = viboras;
+	}
+
+	public int getLargo() {
+		return largo;
+	}
+
+	public void setLargo(int largo) {
+		this.largo = largo;
+	}
+
+	public int getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
 	}
 	
 }
