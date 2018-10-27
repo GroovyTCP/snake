@@ -1,7 +1,6 @@
 package testEntidades;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,12 +30,7 @@ public class CuerpoTest {
 		
 		cuerpo.moverCuerpo(new Punto (4,1));
 		
-		Assert.assertEquals(resultado.get(0).getX(), cuerpo.getCuerpo().get(0).getX());
-		Assert.assertEquals(resultado.get(0).getY(), cuerpo.getCuerpo().get(0).getY());
-		Assert.assertEquals(resultado.get(1).getX(), cuerpo.getCuerpo().get(1).getX());
-		Assert.assertEquals(resultado.get(1).getY(), cuerpo.getCuerpo().get(1).getY());
-		Assert.assertEquals(resultado.get(2).getX(), cuerpo.getCuerpo().get(2).getX());
-		Assert.assertEquals(resultado.get(2).getY(), cuerpo.getCuerpo().get(2).getY());
+		Assert.assertTrue(cuerpo.getCuerpo().equals(resultado));
 		
 	}
 	
@@ -61,11 +55,7 @@ public class CuerpoTest {
 		
 		cuerpo.moverCuerpo(new Punto(0,0));
 		
-		Assert.assertEquals(resultado.get(0).getX(), cuerpo.getCuerpo().get(0).getX());
-		Assert.assertEquals(resultado.get(0).getY(), cuerpo.getCuerpo().get(0).getY());
-		Assert.assertEquals(resultado.get(1).getX(), cuerpo.getCuerpo().get(1).getX());
-		Assert.assertEquals(resultado.get(1).getY(), cuerpo.getCuerpo().get(1).getY());
-		Assert.assertEquals(resultado.get(2).getX(), cuerpo.getCuerpo().get(2).getX());
-		Assert.assertEquals(resultado.get(2).getY(), cuerpo.getCuerpo().get(2).getY());
+		Assert.assertTrue(cuerpo.getCuerpo().equals(resultado));
+		
 	}
 }

@@ -1,16 +1,15 @@
 package testEntidades;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import entidades.Vibora;
 import entidades.Cabeza;
 import entidades.Cuerpo;
 import entidades.Fruta;
 import entidades.Punto;
+import entidades.Vibora;
 
 public class ComerCrecerTest {
 
@@ -32,7 +31,6 @@ public class ComerCrecerTest {
 
 		Assert.assertEquals(200,v1.getPuntaje()); ///200 PUNTOS
 		Assert.assertEquals(4, v1.getCuerpo().getCuerpo().size()); ///AHORA TIENE 4 PARTES
-		
 		
 	}
 }

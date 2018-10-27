@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class Cuerpo {
 
 	private ArrayList<Punto> cuerpo;
-	private int Cantidad;///puede servir en un futuro
+	private int cantidad;///puede servir en un futuro
 	
 	
 	public int getCantidad() {
-		return Cantidad;
+		return cantidad;
 	}
 
 
 	public void setCantidad(int cantidad) {
-		Cantidad = cantidad;
+		this.cantidad = cantidad;
 	}
 
 
@@ -32,7 +32,7 @@ public class Cuerpo {
 	public Cuerpo(ArrayList<Punto> cuerpo) {
 		super();
 		this.cuerpo = cuerpo;
-		this.Cantidad=cuerpo.size();
+		this.cantidad=cuerpo.size();
 	}
 
 	
@@ -49,7 +49,32 @@ public class Cuerpo {
 	///Se debe asignar un punto al crecimiento para saber donde crecer, lo sabe el colisionador
 	public void crecer(Punto puntoCrecimiento) {
 		this.cuerpo.add(new Punto(puntoCrecimiento));
-		this.Cantidad++;
+		this.cantidad++;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cuerpo == null) ? 0 : cuerpo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cuerpo other = (Cuerpo) obj;
+		if (cuerpo == null) {
+			if (other.cuerpo != null)
+				return false;
+		} else if (!cuerpo.equals(other.cuerpo))
+			return false;
+		return true;
 	}
 	
 }
