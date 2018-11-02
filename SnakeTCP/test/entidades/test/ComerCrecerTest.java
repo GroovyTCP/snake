@@ -1,15 +1,15 @@
-package testEntidades;
+package entidades.test;
 
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import entidades.Cabeza;
-import entidades.Cuerpo;
-import entidades.Fruta;
-import entidades.Punto;
-import entidades.Vibora;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Fruta;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 public class ComerCrecerTest {
 

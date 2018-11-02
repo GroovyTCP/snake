@@ -1,4 +1,4 @@
-package testEntidades;
+package entidades.test;
 
 
 import static org.junit.Assert.*;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import entidades.Cabeza;
-import entidades.Cuerpo;
-import entidades.Punto;
-import entidades.Vibora;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 public class MovimientosTest {
 

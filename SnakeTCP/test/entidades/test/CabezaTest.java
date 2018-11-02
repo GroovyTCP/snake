@@ -1,10 +1,10 @@
-package testEntidades;
+package entidades.test;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-import entidades.Cabeza;
-import entidades.Punto;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Punto;
 
 public class CabezaTest {
 
