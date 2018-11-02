@@ -1,52 +1,42 @@
 package viborita.entidades;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
-public class Login {
+public class Login extends JFrame{
 
 	private JFrame frame;
 	private JTextField txtUsuario;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 
 	/**
-	 * Launch the application.
+	 * 
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+	private static final long serialVersionUID = 8622887703162718277L;
+	
 	public Login() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa el contenido del frame
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Viborita");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(0, 102, 255));
 		frame.setBounds(100, 100, 383, 497);
@@ -63,6 +53,10 @@ public class Login {
 		btnIniciarSesion.setFont(new Font("Trajan Pro", Font.PLAIN, 13));
 		btnIniciarSesion.setBackground(new Color(153, 255, 255));
 		btnIniciarSesion.setBounds(163, 292, 151, 25);
+		
+		LoginActionListener lal = new LoginActionListener();
+		btnIniciarSesion.addActionListener(lal);
+		
 		panel.add(btnIniciarSesion);
 		
 		txtUsuario = new JTextField();
@@ -73,8 +67,8 @@ public class Login {
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
-		txtPassword = new JTextField();
-		txtPassword.setToolTipText("Ingrese Su contrase\u00F1a");
+		txtPassword = new JPasswordField();
+		txtPassword.setToolTipText("Ingrese su contrase\u00F1a");
 		txtPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		txtPassword.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 13));
 		txtPassword.setBounds(163, 238, 151, 22);
@@ -97,9 +91,41 @@ public class Login {
 		lblLaVivorita.setBounds(157, 142, 172, 42);
 		panel.add(lblLaVivorita);
 		
-		JLabel label = new JLabel("");
+//		Icon icon = new ImageIcon("C:/Users/thandley/git/snake/SnakeTCP/recursos/imagenes");
+		Icon icon = new ImageIcon("../../recursos/imagenes/serpiente-login.gif");
+		JLabel label = new JLabel(icon);
 		label.setBounds(0, 91, 161, 226);
 		panel.add(label);
-		label.setIcon(new ImageIcon("C:\\Users\\lucki\\workspace\\Formularios\\serpiente-y-culebra-imagen-animada-0144.gif"));
+//		label.setIcon(new ImageIcon("../../recursos/imagenes/serpiente-login.gif"));
+//		label.setIcon(new ImageIcon("C:\\Users\\thandley\\git\\snake\\SnakeTCP\\recursos\\imagenes"));
 	}
+
+	public void run() {
+		try {
+			this.frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No se pudo abrir pantalla login");
+		}
+	}
+	
+	private class LoginActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("Validar usuario en servidor");
+			
+			Cliente cliente = new Cliente("localhost", 8080);
+			
+			if(cliente.loginCliente()) {
+				System.out.println("Loguea ok y va a la pantalla de salas");
+			}else {
+				System.out.println("Muestro mensaje error para validacion de inputs");
+			}
+			
+		}
+
+	}
+	
 }
