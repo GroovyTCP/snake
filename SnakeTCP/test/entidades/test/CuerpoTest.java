@@ -1,12 +1,12 @@
-package testEntidades;
+package entidades.test;
 
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import entidades.Cuerpo;
-import entidades.Punto;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Punto;
 
 public class CuerpoTest {
 

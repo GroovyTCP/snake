@@ -1,4 +1,4 @@
-package entidades;
+package viborita.entidades;
 
 public class Fruta {
 

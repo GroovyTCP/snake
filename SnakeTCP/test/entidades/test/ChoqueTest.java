@@ -1,21 +1,20 @@
-package testEntidades;
+package entidades.test;
 import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import entidades.Cabeza;
-import entidades.Cuerpo;
-import entidades.Mapa;
-import entidades.Punto;
-import entidades.Vibora;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Mapa;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 
 public class ChoqueTest {
 	@Test
 	public void choqueDosViboras () {
 
-		
 		///Creo dos viboras yendo a la izquierda paralelas juntas
 		ArrayList<Punto> partes1 = new ArrayList<>();
 		partes1.add(new Punto (3,0));
