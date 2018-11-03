@@ -1,5 +1,7 @@
 package entidades;
 
+import viborita.entidades.Punto;
+
 public class Direcciones {
 	
 	public static final Punto DERECHA = new Punto(10, 0);

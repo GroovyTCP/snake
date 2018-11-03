@@ -1,4 +1,5 @@
 package entidades.test;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -26,8 +27,8 @@ public class ChoqueTest {
 		partes2.add(new Punto (4,1));
 		Cuerpo cuerpo2 = new Cuerpo(partes2);
 		
-		Vibora v1 = new Vibora(new Cabeza(new Punto(2,0)),cuerpo1,"rojo",new Punto(-1,0));
-		Vibora v2 = new Vibora(new Cabeza(new Punto(2,1)),cuerpo2,"azul",new Punto(-1,0));
+		Vibora v1 = new Vibora(new Cabeza(new Punto(2,0)),cuerpo1,Color.RED,new Punto(0,1));
+		Vibora v2 = new Vibora(new Cabeza(new Punto(2,1)),cuerpo2,Color.BLUE,new Punto(0,-1));
 		
 		Vibora[] viboritas = new Vibora[2];
 		viboritas[0] = v1;
@@ -38,20 +39,20 @@ public class ChoqueTest {
 		
 		///Una se mueve pa arriba, otra pa abajo
 		Punto p1 = new Punto(0,-1);
-		Punto p2 = new Punto(0,1);
+		Punto p2 = new Punto(0, 1);
 		Punto[] movimientos = new Punto[2];
 		movimientos[0] = p1;
 		movimientos[1] = p2;
 		
 		///Antes vivas
-		Assert.assertEquals(false,v1.isMuerta()); ///v1 muere
-		Assert.assertEquals(false,v2.isMuerta()); ///v2 muere
+		Assert.assertFalse(v1.isMuerta()); ///v1 muere
+		Assert.assertFalse(v2.isMuerta()); ///v2 muere
 		
-		mapa.evaluarMovimientoViborita(movimientos);
+		mapa.evaluarMovimientoViborita();
 		
 		///Ahora mueren ambas
-		Assert.assertEquals(true,v1.isMuerta()); ///v1 muere
-		Assert.assertEquals(true,v2.isMuerta()); ///v2 muere
+		Assert.assertTrue(v1.isMuerta()); ///v1 muere
+		Assert.assertTrue(v2.isMuerta()); ///v2 muere
 	}
 		
 		

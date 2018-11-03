@@ -1,5 +1,6 @@
 package entidades.test;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.junit.Assert;
@@ -20,7 +21,7 @@ public class ComerCrecerTest {
 		partes.add(new Punto (4,1));
 		Cuerpo cuerpo = new Cuerpo(partes);
 		
-		Vibora v1 = new Vibora(new Cabeza(new Punto(2,1)),cuerpo,"rojo",new Punto(1,0));
+		Vibora v1 = new Vibora(new Cabeza(new Punto(2,1)),cuerpo,Color.RED,new Punto(1,0));
 	
 		Fruta frutin1 = new Fruta(new Punto(1,1),100);
 		Fruta frutin2 = new Fruta(new Punto(2,0),100);
