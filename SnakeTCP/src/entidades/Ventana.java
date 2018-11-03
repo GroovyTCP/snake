@@ -1,15 +1,21 @@
 package entidades;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Timer;
+
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Mapa;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
+
+
+// Serpiente roja, se mueve con las flechitas y la otra con WASD
 
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
@@ -20,11 +26,12 @@ public class Ventana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Vibora snake;
+	private Mapa juego;
 	
-	public Ventana() {
+	public Ventana(Mapa mapa) {
 		super("Snake");
 		setResizable(false);
+		juego = mapa;
 		
 		addKeyListener(new KeyAdapter() {
 			@Override
@@ -33,78 +40,87 @@ public class Ventana extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
+		setBounds(0, 0, mapa.getAncho(), mapa.getLargo());
 		
-		snake = new Vibora(new Cabeza(new Punto(100, 100)), "red", Direcciones.DERECHA);
+		contentPane = new SnakeGrafico(mapa);
+		setBackground(Color.BLACK);
+		setContentPane(contentPane);
+		setLocationRelativeTo(null);
+		setVisible(true);
+		
+		int temporizadorFruta = 0;
+		
+		while(mapa.cantidadViborasVivas() > 0) {
+			try {
+				Thread.sleep(200);
+				temporizadorFruta++;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (temporizadorFruta % 3 == 0) {
+				juego.mandarFruta();
+				temporizadorFruta = 0;
+			}
+			juego.evaluarMovimientoViborita();
+			repaint();
+		}
+		
+		//dispose();
+		
+	}
+	
+	public void setMovimiento(KeyEvent evento){
+
+		System.out.println("-------------------------------");
+		
+		int viboraNumero = 0;
+		Punto direccionActual = juego.getViboras()[viboraNumero].getDireccionActual();
+		
+		if(evento.getKeyCode() == KeyEvent.VK_LEFT && direccionActual != Direcciones.DERECHA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.IZQUIERDA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_RIGHT && direccionActual != Direcciones.IZQUIERDA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.DERECHA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_UP && direccionActual != Direcciones.ABAJO) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.ARRIBA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_DOWN && direccionActual != Direcciones.ARRIBA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.ABAJO);
+		}
+		
+		// Vibora numero 2
+		viboraNumero = 1;
+		Punto direccionActual2 = juego.getViboras()[viboraNumero].getDireccionActual();
+		
+		if(evento.getKeyCode() == KeyEvent.VK_A && direccionActual2 != Direcciones.DERECHA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.IZQUIERDA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_D && direccionActual2 != Direcciones.IZQUIERDA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.DERECHA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_W && direccionActual2 != Direcciones.ABAJO) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.ARRIBA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_S && direccionActual2 != Direcciones.ARRIBA) {
+			juego.getViboras()[viboraNumero].setDireccionActual(Direcciones.ABAJO);
+		}
+		repaint();
+	}
+	
+	public static void main(String[] args) {
+		Vibora[] snake = new Vibora[2];
+		snake[0] = new Vibora(new Cabeza(new Punto(100, 100)), Color.RED, Direcciones.DERECHA);
 		ArrayList<Punto> cuerpo = new ArrayList<Punto>();
 		cuerpo.add(new Punto(90, 100));
 		cuerpo.add(new Punto(80, 100));
 		cuerpo.add(new Punto(70, 100));
 		cuerpo.add(new Punto(60, 100));
-		snake.setCuerpo(new Cuerpo(cuerpo));
+		snake[0].setCuerpo(new Cuerpo(cuerpo));
 		
-		contentPane = new SnakeGrafico(snake);
-		setBackground(Color.BLACK);
-		setContentPane(contentPane);
-		setLocationRelativeTo(null);
-		setVisible(true);
-		while(!snake.isMuerta()) {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			snake.mover();
-			repaint();
-//			setMovimiento();
-		}
+		snake[1] = new Vibora(new Cabeza(new Punto(160, 160)), Color.CYAN, Direcciones.DERECHA);
 		
-		
-	}
-	
-	public void setMovimiento(KeyEvent evento){
-//    	Vibora nuevo = ((SnakeGrafico) contentPane).getVibora();
-
-		System.out.println("-------------------------------");
-		
-		Punto direccionActual = snake.getDireccionActual();
-		
-		if(evento.getKeyCode() == KeyEvent.VK_LEFT && direccionActual != Direcciones.DERECHA) {
-//			nuevo.mover(Direcciones.IZQUIERDA);
-//			((SnakeGrafico) contentPane).setVibora(nuevo);
-			
-			snake.setDireccionActual(Direcciones.IZQUIERDA);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_RIGHT && direccionActual != Direcciones.IZQUIERDA) {
-//			nuevo.mover(Direcciones.DERECHA);
-//			((SnakeGrafico) contentPane).setVibora(nuevo);
-			snake.setDireccionActual(Direcciones.DERECHA);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_UP && direccionActual != Direcciones.ABAJO) {
-//			nuevo.mover(Direcciones.ARRIBA);
-//			((SnakeGrafico) contentPane).setVibora(nuevo);
-			snake.setDireccionActual(Direcciones.ARRIBA);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_DOWN && direccionActual != Direcciones.ARRIBA) {
-//			nuevo.mover(Direcciones.ABAJO);
-//			((SnakeGrafico) contentPane).setVibora(nuevo);
-			snake.setDireccionActual(Direcciones.ABAJO);
-		}
-		repaint();
-	}
-	
-	public void setMovimiento(){
-    	Vibora nuevo = ((SnakeGrafico) contentPane).getVibora();
-
-		System.out.println("-------------------------------");
-		
-		
-			nuevo.mover(Direcciones.DERECHA);
-			((SnakeGrafico) contentPane).setVibora(nuevo);
-		repaint();
-	}
-	
-	public static void main(String[] args) {
-		new Ventana();
+		Mapa game = new Mapa(snake, 300, 300);
+		new Ventana(game);
 	}
 }

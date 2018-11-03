@@ -10,28 +10,39 @@ import viborita.entidades.Vibora;
 public class SnakeGrafico extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Vibora snake;
+	//private Vibora snake;
+	private Mapa mapa;
 	
-	public SnakeGrafico(Vibora snake) {
-		this.snake = snake;
+	public SnakeGrafico(Mapa mapa) {
+		this.mapa = mapa;
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillRect(this.snake.getCabeza().getCabeza().getX(), this.snake.getCabeza().getCabeza().getY(), 10, 10);
-		
-		g.setColor(Color.GREEN);
-		for (int i = 0; i < snake.getCuerpo().getCantidad(); i++)
-			g.fillRect(this.snake.getCuerpo().getCuerpo().get(i).getX(), this.snake.getCuerpo().getCuerpo().get(i).getY(), 10, 10);
-
+		for (Vibora snake : this.mapa.getViboras()) {
+			if (!snake.isMuerta()) {
+				g.setColor(snake.getColor().darker());
+				g.fillRect(snake.getCabeza().getCabeza().getX(), snake.getCabeza().getCabeza().getY(), 10, 10);
+				
+				g.setColor(snake.getColor().brighter());
+				
+				for (int i = 0; i < snake.getCuerpo().getCantidad(); i++)
+					g.fillRect(snake.getCuerpo().getCuerpo().get(i).getX(), snake.getCuerpo().getCuerpo().get(i).getY(), 10, 10);
+				
+			}
+			
+		}
+		for (Fruta fruit : this.mapa.getFrutas()) {
+			g.setColor(Color.GREEN);
+			g.fillOval(fruit.getPosicion().getX(), fruit.getPosicion().getY(), 10, 10);
+		}
 	}
 	
-	public Vibora getVibora() {
-		return this.snake;
+	public Vibora[] getVibora() {
+		return this.mapa.getViboras();
 	}
 	
-	public void setVibora(Vibora snake) {
-		this.snake = snake;
+	public void setVibora(Mapa mapa) {
+		this.mapa = mapa;
 	}
 }
