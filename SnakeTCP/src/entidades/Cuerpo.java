@@ -10,7 +10,7 @@ public class Cuerpo {
 	public Cuerpo(ArrayList<Punto> cuerpo) {
 		super();
 		this.cuerpo = cuerpo;
-		this.cantidad=cuerpo.size();
+		this.cantidad = cuerpo.size();
 	}
 	
 	public void moverCuerpo(Punto primerEslabon) {
@@ -18,6 +18,7 @@ public class Cuerpo {
 		
 		for (int i = 0; i < this.cuerpo.size(); i++) {
 			aux = this.cuerpo.get(i);
+			System.out.println(aux);
 			this.cuerpo.set(i, primerEslabon);
 			primerEslabon = aux;
 		}
