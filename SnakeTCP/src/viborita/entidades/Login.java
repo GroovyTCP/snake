@@ -118,7 +118,7 @@ public class Login extends JFrame{
 			
 			Cliente cliente = new Cliente("localhost", 8080);
 			
-			if(cliente.loginCliente()) {
+			if(cliente.loginCliente(txtUsuario.getText(), txtPassword.getPassword().toString())) {
 				System.out.println("Loguea ok y va a la pantalla de salas");
 			}else {
 				System.out.println("Muestro mensaje error para validacion de inputs");
