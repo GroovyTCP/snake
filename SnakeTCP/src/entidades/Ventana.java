@@ -11,6 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
+
 public class Ventana extends JFrame {
 
 	private static final long serialVersionUID = 1L;

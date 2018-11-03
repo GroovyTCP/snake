@@ -2,6 +2,9 @@ package entidades;
 
 import java.util.ArrayList;
 
+import viborita.entidades.Fruta;
+import viborita.entidades.Vibora;
+
 public class Tablero {
 	
 	public static final int WIDTH = 600;

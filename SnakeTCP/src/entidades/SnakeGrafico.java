@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import viborita.entidades.Vibora;
+
 public class SnakeGrafico extends JPanel {
 
 	private static final long serialVersionUID = 1L;
