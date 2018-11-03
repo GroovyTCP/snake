@@ -54,6 +54,25 @@ public class Vibora {
 		
 	}
 	
+	public void mover() {
+		if(!this.puedeMoverse(direccionActual))
+			return;
+		
+//		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
+//			direccion = this.direccionActual;
+		
+//		if()
+		if(this.getCabeza().getCabeza().getX()<=0 || this.getCabeza().getCabeza().getY()<=0 )
+			this.morir();
+		Punto nuevaPosicion = this.cabeza.getCabeza();
+		
+		this.cabeza.moverCabeza(direccionActual);
+		System.out.println(this.cabeza.getCabeza());
+		this.cuerpo.moverCuerpo(nuevaPosicion);
+		this.direccionActual=direccionActual;
+		
+	}
+	
 	 ///EVITA QUE GIRE 90 GRADOS :) //Esto quizas lo deba saber el colisionador
 	public boolean puedeMoverse(Punto direccion) {
 		///Obtiene el ultimo eslabon de su cuerpo

@@ -15,7 +15,8 @@ public class Ventana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private Vibora snake;
+	
 	public Ventana() {
 		super("Snake");
 		setResizable(false);
@@ -29,7 +30,7 @@ public class Ventana extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		
-		Vibora snake = new Vibora(new Cabeza(new Punto(100, 100)), "red", new Punto(1, 0));
+		snake = new Vibora(new Cabeza(new Punto(100, 100)), "red", Direcciones.DERECHA);
 		ArrayList<Punto> cuerpo = new ArrayList<Punto>();
 		cuerpo.add(new Punto(90, 100));
 		cuerpo.add(new Punto(80, 100));
@@ -42,39 +43,59 @@ public class Ventana extends JFrame {
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		ActionListener listen = new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-            	Vibora nuevo = ((SnakeGrafico) contentPane).getVibora();
-            	nuevo.mover(nuevo.getDireccionActual());
-    			((SnakeGrafico) contentPane).setVibora(nuevo);
-    			repaint();
-
-            }
-        };
-        
-        Timer timerGamer = new Timer(500, listen);
+		while(!snake.isMuerta()) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			snake.mover();
+			repaint();
+//			setMovimiento();
+		}
+		
+		
 	}
 	
 	public void setMovimiento(KeyEvent evento){
+//    	Vibora nuevo = ((SnakeGrafico) contentPane).getVibora();
+
+		System.out.println("-------------------------------");
+		
+		Punto direccionActual = snake.getDireccionActual();
+		
+		if(evento.getKeyCode() == KeyEvent.VK_LEFT && direccionActual != Direcciones.DERECHA) {
+//			nuevo.mover(Direcciones.IZQUIERDA);
+//			((SnakeGrafico) contentPane).setVibora(nuevo);
+			
+			snake.setDireccionActual(Direcciones.IZQUIERDA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_RIGHT && direccionActual != Direcciones.IZQUIERDA) {
+//			nuevo.mover(Direcciones.DERECHA);
+//			((SnakeGrafico) contentPane).setVibora(nuevo);
+			snake.setDireccionActual(Direcciones.DERECHA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_UP && direccionActual != Direcciones.ABAJO) {
+//			nuevo.mover(Direcciones.ARRIBA);
+//			((SnakeGrafico) contentPane).setVibora(nuevo);
+			snake.setDireccionActual(Direcciones.ARRIBA);
+		}
+		if(evento.getKeyCode() == KeyEvent.VK_DOWN && direccionActual != Direcciones.ARRIBA) {
+//			nuevo.mover(Direcciones.ABAJO);
+//			((SnakeGrafico) contentPane).setVibora(nuevo);
+			snake.setDireccionActual(Direcciones.ABAJO);
+		}
+		repaint();
+	}
+	
+	public void setMovimiento(){
     	Vibora nuevo = ((SnakeGrafico) contentPane).getVibora();
 
 		System.out.println("-------------------------------");
-		if(evento.getKeyCode() == KeyEvent.VK_LEFT) {
-			nuevo.mover(Direcciones.IZQUIERDA);
-			((SnakeGrafico) contentPane).setVibora(nuevo);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_RIGHT) {
+		
+		
 			nuevo.mover(Direcciones.DERECHA);
 			((SnakeGrafico) contentPane).setVibora(nuevo);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_UP) {
-			nuevo.mover(Direcciones.ARRIBA);
-			((SnakeGrafico) contentPane).setVibora(nuevo);
-		}
-		if(evento.getKeyCode() == KeyEvent.VK_DOWN) {
-			nuevo.mover(Direcciones.ABAJO);
-			((SnakeGrafico) contentPane).setVibora(nuevo);
-		}
 		repaint();
 	}
 	
