@@ -10,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import viborita.repositorio.UsuarioService;
+import viborita.repositorio.impl.UsuarioServiceImpl;
+
 public class Servidor {
 
 	public static void main(String[] args) {
@@ -24,11 +27,9 @@ public class Servidor {
 	public Servidor(int puerto) {
 		
 		try {
-			System.out.println("SERVER INICIADO - Esperando conexiones de clientes ...");
 			ServerSocket servidor = new ServerSocket(puerto);
 			this.cliente = servidor.accept();
 			servidor.close();
-			System.out.println("SERVER TERMINADO");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -41,31 +42,36 @@ public class Servidor {
 	public void setCliente(Socket cliente) {
 		this.cliente = cliente;
 	}
+
+	public int getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
 	
 }
 
 class MarcoServidor extends JFrame implements Runnable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 380699294292670345L;
+
 	public MarcoServidor(){
 		
 			setBounds(1200,300,280,350);				
-				
 			JPanel milamina= new JPanel();
-			
 			milamina.setLayout(new BorderLayout());
-			
 			areatexto=new JTextArea();
-			
 			milamina.add(areatexto,BorderLayout.CENTER);
-			
 			add(milamina);
-			
 			setVisible(true);
 			
 			Thread hilo = new Thread(this);
-			
 			hilo.start();
-		
 		}
 	
 	private	JTextArea areatexto;
@@ -84,8 +90,12 @@ class MarcoServidor extends JFrame implements Runnable {
 			areatexto.append(usuario + "\n");
 			String pass = entrada.readUTF();
 			areatexto.append(pass);
+			UsuarioServiceImpl usi = new UsuarioServiceImpl();
+			Usuario user = usi.get(usuario);
+			if(usuario != null) {
+				//Debería devolver la response al cliente para saber que hacer
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
