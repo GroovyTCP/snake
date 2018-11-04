@@ -9,7 +9,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario get(String usuario) {
 		
 		//Obtener usuario desde bd y si existe lo devuelvo, sino null
-		return null;
+		
+		Usuario user = new Usuario();
+		user.setUsuario("admin");
+		user.setContrasenia("admin");
+		
+		return user;
 	}
 
 }
