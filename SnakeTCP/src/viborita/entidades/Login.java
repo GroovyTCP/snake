@@ -4,7 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,20 +31,26 @@ public class Login extends JFrame{
 	private JFrame frame;
 	private JTextField textFieldUsuario;
 	private JPasswordField passField;
+	private File cancionLogin;
+	private AudioInputStream audio;
+	private Clip clip;
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8622887703162718277L;
 	
-	public Login() {
+	public Login() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		initialize();
 	}
 
 	/**
 	 * Inicializa el contenido del frame
+	 * @throws IOException 
+	 * @throws UnsupportedAudioFileException 
+	 * @throws LineUnavailableException 
 	 */
-	private void initialize() {
+	private void initialize() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		frame = new JFrame();
 		frame.setTitle("Viborita");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,6 +118,13 @@ public class Login extends JFrame{
 		JLabel label = new JLabel(icon);
 		label.setBounds(0, 120, 161, 226);
 		panel.add(label);
+		
+		//Musica
+		cancionLogin = new File("recursos\\soundtrack\\musicaLogin.wav");
+		audio = AudioSystem.getAudioInputStream(cancionLogin);
+		clip = AudioSystem.getClip();
+		clip.open(audio);
+		clip.start();
 	}
 
 	public void run() {
@@ -139,8 +159,16 @@ public class Login extends JFrame{
 			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
 				//Usuario validado. Muestro salas (las tiene el sv)
 				System.out.println("Pass validada. Muestro salas");
-				SalaInterfaz salas = new SalaInterfaz();
-				salas.setVisible(true);
+				SalaInterfaz salas;
+				try {
+					salas = new SalaInterfaz();
+					salas.setVisible(true);
+					frame.dispose();
+					clip.stop();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} else {
 				System.out.println("Validacion de inputs");
 			}

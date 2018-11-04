@@ -6,7 +6,17 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +27,14 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
+import entidades.Direcciones;
+import entidades.Ventana;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Mapa;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 public class SalaInterfaz extends JFrame{
 
@@ -46,9 +64,12 @@ public class SalaInterfaz extends JFrame{
 
 	/**
 	 * Crea el frame.
+	 * @throws IOException 
+	 * @throws UnsupportedAudioFileException 
+	 * @throws LineUnavailableException 
 	 */
-	public SalaInterfaz() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	public SalaInterfaz() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setSize(1080,720);
 		contentPane = new JPanel();
@@ -121,6 +142,27 @@ public class SalaInterfaz extends JFrame{
 		btnAgregar.setFocusable(false);
 		btnAgregar.setFont(new Font("ComicSans", Font.PLAIN, 20));
 		panelPrincipal.add(btnAgregar);
+		
+		JButton btnIniciar = new JButton("Iniciar Juego");
+		btnIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				///ACA SE LANZA EL JUEGOS
+				
+			}
+		});
+		btnIniciar.setForeground(new Color(51, 153, 255));
+		btnIniciar.setBounds(35, 550, 300, 40);
+		btnIniciar.setFocusable(false);
+		btnIniciar.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnIniciar);
+		
+		//Musica
+		File cancionLogin = new File("recursos\\soundtrack\\musicaSalas.wav");
+		AudioInputStream audio = AudioSystem.getAudioInputStream(cancionLogin);
+		Clip clip = AudioSystem.getClip();
+		clip.open(audio);
+		clip.start();
 		
 	}
 }
