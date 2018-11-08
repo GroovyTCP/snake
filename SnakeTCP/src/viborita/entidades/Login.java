@@ -74,7 +74,7 @@ public class Login extends JFrame{
 		lblLaVivorita.setForeground(Color.lightGray);
 		panel.add(lblLaVivorita);
 		
-		JLabel lblUsuario = new JLabel("Usuario:");
+		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 17));
 		lblUsuario.setBounds(163, 187, 74, 20);
 		lblUsuario.setForeground(Color.lightGray);
@@ -89,14 +89,14 @@ public class Login extends JFrame{
 		panel.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		JLabel lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 17));
-		lblContrasea.setBounds(163, 240, 85, 20);
+		lblContrasea.setBounds(163, 240, 95, 20);
 		lblContrasea.setForeground(Color.lightGray);
 		panel.add(lblContrasea);
 		
 		passField = new JPasswordField();
-		passField.setToolTipText("Ingrese su contrase\u00F1a");
+		passField.setToolTipText("Ingrese su contraseña");
 		passField.setHorizontalAlignment(SwingConstants.CENTER);
 		passField.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 13));
 		passField.setBorder(null);
@@ -166,7 +166,6 @@ public class Login extends JFrame{
 					frame.dispose();
 					clip.stop();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			} else {

@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -25,16 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import entidades.Direcciones;
 import entidades.Ventana;
-import viborita.entidades.Cabeza;
-import viborita.entidades.Cuerpo;
-import viborita.entidades.Mapa;
-import viborita.entidades.Punto;
-import viborita.entidades.Vibora;
 
 public class SalaInterfaz extends JFrame{
 
@@ -96,7 +86,7 @@ public class SalaInterfaz extends JFrame{
 		fondo.add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("Salas");
+		JLabel lblTitulo = new JLabel("Sala");
 		lblTitulo.setBounds(35, 20, 300, 40);
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setOpaque(true);
@@ -105,50 +95,18 @@ public class SalaInterfaz extends JFrame{
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("ComicSans", Font.PLAIN, 25));
 		
-//		JLabel lblAgregarSala = new JLabel("Agregar Sala: ");
-//		lblAgregarSala.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 13));
-//		lblAgregarSala.setBounds(187, 104, 107, 16);
-//		panelPrincipal.add(lblAgregarSala);
-//		
 		JPanel panelSala = new JPanel();
 		panelSala.setBackground(Color.LIGHT_GRAY);
 		panelSala.setBounds(350, 20, 630, 570);
 		panelPrincipal.add(panelSala);
 		panelSala.setLayout(null);
-//		
-//		JLabel ColorDeFondo = new JLabel("");
-//		ColorDeFondo.setIcon(new ImageIcon("C:\\Users\\lucki\\Desktop\\medio.jpg"));
-//		ColorDeFondo.setBounds(0, 0, 150, 234);
-//		PanelSala.add(ColorDeFondo);
-//		
-//		JList ListaDeSalas = new JList();
-//		ListaDeSalas.setBounds(0, 229, 150, -223);
-//		PanelSala.add(ListaDeSalas);
-//		
-//		JButton btnIngresarEnSala = new JButton("Unirse a la Sala");
-//		btnIngresarEnSala.setBackground(new Color(30, 144, 255));
-//		btnIngresarEnSala.setBounds(12, 325, 151, 25);
-//		panelPrincipal.add(btnIngresarEnSala);
-//		
-//		TextIngresarSala = new JTextField();
-//		TextIngresarSala.setToolTipText("Ingrese Nombre de sala a crear");
-//		TextIngresarSala.setBounds(187, 128, 116, 22);
-//		panelPrincipal.add(TextIngresarSala);
-//		TextIngresarSala.setColumns(10);
-		
-		JButton btnAgregar = new JButton("Crear sala");
-		btnAgregar.setForeground(new Color(51, 153, 255));
-		btnAgregar.setBounds(35, 70, 300, 40);
-		btnAgregar.setFocusable(false);
-		btnAgregar.setFont(new Font("ComicSans", Font.PLAIN, 20));
-		panelPrincipal.add(btnAgregar);
 		
 		JButton btnIniciar = new JButton("Iniciar Juego");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				///ACA SE LANZA EL JUEGOS
-				
+				Runnable r = new Ventana();
+				Thread t = new Thread(r);
+				t.start();
 			}
 		});
 		btnIniciar.setForeground(new Color(51, 153, 255));

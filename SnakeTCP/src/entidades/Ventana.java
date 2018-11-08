@@ -22,11 +22,15 @@ import viborita.entidades.Cuerpo;
 import viborita.entidades.Punto;
 import viborita.entidades.Vibora;
 
-public class Ventana extends JFrame {
+public class Ventana extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Mapa juego;
+	
+	public Ventana() {
+		
+	}
 	
 	public Ventana(Mapa mapa) {
 		super("Snake");
@@ -108,7 +112,24 @@ public class Ventana extends JFrame {
 		repaint();
 	}
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//		Vibora[] snake = new Vibora[2];
+//		snake[0] = new Vibora(new Cabeza(new Punto(100, 100)), Color.RED, Direcciones.DERECHA);
+//		ArrayList<Punto> cuerpo = new ArrayList<Punto>();
+//		cuerpo.add(new Punto(90, 100));
+//		cuerpo.add(new Punto(80, 100));
+//		cuerpo.add(new Punto(70, 100));
+//		cuerpo.add(new Punto(60, 100));
+//		snake[0].setCuerpo(new Cuerpo(cuerpo));
+//		
+//		snake[1] = new Vibora(new Cabeza(new Punto(160, 160)), Color.CYAN, Direcciones.DERECHA);
+//		
+//		Mapa game = new Mapa(snake, 300, 300);
+//		new Ventana(game);
+//	}
+
+	@Override
+	public void run() {
 		Vibora[] snake = new Vibora[2];
 		snake[0] = new Vibora(new Cabeza(new Punto(100, 100)), Color.RED, Direcciones.DERECHA);
 		ArrayList<Punto> cuerpo = new ArrayList<Punto>();
