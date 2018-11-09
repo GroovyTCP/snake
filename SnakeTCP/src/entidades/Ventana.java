@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import viborita.entidades.Cabeza;
@@ -37,13 +38,27 @@ public class Ventana extends JFrame implements Runnable {
 		setResizable(false);
 		juego = mapa;
 		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	
+		    	int jPaneResult = JOptionPane.showConfirmDialog(windowEvent.getComponent(), 
+			            "¿Estás seguro que deseas abandonar la partida?", "¿Abandonar partida?", 
+			            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		        if (jPaneResult == JOptionPane.YES_OPTION){
+		            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		            
+		        }
+		    }
+		});
+		
 		addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent tecla) {
 				setMovimiento(tecla);
 			}
 		});
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, mapa.getAncho(), mapa.getLargo());
 		
 		contentPane = new SnakeGrafico(mapa);

@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -60,7 +61,6 @@ public class SalaInterfaz extends JFrame{
 	 */
 	public SalaInterfaz() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		setSize(1080,720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(6, 5, 5, 5));
