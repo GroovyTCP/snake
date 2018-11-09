@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -25,7 +26,13 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import entidades.Direcciones;
 import entidades.Ventana;
+import viborita.entidades.Cabeza;
+import viborita.entidades.Cuerpo;
+import viborita.entidades.Mapa;
+import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 public class SalaInterfaz extends JFrame{
 
@@ -109,7 +116,29 @@ public class SalaInterfaz extends JFrame{
 		JButton btnIniciar = new JButton("Iniciar Juego");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Runnable r = new Ventana();
+				
+				Vibora[] snake = new Vibora[2];
+				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), Color.RED, Direcciones.DERECHA);
+				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
+				cuerpo1.add(new Punto(50, 50));
+				cuerpo1.add(new Punto(40, 50));
+				snake[0].setCuerpo(new Cuerpo(cuerpo1));
+				
+				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), Color.CYAN, Direcciones.IZQUIERDA);
+				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
+				cuerpo2.add(new Punto(550, 450));
+				cuerpo2.add(new Punto(560, 450));
+				snake[1].setCuerpo(new Cuerpo(cuerpo2));
+				
+				/*
+				 * snake array viboras
+				 * 600 ancho mapa
+				 * 500 largo mapa
+				 * 100 puntaje por comer una fruta
+				 */
+				Mapa game = new Mapa(snake, 600, 500, 100);
+				
+				Runnable r = new Ventana(game);
 				Thread t = new Thread(r);
 				t.start();
 				

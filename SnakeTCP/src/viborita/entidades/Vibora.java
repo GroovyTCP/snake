@@ -65,7 +65,7 @@ public class Vibora {
 //		if()
 		
 		Punto nuevaPosicion = this.cabeza.getCabeza();
-		System.out.println(this.cabeza.getCabeza());
+//		System.out.println(this.cabeza.getCabeza());
 		this.cabeza.moverCabeza(direccionActual);
 		this.cuerpo.moverCuerpo(nuevaPosicion);
 		//this.direccionActual=direccionActual;

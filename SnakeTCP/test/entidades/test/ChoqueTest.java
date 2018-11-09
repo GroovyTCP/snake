@@ -35,7 +35,7 @@ public class ChoqueTest {
 		viboritas[1] = v2;
 		
 		
-		Mapa mapa = new Mapa(viboritas,10,10);
+		Mapa mapa = new Mapa(viboritas,10,10, 100);
 		
 		///Una se mueve pa arriba, otra pa abajo
 		Punto p1 = new Punto(0,-1);

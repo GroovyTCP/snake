@@ -18,7 +18,7 @@ public class Cuerpo {
 		
 		for (int i = 0; i < this.cuerpo.size(); i++) {
 			aux = this.cuerpo.get(i);
-			System.out.println(aux);
+//			System.out.println(aux);
 			this.cuerpo.set(i, primerEslabon);
 			primerEslabon = aux;
 		}

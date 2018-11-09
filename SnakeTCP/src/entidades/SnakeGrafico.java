@@ -34,10 +34,8 @@ public class SnakeGrafico extends JPanel {
 			}
 			
 		}
-		for (Fruta fruit : this.mapa.getFrutas()) {
-			g.setColor(Color.GREEN);
-			g.fillOval(fruit.getPosicion().getX(), fruit.getPosicion().getY(), 10, 10);
-		}
+		g.setColor(Color.GREEN);
+		g.fillOval(this.mapa.getFruta().getPosicion().getX(), this.mapa.getFruta().getPosicion().getY(), 10, 10);
 	}
 	
 	public Vibora[] getVibora() {
