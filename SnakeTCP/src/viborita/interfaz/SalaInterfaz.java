@@ -29,13 +29,18 @@ import entidades.Ventana;
 
 public class SalaInterfaz extends JFrame{
 
+	private boolean musicOn = true;
+	File cancionLogin;
+	AudioInputStream audio;
+	private Clip clip;
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -453204827036494827L;
 
 	private JPanel contentPane;
-	private JTextField textIngresarSala;
+	///private JTextField textIngresarSala;
 
 	/**
 	 * Corre el frame de sala.
@@ -107,6 +112,8 @@ public class SalaInterfaz extends JFrame{
 				Runnable r = new Ventana();
 				Thread t = new Thread(r);
 				t.start();
+				
+				clip.stop(); //musica fuera
 			}
 		});
 		btnIniciar.setForeground(new Color(51, 153, 255));
@@ -115,10 +122,30 @@ public class SalaInterfaz extends JFrame{
 		btnIniciar.setFont(new Font("ComicSans", Font.PLAIN, 20));
 		panelPrincipal.add(btnIniciar);
 		
+		//boton musica
+		JButton btnMusica = new JButton();
+		btnMusica.setBackground(Color.LIGHT_GRAY);
+		btnMusica.setIcon(new ImageIcon("recursos\\imagenes\\iconoMusica.png"));
+		btnMusica.setBounds(945, 595, 55, 25);
+		panelPrincipal.add(btnMusica);
+		btnMusica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(musicOn == false) {
+					clip.start();
+					musicOn=true;
+				}
+				else {
+					clip.stop();
+					musicOn=false;
+				}
+					
+			}
+		});
+
 		//Musica
-		File cancionLogin = new File("recursos\\soundtrack\\musicaSalas.wav");
-		AudioInputStream audio = AudioSystem.getAudioInputStream(cancionLogin);
-		Clip clip = AudioSystem.getClip();
+		cancionLogin = new File("recursos\\soundtrack\\musicaSalas.wav");
+		audio = AudioSystem.getAudioInputStream(cancionLogin);
+		clip = AudioSystem.getClip();
 		clip.open(audio);
 		clip.start();
 		

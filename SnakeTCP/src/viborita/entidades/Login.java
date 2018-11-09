@@ -34,6 +34,7 @@ public class Login extends JFrame{
 	private File cancionLogin;
 	private AudioInputStream audio;
 	private Clip clip;
+	private boolean musicOn = true;
 
 	/**
 	 * 
@@ -125,6 +126,25 @@ public class Login extends JFrame{
 		clip = AudioSystem.getClip();
 		clip.open(audio);
 		clip.start();
+		
+		JButton btnMusica = new JButton();
+		btnMusica.setBackground(Color.LIGHT_GRAY);
+		btnMusica.setIcon(new ImageIcon("recursos\\imagenes\\iconoMusica.png"));
+		btnMusica.setBounds(290, 415, 55, 25);
+		panel.add(btnMusica);
+		btnMusica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(musicOn == false) {
+					clip.start();
+					musicOn=true;
+				}
+				else {
+					clip.stop();
+					musicOn=false;
+				}
+					
+			}
+		});
 	}
 
 	public void run() {
