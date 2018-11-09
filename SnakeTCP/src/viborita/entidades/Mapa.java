@@ -1,6 +1,5 @@
 package viborita.entidades;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Mapa {
@@ -11,6 +10,8 @@ public class Mapa {
 	private int alto;
 	/// private String mapa[][];
 	private Fruta fruta;
+	
+	private static final int anchoTablaDePuntos = 300;
 
 	public Mapa(Vibora[] viboras, int ancho, int alto, int puntaje) {
 		super();
@@ -177,6 +178,10 @@ public class Mapa {
 
 	public void setFruta(Fruta fruta) {
 		this.fruta = fruta;
+	}
+
+	public static int getAnchotabladepuntos() {
+		return anchoTablaDePuntos;
 	}
 
 	public int cantidadViborasVivas() {

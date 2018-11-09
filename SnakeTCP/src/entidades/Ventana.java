@@ -3,24 +3,15 @@ package entidades;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import viborita.entidades.Cabeza;
-import viborita.entidades.Cuerpo;
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
-import viborita.entidades.Vibora;
 
 // Serpiente roja, se mueve con las flechitas y la otra con WASD
 
-import viborita.entidades.Cabeza;
-import viborita.entidades.Cuerpo;
-import viborita.entidades.Punto;
-import viborita.entidades.Vibora;
 
 public class Ventana extends JFrame implements Runnable {
 
@@ -42,7 +33,7 @@ public class Ventana extends JFrame implements Runnable {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 
 				int jPaneResult = JOptionPane.showConfirmDialog(windowEvent.getComponent(),
-						"ï¿½Estï¿½s seguro que deseas abandonar la partida?", "ï¿½Abandonar partida?",
+						"¿Estás seguro que deseas abandonar la partida?", "¿Abandonar partida?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -63,7 +54,7 @@ public class Ventana extends JFrame implements Runnable {
 				setMovimiento(tecla);
 			}
 		});
-		setBounds(0, 0, mapa.getAncho(), mapa.getAlto());
+		setBounds(0, 0, mapa.getAncho()+Mapa.getAnchotabladepuntos(), mapa.getAlto());
 
 		contentPane = new SnakeGrafico(mapa);
 		setBackground(Color.BLACK);
