@@ -193,4 +193,19 @@ public class Mapa {
 
 		return contandoVivas;
 	}
+	
+	///PONE NOMBRE SOLO POR ESTA PRUEBA
+	public void ponerNombreViboras() {
+		
+		String[] nombres = {"Anaconda roja","Culebra azul"};
+		
+		int i=0;
+		
+		for(Vibora v : this.getViboras()) {
+			v.setNombre(nombres[i]);
+			i++;
+		}
+			
+		
+	}
 }

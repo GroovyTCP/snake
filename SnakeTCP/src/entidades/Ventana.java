@@ -109,6 +109,8 @@ public class Ventana extends JFrame implements Runnable {
 
 	@Override
 	public void run() {
+		
+		mapa.ponerNombreViboras();
 
 		while (mapa.cantidadViborasVivas() > 0) {
 			try {
@@ -158,7 +160,7 @@ public class Ventana extends JFrame implements Runnable {
 				            this.dispose();
 				        }
 			} else {
-				int n = JOptionPane.showOptionDialog(new JFrame(), "Ganador: " + ganadoras.get(0).getColor(), 
+				int n = JOptionPane.showOptionDialog(new JFrame(), "Ganador: " + ganadoras.get(0).getNombre(), ///ganadoras.get(0).getColor(), 
 				        "Fin del juego", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
 				        null, new Object[] {"Aceptar"}, JOptionPane.YES_OPTION);
 

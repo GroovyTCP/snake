@@ -11,6 +11,7 @@ public class Vibora {
 	private Color color;
 	private boolean muerta;
 	private Punto direccionActual;
+	private String nombre;
 	
 	
 	///Este metodo crea una nueva vibora, sin cuerpo solo con cabeza y con el estado de muerta como false
@@ -137,6 +138,14 @@ public class Vibora {
 
 	public void setDireccionActual(Punto direccionActual) {
 		this.direccionActual = direccionActual;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }

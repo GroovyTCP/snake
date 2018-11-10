@@ -51,7 +51,9 @@ public class SnakeGrafico extends JPanel {
 		for (Vibora e: mapa.getViboras()) {
 			g.setColor(e.isMuerta()?Color.RED:Color.WHITE);
 			//g.drawString(e.isMuerta()?"†":"", mapa.getAncho()+1, 60+i*20);
-			g.drawString("Jugador " +(nroJugador+1), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
+			
+			///g.drawString("Jugador " +(nroJugador+1), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
+			g.drawString(e.getNombre(), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
 			g.setColor(e.getColor());
 			g.fillRect(mapa.getAncho()+Mapa.getAnchotabladepuntos()/2,50+nroJugador*sepacionEntreJugadores, 50, 10);
 			g.setColor(Color.WHITE);
