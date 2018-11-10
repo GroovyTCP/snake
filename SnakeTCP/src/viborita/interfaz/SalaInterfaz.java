@@ -116,13 +116,13 @@ public class SalaInterfaz extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Vibora[] snake = new Vibora[2];
-				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), Color.RED, Direcciones.DERECHA);
+				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
 				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
 				cuerpo1.add(new Punto(50, 50));
 				cuerpo1.add(new Punto(40, 50));
 				snake[0].setCuerpo(new Cuerpo(cuerpo1));
 				
-				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), Color.CYAN, Direcciones.IZQUIERDA);
+				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
 				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
 				cuerpo2.add(new Punto(550, 450));
 				cuerpo2.add(new Punto(560, 450));

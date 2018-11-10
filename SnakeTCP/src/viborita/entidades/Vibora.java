@@ -33,6 +33,16 @@ public class Vibora {
 		this.muerta = false;
 		this.direccionActual = direccionActual;
 	}
+
+	public Vibora(Cabeza cabeza, String nombre, Color color,Punto direccionActual) {
+		this.puntaje = 0;
+		this.cabeza = cabeza;
+		this.cuerpo = new Cuerpo(new ArrayList<Punto>());
+		this.color = color;
+		this.muerta = false;
+		this.direccionActual = direccionActual;
+		this.nombre = nombre;
+	}
 	
 	///cuando crece, siempre el colisionador debe saber para donde
 	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {

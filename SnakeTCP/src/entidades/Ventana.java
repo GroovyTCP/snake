@@ -36,7 +36,7 @@ public class Ventana extends JFrame implements Runnable {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 
 				int jPaneResult = JOptionPane.showConfirmDialog(windowEvent.getComponent(),
-						"¿Estás seguro que deseas abandonar la partida?", "¿Abandonar partida?",
+						"ï¿½Estï¿½s seguro que deseas abandonar la partida?", "ï¿½Abandonar partida?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {
 					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -69,7 +69,7 @@ public class Ventana extends JFrame implements Runnable {
 
 	private void setMovimiento(KeyEvent evento) {
 
-		System.out.println("-------------------------------");
+//		System.out.println("-------------------------------");
 
 		int viboraNumero = 0;
 		Punto direccionActual = mapa.getViboras()[viboraNumero].getDireccionActual();
@@ -110,7 +110,7 @@ public class Ventana extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		
-		mapa.ponerNombreViboras();
+//		mapa.ponerNombreViboras();
 
 		while (mapa.cantidadViborasVivas() > 0) {
 			try {

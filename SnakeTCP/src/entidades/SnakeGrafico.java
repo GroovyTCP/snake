@@ -40,7 +40,7 @@ public class SnakeGrafico extends JPanel {
 		
 		/// Blanco = Jugador Vivo - Rojo = Jugador Muerto
 		g.setColor(Color.GRAY);
-		g.fillRect(mapa.getAncho(),0, Mapa.getAnchotabladepuntos(), mapa.getAlto());
+		g.fillRect(mapa.getAncho() - 10,0, Mapa.getAnchotabladepuntos() + 10, mapa.getAlto());
 		int nroJugador = 0;
 		g.setFont(new Font("ComicSans", Font.PLAIN, 15));
 		g.setColor(Color.WHITE);
@@ -50,7 +50,7 @@ public class SnakeGrafico extends JPanel {
 		
 		for (Vibora e: mapa.getViboras()) {
 			g.setColor(e.isMuerta()?Color.RED:Color.WHITE);
-			//g.drawString(e.isMuerta()?"†":"", mapa.getAncho()+1, 60+i*20);
+			//g.drawString(e.isMuerta()?"ï¿½":"", mapa.getAncho()+1, 60+i*20);
 			
 			///g.drawString("Jugador " +(nroJugador+1), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
 			g.drawString(e.getNombre(), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
