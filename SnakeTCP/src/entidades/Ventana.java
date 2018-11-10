@@ -3,12 +3,15 @@ package entidades;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
+import viborita.entidades.Vibora;
 
 // Serpiente roja, se mueve con las flechitas y la otra con WASD
 
@@ -116,6 +119,53 @@ public class Ventana extends JFrame implements Runnable {
 
 			mapa.evaluarMovimientoViborita();
 			repaint();
+		}
+		mostrarGanador();
+	}
+
+	private void mostrarGanador() {
+		ArrayList<Vibora> ganadoras = new ArrayList<>();
+		int ganador = 0;
+		for(int i = 0;i<mapa.getViboras().length;i++) {
+			if(mapa.getViboras()[i].getPuntaje() > ganador) {
+				ganador = mapa.getViboras()[i].getPuntaje();
+			}
+		}
+		for(int i = 0;i<mapa.getViboras().length;i++) {
+			if(mapa.getViboras()[i].getPuntaje() == ganador) {
+				ganadoras.add(mapa.getViboras()[i]);
+			}
+		}
+		
+		mostrarMensajeCorrespondiente(ganador, ganadoras);
+	}
+
+	private void mostrarMensajeCorrespondiente(int ganador, ArrayList<Vibora> ganadoras) {
+		if(ganador == 0) {
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Son horribles", 
+			        "Fin del juego", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+			        null, new Object[] {"Aceptar"}, JOptionPane.YES_OPTION);
+			        if (n == JOptionPane.YES_OPTION) {
+			            this.dispose();
+			        }
+		}else {
+			if(ganadoras.size() > 1) {
+				int n = JOptionPane.showOptionDialog(new JFrame(), "EMPATE!!!!!!!", 
+				        "Fin del juego", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+				        null, new Object[] {"Aceptar"}, JOptionPane.YES_OPTION);
+
+				        if (n == JOptionPane.YES_OPTION) {
+				            this.dispose();
+				        }
+			} else {
+				int n = JOptionPane.showOptionDialog(new JFrame(), "Ganador: " + ganadoras.get(0).getColor(), 
+				        "Fin del juego", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+				        null, new Object[] {"Aceptar"}, JOptionPane.YES_OPTION);
+
+				        if (n == JOptionPane.YES_OPTION) {
+				            this.dispose();
+				        }
+			}
 		}
 	}
 	
