@@ -14,8 +14,8 @@ public class CabezaTest {
 		
 		cabeza.moverCabeza(new Punto(-1,0));
 		
-		Assert.assertEquals(3, cabeza.getCabeza().getX());
-		Assert.assertEquals(1, cabeza.getCabeza().getY());
+		Assert.assertEquals(3, cabeza.getPosicion().getX());
+		Assert.assertEquals(1, cabeza.getPosicion().getY());
 		
 	}
 	
@@ -25,8 +25,8 @@ public class CabezaTest {
 		
 		cabeza.moverCabeza(new Punto(1,0));
 		
-		Assert.assertEquals(5, cabeza.getCabeza().getX());
-		Assert.assertEquals(1, cabeza.getCabeza().getY());
+		Assert.assertEquals(5, cabeza.getPosicion().getX());
+		Assert.assertEquals(1, cabeza.getPosicion().getY());
 		
 	}
 	
@@ -36,8 +36,8 @@ public class CabezaTest {
 		
 		cabeza.moverCabeza(new Punto(0,1));
 		
-		Assert.assertEquals(4, cabeza.getCabeza().getX());
-		Assert.assertEquals(2, cabeza.getCabeza().getY());
+		Assert.assertEquals(4, cabeza.getPosicion().getX());
+		Assert.assertEquals(2, cabeza.getPosicion().getY());
 		
 	}
 	
@@ -47,8 +47,8 @@ public class CabezaTest {
 		
 		cabeza.moverCabeza(new Punto(0,-1));
 		
-		Assert.assertEquals(4, cabeza.getCabeza().getX());
-		Assert.assertEquals(0, cabeza.getCabeza().getY());
+		Assert.assertEquals(4, cabeza.getPosicion().getX());
+		Assert.assertEquals(0, cabeza.getPosicion().getY());
 		
 	}
 }

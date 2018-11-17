@@ -25,7 +25,7 @@ public class SnakeGrafico extends JPanel {
 		for (Vibora snake : this.mapa.getViboras()) {
 			if (!snake.isMuerta()) {
 				g.setColor(snake.getColor().darker());
-				g.fillRect(snake.getCabeza().getCabeza().getX(), snake.getCabeza().getCabeza().getY(), 10, 10);
+				g.fillRect(snake.getCabeza().getPosicion().getX(), snake.getCabeza().getPosicion().getY(), 10, 10);
 				
 				g.setColor(snake.getColor().brighter());
 				
