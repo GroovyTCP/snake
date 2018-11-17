@@ -73,7 +73,7 @@ public class Mapa {
 	/// Se fija si hay una cabeza o un cuerpo de vibora en ese punto
 	private boolean hayCuerpo(Punto punto) {
 		for (Vibora vibora : this.viboras) {
-			if (vibora.getCabeza().getCabeza().equals(punto))
+			if (vibora.getCabeza().getPosicion().equals(punto))
 				return true;
 			for (Punto parte : vibora.getCuerpo().getCuerpo()) {
 				if (parte.equals(punto))
@@ -85,11 +85,11 @@ public class Mapa {
 
 	/// Se fija si hay otra cabeza o un cuerpo de vibora viva en ese punto
 	private boolean hayCuerpo(Cabeza cabeza) {
-		Punto pos = cabeza.getCabeza();
+		Punto pos = cabeza.getPosicion();
 		for (Vibora vibora : this.viboras) {
 			if (!vibora.isMuerta()) {
-				if ((vibora.getCabeza().getCabeza().equals(pos)
-						|| pos.equals(vibora.getCabeza().getCabeza().sumarPunto(vibora.getDireccionActual())))
+				if ((vibora.getCabeza().getPosicion().equals(pos)
+						|| pos.equals(vibora.getCabeza().getPosicion().sumarPunto(vibora.getDireccionActual())))
 						&& cabeza != vibora.getCabeza()) {
 					// Si es un choque de cabeza mueren las dos
 					vibora.morir();
@@ -122,11 +122,11 @@ public class Mapa {
 					posCrecimiento = this.viboras[i].getCuerpo().getCuerpo()
 							.get(this.viboras[i].getCuerpo().getCuerpo().size() - 1);
 				else
-					posCrecimiento = this.viboras[i].getCabeza().getCabeza();
+					posCrecimiento = this.viboras[i].getCabeza().getPosicion();
 
 				this.viboras[i].mover();
 
-				if ((fruta = hayFruta(this.viboras[i].getCabeza().getCabeza())) != null) {
+				if ((fruta = hayFruta(this.viboras[i].getCabeza().getPosicion())) != null) {
 
 					this.viboras[i].comerFruta(fruta, posCrecimiento);
 					this.fruta.setPosicion(generarPosicionFruta());
@@ -136,10 +136,10 @@ public class Mapa {
 
 		for (Vibora vibora : viboras) {
 			/// Se fue del mapa y mulio
-			if (vibora.getCabeza().getCabeza().getX() < 0 
-					|| vibora.getCabeza().getCabeza().getY() < 0
-						|| vibora.getCabeza().getCabeza().getX() > this.ancho - 15
-							|| vibora.getCabeza().getCabeza().getY() > this.alto - 40)
+			if (vibora.getCabeza().getPosicion().getX() < 0 
+					|| vibora.getCabeza().getPosicion().getY() < 0
+						|| vibora.getCabeza().getPosicion().getX() > this.ancho - 15
+							|| vibora.getCabeza().getPosicion().getY() > this.alto - 40)
 				vibora.morir();
 
 			/// Si hay otro cuerpo o cabeza la queda

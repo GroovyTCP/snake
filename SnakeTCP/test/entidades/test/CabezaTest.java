@@ -1,7 +1,7 @@
 package entidades.test;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import viborita.entidades.Cabeza;
 import viborita.entidades.Punto;

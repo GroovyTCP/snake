@@ -24,12 +24,12 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import entidades.Direcciones;
-import entidades.Ventana;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
+import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
+import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
 public class SalaInterfaz extends JFrame{

@@ -2,21 +2,21 @@ package viborita.entidades;
 
 public class Cabeza {
 
-	private Punto cabeza;
+	private Punto posicion;
 	
 	public Cabeza (Punto cabeza) {
-		this.cabeza = cabeza;
+		this.posicion = cabeza;
 	}
 
-	public Punto getCabeza() {
-		return cabeza;
+	public Punto getPosicion() {
+		return posicion;
 	}
 
-	public void setCabeza(Punto cabeza) {
-		this.cabeza = cabeza;
+	public void setPosicion(Punto posicion) {
+		this.posicion = posicion;
 	}
 	
 	public void moverCabeza(Punto direccion) {
-		this.cabeza = this.cabeza.sumarPunto(direccion);
+		this.posicion = this.posicion.sumarPunto(direccion);
 	}
 }

@@ -90,14 +90,14 @@ public class Login extends JFrame{
 		panel.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		JLabel lblContrasea = new JLabel("Contraseña");
+		JLabel lblContrasea = new JLabel("ContraseÃ±a");
 		lblContrasea.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 17));
 		lblContrasea.setBounds(163, 240, 95, 20);
 		lblContrasea.setForeground(Color.lightGray);
 		panel.add(lblContrasea);
 		
 		passField = new JPasswordField();
-		passField.setToolTipText("Ingrese su contraseña");
+		passField.setToolTipText("Ingrese su contraseÃ±a");
 		passField.setHorizontalAlignment(SwingConstants.CENTER);
 		passField.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 13));
 		passField.setBorder(null);
@@ -178,18 +178,18 @@ public class Login extends JFrame{
 			
 			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
 				//Usuario validado. Muestro salas (las tiene el sv)
-				System.out.println("Pass validada. Muestro salas");
-				SalaInterfaz salas;
+				System.out.println("Pass validada. Muestro sala");
+				SalaInterfaz sala;
 				try {
-					salas = new SalaInterfaz();
-					salas.setVisible(true);
+					sala = new SalaInterfaz();
+					sala.setVisible(true);
 					frame.dispose();
 					clip.stop();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
 			} else {
-				System.out.println("Validacion de inputs");
+				System.out.println("Error al validar credenciales");
 			}
 			
 		}
