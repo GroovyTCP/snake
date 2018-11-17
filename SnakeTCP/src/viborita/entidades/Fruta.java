@@ -11,6 +11,10 @@ public class Fruta {
 		this.puntaje = puntaje;
 	}
 	
+	public Fruta (int puntaje) {
+		this.puntaje = puntaje;
+	}
+	
 	public Punto getPosicion() {
 		return posicion;
 	}

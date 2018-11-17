@@ -22,8 +22,8 @@ public class MovimientosTest {
 		a.add(new Punto(4, 5));
 		v1.setCuerpo(new Cuerpo(a));
 		
-		assertEquals(5, v1.getCabeza().getCabeza().getX());
-		assertEquals(5, v1.getCabeza().getCabeza().getY());
+		assertEquals(5, v1.getCabeza().getPosicion().getX());
+		assertEquals(5, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(4, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(5, v1.getCuerpo().getCuerpo().get(0).getY());
@@ -31,8 +31,8 @@ public class MovimientosTest {
 		
 		v1.mover(new Punto(1, 0));
 		
-		assertEquals(6, v1.getCabeza().getCabeza().getX());
-		assertEquals(5, v1.getCabeza().getCabeza().getY());
+		assertEquals(6, v1.getCabeza().getPosicion().getX());
+		assertEquals(5, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(5, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(5, v1.getCuerpo().getCuerpo().get(0).getY());
@@ -40,8 +40,8 @@ public class MovimientosTest {
 		
 		v1.mover(new Punto(1, 0));
 		
-		assertEquals(7, v1.getCabeza().getCabeza().getX());
-		assertEquals(5, v1.getCabeza().getCabeza().getY());
+		assertEquals(7, v1.getCabeza().getPosicion().getX());
+		assertEquals(5, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(6, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(5, v1.getCuerpo().getCuerpo().get(0).getY());
@@ -49,24 +49,24 @@ public class MovimientosTest {
 		
 		v1.mover(new Punto(0, -1));
 
-		assertEquals(7, v1.getCabeza().getCabeza().getX());
-		assertEquals(4, v1.getCabeza().getCabeza().getY());
+		assertEquals(7, v1.getCabeza().getPosicion().getX());
+		assertEquals(4, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(7, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(5, v1.getCuerpo().getCuerpo().get(0).getY());
 		
 		v1.mover(new Punto(0, -1));
 
-		assertEquals(7, v1.getCabeza().getCabeza().getX());
-		assertEquals(3, v1.getCabeza().getCabeza().getY());
+		assertEquals(7, v1.getCabeza().getPosicion().getX());
+		assertEquals(3, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(7, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(4, v1.getCuerpo().getCuerpo().get(0).getY());
 		
 		v1.mover(new Punto(0, -1));
 		
-		assertEquals(7, v1.getCabeza().getCabeza().getX());
-		assertEquals(2, v1.getCabeza().getCabeza().getY());
+		assertEquals(7, v1.getCabeza().getPosicion().getX());
+		assertEquals(2, v1.getCabeza().getPosicion().getY());
 		
 		assertEquals(7, v1.getCuerpo().getCuerpo().get(0).getX());
 		assertEquals(3, v1.getCuerpo().getCuerpo().get(0).getY());
