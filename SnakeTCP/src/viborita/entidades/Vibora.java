@@ -11,6 +11,7 @@ public class Vibora {
 	private Color color;
 	private boolean muerta;
 	private Punto direccionActual;
+	private String nombre;
 	
 	
 	///Este metodo crea una nueva vibora, sin cuerpo solo con cabeza y con el estado de muerta como false
@@ -32,6 +33,16 @@ public class Vibora {
 		this.muerta = false;
 		this.direccionActual = direccionActual;
 	}
+
+	public Vibora(Cabeza cabeza, String nombre, Color color,Punto direccionActual) {
+		this.puntaje = 0;
+		this.cabeza = cabeza;
+		this.cuerpo = new Cuerpo(new ArrayList<Punto>());
+		this.color = color;
+		this.muerta = false;
+		this.direccionActual = direccionActual;
+		this.nombre = nombre;
+	}
 	
 	///cuando crece, siempre el colisionador debe saber para donde
 	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {
@@ -46,10 +57,10 @@ public class Vibora {
 		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
 			direccion = this.direccionActual;
 		
-		Punto nuevaPosicion = this.cabeza.getCabeza();
+		Punto nuevaPosicion = this.cabeza.getPosicion();
 		
 		this.cabeza.moverCabeza(direccion);
-		System.out.println(this.cabeza.getCabeza());
+		System.out.println(this.cabeza.getPosicion());
 		this.cuerpo.moverCuerpo(nuevaPosicion);
 		this.direccionActual=direccion;
 		
@@ -59,17 +70,9 @@ public class Vibora {
 		if(!this.puedeMoverse(direccionActual))
 			return;
 		
-//		if(direccionActual.getX() == -direccion.getX() && direccionActual.getY() == -direccion.getY())
-//			direccion = this.direccionActual;
-		
-//		if()
-		
-		Punto nuevaPosicion = this.cabeza.getCabeza();
-		System.out.println(this.cabeza.getCabeza());
+		Punto nuevaPosicion = this.cabeza.getPosicion();
 		this.cabeza.moverCabeza(direccionActual);
 		this.cuerpo.moverCuerpo(nuevaPosicion);
-		//this.direccionActual=direccionActual;
-		
 	}
 	
 	 ///EVITA QUE GIRE 90 GRADOS :) //Esto quizas lo deba saber el colisionador
@@ -78,7 +81,7 @@ public class Vibora {
 			///Obtiene el ultimo eslabon de su cuerpo
 			Punto punto1 = this.cuerpo.getCuerpo().get(0);
 			 //Obtiene el punto donde quedaria la cabeza
-			Punto punto2 = this.cabeza.getCabeza().sumarPunto(direccion);
+			Punto punto2 = this.cabeza.getPosicion().sumarPunto(direccion);
 			
 			///Si son iguales no puede moverse
 			if(punto1.equals(punto2))
@@ -89,6 +92,7 @@ public class Vibora {
 	
 	public void morir() {
 		this.muerta = true;
+		this.setCabeza(new Cabeza(new Punto(Integer.MAX_VALUE, Integer.MAX_VALUE)));
 	}
 	
 	public int getPuntaje() {
@@ -137,6 +141,14 @@ public class Vibora {
 
 	public void setDireccionActual(Punto direccionActual) {
 		this.direccionActual = direccionActual;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }
