@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
+import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
 import viborita.repositorio.impl.UsuarioServiceImpl;
 
@@ -160,37 +161,28 @@ public class Login extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("Validar usuario desde servidor. Si es válido, sigue ejecutando");
+			Usuario user = new Usuario(textFieldUsuario.getText(), new String((passField.getPassword())));
+			Cliente c = new Cliente("localhost", 8000, user);
 			
-//			System.out.println("Validar usuario en servidor");
-			
-//			Cliente cliente = new Cliente("localhost", 8080);
-			
-//			if(cliente.loginCliente(txtUsuario.getText(), txtPassword.getPassword().toString())) {
-//				System.out.println("Loguea ok y va a la pantalla de salas");
-//			}else {
-//				System.out.println("Muestro mensaje error para validacion de inputs");
+//			UsuarioServiceImpl us = new UsuarioServiceImpl();
+//			Usuario user = us.get(textFieldUsuario.getText());
+//			
+//			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
+//				//Usuario validado. Muestro salas (las tiene el sv)
+//				System.out.println("Pass validada. Muestro sala");
+//				SalaInterfaz sala;
+//				try {
+//					sala = new SalaInterfaz();
+//					sala.setVisible(true);
+//					frame.dispose();
+//					clip.stop();
+//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//					e1.printStackTrace();
+//				}
+//			} else {
+//				System.out.println("Error al validar credenciales");
 //			}
-			
-			System.out.println("Validar usuario");
-			
-			UsuarioServiceImpl us = new UsuarioServiceImpl();
-			Usuario user = us.get(textFieldUsuario.getText());
-			
-			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
-				//Usuario validado. Muestro salas (las tiene el sv)
-				System.out.println("Pass validada. Muestro sala");
-				SalaInterfaz sala;
-				try {
-					sala = new SalaInterfaz();
-					sala.setVisible(true);
-					frame.dispose();
-					clip.stop();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					e1.printStackTrace();
-				}
-			} else {
-				System.out.println("Error al validar credenciales");
-			}
 			
 		}
 

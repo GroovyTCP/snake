@@ -10,6 +10,11 @@ public class Usuario {
 		
 	}
 
+	public Usuario(String usuario, String pass) {
+		this.usuario = usuario;
+		this.contrasenia = pass;
+	}
+	
 	public String getUsuario() {
 		return usuario;
 	}
