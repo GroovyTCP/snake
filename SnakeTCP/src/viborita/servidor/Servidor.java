@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import viborita.entidades.Hilo;
 import viborita.entidades.Usuario;
 import viborita.repositorio.impl.UsuarioServiceImpl;
@@ -44,19 +46,17 @@ public class Servidor {
 			public void run() {
 				try {
 					Socket clienteHilo = cliente;
+					ObjectMapper om = new ObjectMapper();
 					String data = new DataInputStream(clienteHilo.getInputStream()).readUTF();
+					Usuario user = om.readValue(data, Usuario.class);
 
-					String[] JSon = data.split(";");
-					
-					if(JSon.length == 4) {
-						if(validarUsuario(JSon[1], JSon[3])) {
-							new DataOutputStream(clienteHilo.getOutputStream()).writeUTF("true");
-						} else {
-							new DataOutputStream(clienteHilo.getOutputStream()).writeUTF("false");
-							clientes.remove(clienteHilo);
-							clienteHilo.close();
-							System.err.println("Cliente se desconecto.");
-						}
+					if(validarUsuario(user.getUsuario(), user.getContrasenia())) {
+						new DataOutputStream(clienteHilo.getOutputStream()).writeUTF("true");
+					} else {
+						new DataOutputStream(clienteHilo.getOutputStream()).writeUTF("false");
+						clientes.remove(clienteHilo);
+						clienteHilo.close();
+						System.err.println("Cliente se desconecto.");
 					}
 				} catch (Exception e) {
 					System.err.println("Se perdio la conexión con el cliente.");
@@ -78,7 +78,7 @@ public class Servidor {
 		hilo.start();
 	}
 
-	public static void main(String[] args) {
-		Servidor sv = new Servidor(8000);
-	}
+//	public static void main(String[] args) {
+//		Servidor sv = new Servidor(8000);
+//	}
 }

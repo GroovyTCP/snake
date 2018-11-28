@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import viborita.entidades.Usuario;
 
 public class Cliente {
@@ -42,9 +44,10 @@ public class Cliente {
 			@Override
 			public void run() {
 				try {
-					String data = "usuario;"+usuario.getUsuario()+";pass;"+usuario.getContrasenia();
-					data = new DataInputStream(cliente.getInputStream()).readUTF();
-					System.out.println(data + "\n");
+					ObjectMapper om = new ObjectMapper();
+					String json = om.writeValueAsString(usuario);
+					new DataInputStream(cliente.getInputStream()).readUTF();
+					System.out.println(json + "\n");
 				} catch (Exception e) {
 					System.err.println("Se ha desconectado cliente");
 				}

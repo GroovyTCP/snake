@@ -140,18 +140,18 @@ public class Login extends JFrame{
 		btnCrearUsuario.setBounds(163, 327, 151, 25);
 		panel.add(btnCrearUsuario);
 		
-		btnCrearUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-				
-				bd.crearUsuario(usuario);
-				
-			}
-		});
+//		btnCrearUsuario.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
+//				
+//				bd.crearUsuario(usuario);
+//				
+//			}
+//		});
 		
-//		LoginActionListener lal = new LoginActionListener();
-//		btnIniciarSesion.addActionListener(lal);
+		LoginActionListener lal = new LoginActionListener();
+		btnIniciarSesion.addActionListener(lal);
 		
 		panel.add(btnIniciarSesion);
 		
@@ -196,35 +196,35 @@ public class Login extends JFrame{
 		}
 	}
 	
-//	private class LoginActionListener implements ActionListener{
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			System.out.println("Validar usuario desde servidor. Si es válido, sigue ejecutando");
-//			Usuario user = new Usuario(textFieldUsuario.getText(), new String((passField.getPassword())));
-////			Cliente c = new Cliente("localhost", 8000, user);
+	private class LoginActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Validar usuario desde servidor. Si es válido, sigue ejecutando");
+			Usuario user = new Usuario(textFieldUsuario.getText(), new String((passField.getPassword())));
+//			Cliente c = new Cliente("localhost", 8000, user);
+			
+//			UsuarioServiceImpl us = new UsuarioServiceImpl();
+//			Usuario user = us.get(textFieldUsuario.getText());
 //			
-////			UsuarioServiceImpl us = new UsuarioServiceImpl();
-////			Usuario user = us.get(textFieldUsuario.getText());
-////			
-////			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
-////				//Usuario validado. Muestro salas (las tiene el sv)
-////				System.out.println("Pass validada. Muestro sala");
-////				SalaInterfaz sala;
-////				try {
-////					sala = new SalaInterfaz();
-////					sala.setVisible(true);
-////					frame.dispose();
-////					clip.stop();
-////				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-////					e1.printStackTrace();
-////				}
-////			} else {
-////				System.out.println("Error al validar credenciales");
-////			}
-//			
-//		}
-//
-//	}
+//			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
+//				//Usuario validado. Muestro salas (las tiene el sv)
+//				System.out.println("Pass validada. Muestro sala");
+//				SalaInterfaz sala;
+//				try {
+//					sala = new SalaInterfaz();
+//					sala.setVisible(true);
+//					frame.dispose();
+//					clip.stop();
+//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//					e1.printStackTrace();
+//				}
+//			} else {
+//				System.out.println("Error al validar credenciales");
+//			}
+			
+		}
+
+	}
 	
 }
