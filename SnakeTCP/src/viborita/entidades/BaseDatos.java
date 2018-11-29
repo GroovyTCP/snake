@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import viborita.enums.EstadoUsuarioEnum;
+
 import java.util.List;
 
 import javax.persistence.Query;
@@ -34,7 +36,7 @@ public class BaseDatos {
 		
 	}
 	
-	public void crearUsuario(Usuario u) {
+	public EstadoUsuarioEnum crearUsuario(Usuario u) {
 		
 		Transaction tx = session.beginTransaction();
 		try {
@@ -46,17 +48,17 @@ public class BaseDatos {
 				if(n.compareTo(u.getUsuario()) == 0) {
 					JOptionPane.showMessageDialog(null,"Nombre usuario esta en uso","Error nombre usuario",JOptionPane.ERROR_MESSAGE);
 					tx.rollback();
-					return;
+					return EstadoUsuarioEnum.USUARIO_EXISTENTE;
 				}
 			
 			if(u.getContrasenia().length() < 5) {
 				JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
 				tx.rollback();
-				return;
+				return EstadoUsuarioEnum.PW_MENOR_DE_CINCO_CHAR;
 			}
 			
 			session.save(u);	
-			JOptionPane.showMessageDialog(null,"Usuario generado con exito","Usuario generado",JOptionPane.INFORMATION_MESSAGE);
+//			JOptionPane.showMessageDialog(null,"Usuario generado con exito","Usuario generado",JOptionPane.INFORMATION_MESSAGE);
 			
 			tx.commit();		
 			
@@ -66,19 +68,17 @@ public class BaseDatos {
 			e2.printStackTrace();
 		}
 		
-		return;
+		return EstadoUsuarioEnum.REGISTRO_OK;
 	}
 	
-	public boolean validarUsuario(Usuario u) {
+	public EstadoUsuarioEnum validarUsuario(Usuario u) {
 		
 		if(u.getUsuario().length() == 0) {
-			JOptionPane.showMessageDialog(null,"Ingrese un nombre de usuario valido","Error nombre de usuario",JOptionPane.ERROR_MESSAGE);
-			return false;
+			return EstadoUsuarioEnum.USUARIO_INVALIDO;
 		}
 		
 		if(u.getContrasenia().length() < 5) {
-			JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 8 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
-			return false;
+			return EstadoUsuarioEnum.PW_MENOR_DE_CINCO_CHAR;
 		}
 		
 		Transaction tx = session.beginTransaction();
@@ -91,20 +91,17 @@ public class BaseDatos {
 			for(Usuario o : listaUsuarios) {
 				if(u.getContrasenia().compareTo(o.getContrasenia()) == 0 && u.getUsuario().compareTo(o.getUsuario()) == 0) {
 					tx.commit();
-					return true;
+					return EstadoUsuarioEnum.LOGIN_OK;
 				}	
 			}
-			
-			JOptionPane.showMessageDialog(null,"El usuario ingeresado no se encontro","Usuario no encontrado",JOptionPane.ERROR_MESSAGE);
 			tx.rollback();
-					
 		} catch (HibernateException e2) {
 			if (tx != null)
 				tx.rollback();
 			e2.printStackTrace();
 		}
 	
-		return false;
+		return EstadoUsuarioEnum.DATOS_INCORRECTOS;
 		
 	}
 	

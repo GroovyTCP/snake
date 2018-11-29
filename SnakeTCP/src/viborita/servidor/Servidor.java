@@ -17,7 +17,6 @@ public class Servidor {
 			System.out.println("Esperando conexiones");
 			clientes = new ArrayList<Socket>();
 			
-//			for(int i = 0; i < ConfiguracionServidor.CONEXIONES_SIMULTANEAS; i++) {
 			while(true) {
 				clienteSocket = servidor.accept();
 				System.out.println("Cliente " + clienteSocket.getInetAddress().getHostName() + " conectado.");
@@ -26,7 +25,6 @@ public class Servidor {
 				Thread hsv = new Thread(sv);
 				hsv.start();
 			}
-//			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

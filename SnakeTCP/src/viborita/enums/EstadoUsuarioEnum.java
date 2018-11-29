@@ -1,0 +1,10 @@
+package viborita.enums;
+
+public enum EstadoUsuarioEnum {
+
+	/**
+	 * Acciones
+	 */
+	LOGIN, LOGIN_OK, REGISTRO, NO_REGISTRADO, REGISTRO_OK, DATOS_INCORRECTOS, PW_MENOR_DE_CINCO_CHAR, USUARIO_EXISTENTE, USUARIO_INVALIDO;
+	
+}

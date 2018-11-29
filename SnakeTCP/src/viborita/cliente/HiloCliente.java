@@ -7,7 +7,9 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import viborita.entidades.Usuario;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import viborita.enums.EstadoUsuarioEnum;
 import viborita.interfaz.SalaInterfaz;
 
 public class HiloCliente implements Runnable {
@@ -15,6 +17,7 @@ public class HiloCliente implements Runnable {
 	Cliente cliente;
 	DataOutputStream salida;
 	SalaInterfaz sala;
+	public static EstadoUsuarioEnum estadoUser;
 	
 	public HiloCliente() {
 
@@ -47,7 +50,7 @@ public class HiloCliente implements Runnable {
 		try {
 			entrada = new DataInputStream(this.cliente.getSocketCliente().getInputStream());
 		} catch (IOException e) {
-			System.out.println("Error al obtener datos de entrada hacia el cliente");
+			System.out.println("Error al obtener datos de entrada desde el servidor");
 			e.printStackTrace();
 		}
 		
@@ -57,7 +60,8 @@ public class HiloCliente implements Runnable {
 			try {
 				if(entrada.available() != 0) {
 					String jsonEntrada = entrada.readUTF();
-					if(jsonEntrada.equals("true")) {
+					
+					if(jsonEntrada.equals(EstadoUsuarioEnum.LOGIN_OK.toString())) {
 						try {
 							sala = new SalaInterfaz();
 							sala.setVisible(true);
@@ -65,6 +69,8 @@ public class HiloCliente implements Runnable {
 							e.printStackTrace();
 						}
 					}
+					ObjectMapper om = new ObjectMapper();
+					estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

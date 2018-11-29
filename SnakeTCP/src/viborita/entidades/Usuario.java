@@ -3,14 +3,14 @@ package viborita.entidades;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import viborita.enums.AccionClienteEnum;
+import viborita.enums.EstadoUsuarioEnum;
 import viborita.mapper.JSONMapperInterface;
 
 public class Usuario implements JSONMapperInterface {
 
 	private String usuario;
 	private String contrasenia;
-	private AccionClienteEnum accionCliente;
+	private EstadoUsuarioEnum accionCliente;
 	
 	public Usuario() {
 		
@@ -50,11 +50,11 @@ public class Usuario implements JSONMapperInterface {
 		this.contrasenia = contrasenia;
 	}
 
-	public AccionClienteEnum getAccionCliente() {
+	public EstadoUsuarioEnum getAccionCliente() {
 		return accionCliente;
 	}
 
-	public void setAccionCliente(AccionClienteEnum accionCliente) {
+	public void setAccionCliente(EstadoUsuarioEnum accionCliente) {
 		this.accionCliente = accionCliente;
 	}
 	

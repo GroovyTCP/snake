@@ -5,11 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viborita.entidades.BaseDatos;
 import viborita.entidades.Usuario;
-import viborita.enums.AccionClienteEnum;
+import viborita.enums.EstadoUsuarioEnum;
+import viborita.mapper.JSONMapper;
 
 public class HiloServidor implements Runnable {
 
@@ -60,15 +62,15 @@ public class HiloServidor implements Runnable {
 			e.printStackTrace();
 		}
 		
-		
-		if(user.getAccionCliente().equals(AccionClienteEnum.LOGIN)) {
-			Boolean loginRegistro = bd.validarUsuario(user);
-			return loginRegistro.toString();
-		} else if(user.getAccionCliente().equals(AccionClienteEnum.REGISTRO)) {
-			bd.crearUsuario(user);
+		if(user.getAccionCliente().equals(EstadoUsuarioEnum.LOGIN)) {
+			EstadoUsuarioEnum loginUsuarioEstado = bd.validarUsuario(user);
+			return JSONMapper.fromObjectToJSON(loginUsuarioEstado);
+		} else if(user.getAccionCliente().equals(EstadoUsuarioEnum.REGISTRO)) {
+			EstadoUsuarioEnum crearUsuarioEstado = bd.crearUsuario(user);
+			return JSONMapper.fromObjectToJSON(crearUsuarioEstado);
 		}
 		
-		return "false";
+		return jsonEntrada;
 	}
 
 }

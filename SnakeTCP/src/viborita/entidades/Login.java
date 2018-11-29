@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,7 +26,7 @@ import javax.swing.border.CompoundBorder;
 
 import viborita.cliente.Cliente;
 import viborita.cliente.HiloCliente;
-import viborita.enums.AccionClienteEnum;
+import viborita.enums.EstadoUsuarioEnum;
 //import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
 import viborita.servidor.ConfiguracionServidor;
@@ -127,8 +128,29 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 						
 				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-				usuario.setAccionCliente(AccionClienteEnum.LOGIN);
+				usuario.setAccionCliente(EstadoUsuarioEnum.LOGIN);
 				hc.enviarData(usuario.convertirDeObjAJSON());
+				
+				if(HiloCliente.estadoUser != null) {
+					switch (HiloCliente.estadoUser) {
+					case DATOS_INCORRECTOS:
+						JOptionPane.showMessageDialog(null,"El usuario ingeresado no se encontro","Usuario no encontrado",JOptionPane.ERROR_MESSAGE);
+						break;
+					case USUARIO_INVALIDO:
+						JOptionPane.showMessageDialog(null,"Ingrese un nombre de usuario valido","Error nombre de usuario",JOptionPane.ERROR_MESSAGE);
+						break;
+					case PW_MENOR_DE_CINCO_CHAR:
+						JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 8 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
+						break;
+					case LOGIN_OK: {
+						frame.dispose();
+						clip.stop();
+						break;
+					}
+					default:
+						break;
+					}
+				}
 				
 				//Hacer esto desde el sv
 //				if(bd.validarUsuario(usuario)) {
@@ -157,8 +179,9 @@ public class Login extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-				usuario.setAccionCliente(AccionClienteEnum.REGISTRO);
-				hc.enviarData(usuario.convertirDeObjAJSON());
+				usuario.setAccionCliente(EstadoUsuarioEnum.REGISTRO);
+				String json = usuario.convertirDeObjAJSON();
+				hc.enviarData(json);
 				
 				//Hacer esto desde el sv
 //				bd.crearUsuario(usuario);
