@@ -23,13 +23,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
+import viborita.cliente.Cliente;
+import viborita.cliente.HiloCliente;
+import viborita.enums.AccionClienteEnum;
 //import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
-import viborita.repositorio.impl.UsuarioServiceImpl;
+import viborita.servidor.ConfiguracionServidor;
 
 public class Login extends JFrame{
 
-	private JFrame frame;
+	static private JFrame frame;
 	private JTextField textFieldUsuario;
 	private JPasswordField passField;
 	private File cancionLogin;
@@ -113,23 +116,33 @@ public class Login extends JFrame{
 		btnIniciarSesion.setBackground(new Color(153, 255, 255));
 		btnIniciarSesion.setBounds(163, 292, 151, 25);
 		
+		panel.add(btnIniciarSesion);
+		
+		Cliente cliente = new Cliente(ConfiguracionServidor.HOST, ConfiguracionServidor.PUERTO);
+		HiloCliente hc = new HiloCliente(cliente);
+		Thread hiloLogin = new Thread(hc);
+		hiloLogin.start();
+		
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 						
 				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
+				usuario.setAccionCliente(AccionClienteEnum.LOGIN);
+				hc.enviarData(usuario.convertirDeObjAJSON());
 				
-				if(bd.validarUsuario(usuario)) {
-					try {
-						sala = new SalaInterfaz();
-						sala.setVisible(true);
-						frame.dispose();
-						clip.stop();
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						e1.printStackTrace();
-					}
-					
-					bd.close();
-				}
+				//Hacer esto desde el sv
+//				if(bd.validarUsuario(usuario)) {
+//					try {
+//						sala = new SalaInterfaz();
+//						sala.setVisible(true);
+//						frame.dispose();
+//						clip.stop();
+//					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//						e1.printStackTrace();
+//					}
+//					
+//					bd.close();
+//				}
 		
 			}
 		});
@@ -140,20 +153,18 @@ public class Login extends JFrame{
 		btnCrearUsuario.setBounds(163, 327, 151, 25);
 		panel.add(btnCrearUsuario);
 		
-//		btnCrearUsuario.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				
-//				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-//				
+		btnCrearUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
+				usuario.setAccionCliente(AccionClienteEnum.REGISTRO);
+				hc.enviarData(usuario.convertirDeObjAJSON());
+				
+				//Hacer esto desde el sv
 //				bd.crearUsuario(usuario);
-//				
-//			}
-//		});
-		
-		LoginActionListener lal = new LoginActionListener();
-		btnIniciarSesion.addActionListener(lal);
-		
-		panel.add(btnIniciarSesion);
+				
+			}
+		});
 		
 		Icon icon = new ImageIcon("recursos\\imagenes\\serpiente-login.gif");
 		JLabel label = new JLabel(icon);
@@ -185,6 +196,7 @@ public class Login extends JFrame{
 					
 			}
 		});
+		
 	}
 
 	public void run() {
@@ -194,37 +206,6 @@ public class Login extends JFrame{
 			e.printStackTrace();
 			System.out.println("No se pudo abrir pantalla login");
 		}
-	}
-	
-	private class LoginActionListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("Validar usuario desde servidor. Si es válido, sigue ejecutando");
-			Usuario user = new Usuario(textFieldUsuario.getText(), new String((passField.getPassword())));
-//			Cliente c = new Cliente("localhost", 8000, user);
-			
-//			UsuarioServiceImpl us = new UsuarioServiceImpl();
-//			Usuario user = us.get(textFieldUsuario.getText());
-//			
-//			if(user != null && user.getContrasenia().equals(new String((passField.getPassword())))) {
-//				//Usuario validado. Muestro salas (las tiene el sv)
-//				System.out.println("Pass validada. Muestro sala");
-//				SalaInterfaz sala;
-//				try {
-//					sala = new SalaInterfaz();
-//					sala.setVisible(true);
-//					frame.dispose();
-//					clip.stop();
-//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-//					e1.printStackTrace();
-//				}
-//			} else {
-//				System.out.println("Error al validar credenciales");
-//			}
-			
-		}
-
 	}
 	
 }
