@@ -61,7 +61,10 @@ public class HiloCliente implements Runnable {
 				if(entrada.available() != 0) {
 					String jsonEntrada = entrada.readUTF();
 					
-					if(jsonEntrada.equals(EstadoUsuarioEnum.LOGIN_OK.toString())) {
+					ObjectMapper om = new ObjectMapper();
+					
+					
+					if(om.readValue(jsonEntrada, EstadoUsuarioEnum.class).equals(EstadoUsuarioEnum.LOGIN_OK)) {
 						try {
 							sala = new SalaInterfaz();
 							sala.setVisible(true);
@@ -69,7 +72,6 @@ public class HiloCliente implements Runnable {
 							e.printStackTrace();
 						}
 					}
-					ObjectMapper om = new ObjectMapper();
 					estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
 				}
 			} catch (IOException e) {
