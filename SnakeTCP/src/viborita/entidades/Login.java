@@ -36,9 +36,7 @@ public class Login extends JFrame{
 	static private JFrame frame;
 	private JTextField textFieldUsuario;
 	private JPasswordField passField;
-	private File cancionLogin;
-	private AudioInputStream audio;
-	private Clip clip;
+	private Musica musica;
 	private boolean musicOn = true;
 	private BaseDatos bd = new BaseDatos();
 	private SalaInterfaz sala;
@@ -144,7 +142,8 @@ public class Login extends JFrame{
 						break;
 					case LOGIN_OK: {
 						frame.dispose();
-						clip.stop();
+//						clip.stop();
+						musica.detener();
 						break;
 					}
 					default:
@@ -195,12 +194,9 @@ public class Login extends JFrame{
 		panel.add(label);
 		
 		//Musica
-		cancionLogin = new File("recursos\\soundtrack\\musicaLogin.wav");
-		audio = AudioSystem.getAudioInputStream(cancionLogin);
-		clip = AudioSystem.getClip();
-		clip.open(audio);
-		clip.start();
-		
+		musica = new Musica("musicaLogin.wav");
+		musica.reproducir();
+			
 		JButton btnMusica = new JButton();
 		btnMusica.setBackground(Color.LIGHT_GRAY);
 		btnMusica.setIcon(new ImageIcon("recursos\\imagenes\\iconoMusica.png"));
@@ -209,11 +205,11 @@ public class Login extends JFrame{
 		btnMusica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(musicOn == false) {
-					clip.start();
+					musica.reproducir();
 					musicOn=true;
 				}
 				else {
-					clip.stop();
+					musica.detener();
 					musicOn=false;
 				}
 					

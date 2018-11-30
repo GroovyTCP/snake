@@ -34,6 +34,7 @@ import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
+import viborita.entidades.Musica;
 import viborita.entidades.Punto;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
@@ -42,11 +43,9 @@ public class SalaInterfaz extends JFrame{
 
 	private List<String> salas = new ArrayList<>();
 	private boolean musicOn = true;
-	private File cancionLogin;
-	private AudioInputStream audio;
-	private Clip clip;
 	private JList<String> listSalas; 
 	private DefaultListModel<String> modeloLista = new DefaultListModel<>();
+	private Musica musica;
 	
 	/**
 	 * 
@@ -178,7 +177,9 @@ public class SalaInterfaz extends JFrame{
 		
 		JButton btnCrearSala = new JButton("Crear sala");
 		btnCrearSala.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {
+				musica.detener();
+				
 				CrearSala crearSala = new CrearSala();
 			
 				///No pone nada ya que toma los textFields vacios
@@ -216,11 +217,11 @@ public class SalaInterfaz extends JFrame{
 		btnMusica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(musicOn == false) {
-					clip.start();
+					musica.reproducir();
 					musicOn=true;
 				}
 				else {
-					clip.stop();
+					musica.detener();
 					musicOn=false;
 				}
 					
@@ -228,12 +229,8 @@ public class SalaInterfaz extends JFrame{
 		});
 
 		//Musica
-		cancionLogin = new File("recursos\\soundtrack\\musicaSalas.wav");
-		audio = AudioSystem.getAudioInputStream(cancionLogin);
-		clip = AudioSystem.getClip();
-		clip.open(audio);
-		clip.start();
-		
+		musica = new Musica("musicaSalas.wav");
+		musica.reproducir();		
 	}
 	
 	public void ponerSalasEnLista() {
