@@ -9,17 +9,23 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import javax.management.modelmbean.ModelMBeanOperationInfo;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -34,10 +40,13 @@ import viborita.entidades.Vibora;
 
 public class SalaInterfaz extends JFrame{
 
+	private List<String> salas = new ArrayList<>();
 	private boolean musicOn = true;
-	File cancionLogin;
-	AudioInputStream audio;
+	private File cancionLogin;
+	private AudioInputStream audio;
 	private Clip clip;
+	private JList<String> listSalas; 
+	private DefaultListModel<String> modeloLista = new DefaultListModel<>();
 	
 	/**
 	 * 
@@ -105,49 +114,98 @@ public class SalaInterfaz extends JFrame{
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("ComicSans", Font.PLAIN, 25));
 		
-		JPanel panelSala = new JPanel();
-		panelSala.setBackground(Color.LIGHT_GRAY);
-		panelSala.setBounds(350, 20, 630, 570);
-		panelPrincipal.add(panelSala);
-		panelSala.setLayout(null);
+//		JPanel panelSala = new JPanel();
+//		panelSala.setBackground(Color.LIGHT_GRAY);
+//		panelSala.setBounds(350, 20, 630, 570);
+//		panelPrincipal.add(panelSala);
+//		panelSala.setLayout(null);
 		
-		JButton btnIniciar = new JButton("Iniciar Juego");
-		btnIniciar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		listSalas = new JList<>();
+		listSalas.setBackground(Color.LIGHT_GRAY);
+		listSalas.setBounds(350, 20, 630, 570);
+		panelPrincipal.add(listSalas);
+		listSalas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSalas.setModel(modeloLista);
+		
+		
+		
+		
+//		JButton btnIniciar = new JButton("Iniciar Juego");
+//		btnIniciar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				
+//				Vibora[] snake = new Vibora[2];
+//				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
+//				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
+//				cuerpo1.add(new Punto(50, 50));
+//				cuerpo1.add(new Punto(40, 50));
+//				snake[0].setCuerpo(new Cuerpo(cuerpo1));
+//				
+//				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
+//				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
+//				cuerpo2.add(new Punto(550, 450));
+//				cuerpo2.add(new Punto(560, 450));
+//				snake[1].setCuerpo(new Cuerpo(cuerpo2));
+//				
+//				/*
+//				 * snake array viboras
+//				 * 600 ancho mapa
+//				 * 500 largo mapa
+//				 * 100 puntaje por comer una fruta
+//				 */
+//				Mapa game = new Mapa(snake, 600, 500, 100);
+//				
+//				Runnable r = new Ventana(game);
+//				Thread t = new Thread(r);
+//				t.start();
+//				
+//				clip.stop(); //musica fuera
+//			}
+//		});
+//		
+//		btnIniciar.setForeground(new Color(51, 153, 255));
+//		btnIniciar.setBounds(35, 550, 300, 40);
+//		btnIniciar.setFocusable(false);
+//		btnIniciar.setFont(new Font("ComicSans", Font.PLAIN, 20));
+//		panelPrincipal.add(btnIniciar);
+		
+		JButton btnUnirse = new JButton("Unirse a sala");
+		btnUnirse.setForeground(new Color(51, 153, 255));
+		btnUnirse.setBounds(35, 550, 300, 40);
+		btnUnirse.setFocusable(false);
+		btnUnirse.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnUnirse);
+		
+		JButton btnCrearSala = new JButton("Crear sala");
+		btnCrearSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				CrearSala crearSala = new CrearSala();
+			
+				///No pone nada ya que toma los textFields vacios
+				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
 				
-				Vibora[] snake = new Vibora[2];
-				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
-				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
-				cuerpo1.add(new Punto(50, 50));
-				cuerpo1.add(new Punto(40, 50));
-				snake[0].setCuerpo(new Cuerpo(cuerpo1));
-				
-				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
-				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
-				cuerpo2.add(new Punto(550, 450));
-				cuerpo2.add(new Punto(560, 450));
-				snake[1].setCuerpo(new Cuerpo(cuerpo2));
-				
-				/*
-				 * snake array viboras
-				 * 600 ancho mapa
-				 * 500 largo mapa
-				 * 100 puntaje por comer una fruta
-				 */
-				Mapa game = new Mapa(snake, 600, 500, 100);
-				
-				Runnable r = new Ventana(game);
-				Thread t = new Thread(r);
-				t.start();
-				
-				clip.stop(); //musica fuera
+				ponerSalasEnLista();
 			}
 		});
-		btnIniciar.setForeground(new Color(51, 153, 255));
-		btnIniciar.setBounds(35, 550, 300, 40);
-		btnIniciar.setFocusable(false);
-		btnIniciar.setFont(new Font("ComicSans", Font.PLAIN, 20));
-		panelPrincipal.add(btnIniciar);
+		
+		
+		btnCrearSala.setForeground(new Color(51, 153, 255));
+		btnCrearSala.setBounds(35, 500, 300, 40);
+		btnCrearSala.setFocusable(false);
+		btnCrearSala.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnCrearSala);
+		
+		//boton cerrar Sesion
+		JButton btnCerrarSesion = new JButton();
+		btnCerrarSesion.setBackground(Color.LIGHT_GRAY);
+		btnCerrarSesion.setIcon(new ImageIcon("recursos\\imagenes\\botonSalir.png"));
+		btnCerrarSesion.setBounds(885, 595, 55, 25);
+		panelPrincipal.add(btnCerrarSesion);
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				///Cerrar sesion y volver a abrir la ventana login
+			}
+		});
 		
 		//boton musica
 		JButton btnMusica = new JButton();
@@ -176,5 +234,11 @@ public class SalaInterfaz extends JFrame{
 		clip.open(audio);
 		clip.start();
 		
+	}
+	
+	public void ponerSalasEnLista() {
+		
+		for(String nombre : this.salas)
+			modeloLista.addElement(nombre);
 	}
 }
