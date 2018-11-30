@@ -41,7 +41,7 @@ public class CrearSala {
 		initialize();
 		frame.setVisible(true);
 	}
-
+ 
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -75,7 +75,7 @@ public class CrearSala {
 				
 				frame.dispose();
 				
-				Sala sala = new Sala();
+				SalaV sala = new SalaV();
 				
 				sala.setDescripcionSala(textPaneDescrip.getText());
 				sala.setNomSala(textFieldNomSala.getText());

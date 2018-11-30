@@ -28,7 +28,7 @@ import viborita.entidades.Vibora;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-public class Sala {
+public class SalaV {
 
 	private int idSala;
 	private JFrame frame;
@@ -55,7 +55,7 @@ public class Sala {
 	/**
 	 * Create the application.
 	 */
-	public Sala() {
+	public SalaV() {
 		initialize();
 		frame.setVisible(true);
 	}
