@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
@@ -31,15 +32,20 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import viborita.cliente.HiloCliente;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
+import viborita.entidades.Login;
 import viborita.entidades.Mapa;
 import viborita.entidades.Musica;
 import viborita.entidades.Punto;
+import viborita.entidades.Sala;
 import viborita.entidades.Usuario;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
+import viborita.enums.EstadoUsuarioEnum;
 
 public class SalaInterfaz extends JFrame {
 
@@ -92,7 +98,28 @@ public class SalaInterfaz extends JFrame {
 		this.user = user;
 	}
 	
+	protected void processSalasResponse(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			System.out.println(response.getBody());
+		} else {
+			System.out.println("Error 400 al traerme salas para lobby");
+		}
+	}
+	
 	private void initialize() {
+		
+//		Sala sala = new Sala();
+//		user.setAccionCliente(EstadoUsuarioEnum.LOBBY);
+//		
+//		ServerRequest request = new ServerRequest();
+//		request.setPath(EstadoUsuarioEnum.LOGIN.name());
+//		request.setBody(null);
+
+		/**
+		 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
+		 */
+//		connectionThread.doRequest(request, SalaInterfaz.this::processSalasResponse);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1080,720);
 		contentPane = new JPanel();

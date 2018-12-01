@@ -13,7 +13,7 @@ public class InterpreterRequestUnirseLobby extends InterpreteRequests {
 
 	@Override
 	public boolean soporta(ServerRequest request) {
-		return validoParaPath(request, EstadoUsuarioEnum.CREAR_LOBBY);
+		return validoParaPath(request, EstadoUsuarioEnum.UNIRSE_LOBBY);
 	}
 
 	@Override

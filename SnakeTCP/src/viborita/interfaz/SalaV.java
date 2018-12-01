@@ -18,6 +18,7 @@ import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
+import viborita.entidades.Sala;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
@@ -28,6 +29,7 @@ public class SalaV extends JFrame {
 	private JLabel lblNomSala;
 	private JLabel lblNomDueno;
 	private HiloCliente connectionThread;
+	private Sala sala;
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -46,9 +48,10 @@ public class SalaV extends JFrame {
 		initialize();
 	}
 
-	public SalaV(HiloCliente connectionThread) {
-		initialize();
+	public SalaV(HiloCliente connectionThread, Sala sala) {
 		this.connectionThread = connectionThread;
+		this.sala = sala;
+		initialize();
 	}
 
 	private void initialize() {
@@ -71,36 +74,36 @@ public class SalaV extends JFrame {
 		getContentPane().setLayout(null);
 		
 		JButton btnJugar = new JButton("Iniciar Juego");
-		btnJugar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				Vibora[] snake = new Vibora[2];
-				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
-				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
-				cuerpo1.add(new Punto(50, 50));
-				cuerpo1.add(new Punto(40, 50));
-				snake[0].setCuerpo(new Cuerpo(cuerpo1));
-				
-				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
-				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
-				cuerpo2.add(new Punto(550, 450));
-				cuerpo2.add(new Punto(560, 450));
-				snake[1].setCuerpo(new Cuerpo(cuerpo2));
-				
-				/*
-				 * snake array viboras
-				 * 600 ancho mapa
-				 * 500 largo mapa
-				 * 100 puntaje por comer una fruta
-				 */
-				Mapa game = new Mapa(snake, 600, 500, 100);
-				
-				Runnable r = new Ventana(game);
-				Thread t = new Thread(r);
-				t.start();
-				
-			}
-		});
+//		btnJugar.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//				Vibora[] snake = new Vibora[2];
+//				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
+//				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
+//				cuerpo1.add(new Punto(50, 50));
+//				cuerpo1.add(new Punto(40, 50));
+//				snake[0].setCuerpo(new Cuerpo(cuerpo1));
+//				
+//				snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
+//				ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
+//				cuerpo2.add(new Punto(550, 450));
+//				cuerpo2.add(new Punto(560, 450));
+//				snake[1].setCuerpo(new Cuerpo(cuerpo2));
+//				
+//				/*
+//				 * snake array viboras
+//				 * 600 ancho mapa
+//				 * 500 largo mapa
+//				 * 100 puntaje por comer una fruta
+//				 */
+//				Mapa game = new Mapa(snake, 600, 500, 100);
+//				
+//				Runnable r = new Ventana(game);
+//				Thread t = new Thread(r);
+//				t.start();
+//				
+//			}
+//		});
 		btnJugar.setBounds(145, 212, 125, 38);
 		getContentPane().add(btnJugar);
 		
@@ -122,11 +125,11 @@ public class SalaV extends JFrame {
 		listUsuarios.setBounds(276, 11, 148, 239);
 		getContentPane().add(listUsuarios);
 		
-		JLabel lblSala = new JLabel("         Sala :");
+		JLabel lblSala = new JLabel("   Sala : " + this.sala.getNombre());
 		lblSala.setBounds(0, 0, 77, 23);
 		getContentPane().add(lblSala);
 		
-		JLabel lblDueno = new JLabel("         Due\u00F1o :");
+		JLabel lblDueno = new JLabel("   Duenio : " + this.sala.getAdmin().getUsuario());
 		lblDueno.setBounds(0, 34, 77, 23);
 		getContentPane().add(lblDueno);
 		

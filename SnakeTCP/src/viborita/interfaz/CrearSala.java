@@ -31,6 +31,7 @@ public class CrearSala extends JFrame {
 	private JTextPane textPaneDescrip;
 	private HiloCliente connectionThread;
 	private Usuario user;
+	private Sala salaEntidad;
 
 	/**
 	 * Launch the application.
@@ -96,6 +97,7 @@ public class CrearSala extends JFrame {
 				dispose();
 				
 				Sala sala = new Sala(textFieldNomSala.getText(), CrearSala.this.user);
+				CrearSala.this.salaEntidad = sala;
 				
 				ServerRequest request = new ServerRequest();
 				request.setPath(EstadoUsuarioEnum.CREAR_LOBBY.name());
@@ -120,6 +122,11 @@ public class CrearSala extends JFrame {
 	protected void processCreacionLobbyResponse(ServerResponse response) {
 		if (response.getStatus() == 200) {
 			dispose();
+			SalaV sala = new SalaV(connectionThread, salaEntidad);
+			sala.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "Ya existe la sala con ese nombre. Intente nuevamente", "Error al crear sala",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
