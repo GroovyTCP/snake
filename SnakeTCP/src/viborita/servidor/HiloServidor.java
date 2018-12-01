@@ -8,6 +8,8 @@ import java.net.Socket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import viborita.cliente.ServerRequest;
+import viborita.cliente.ServerResponse;
 import viborita.entidades.BaseDatos;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
@@ -35,15 +37,16 @@ public class HiloServidor implements Runnable {
 	
 	@Override
 	public void run() {
-		String jsonEntrada;
+		String svRequest;
 		boolean conexionActiva = true;
+		ObjectMapper om = new ObjectMapper();
 		
 		while(conexionActiva) {
 			try {
 				System.out.println("Estoy en el RUN de HiloServidor");
-				jsonEntrada = this.entrada.readUTF();
-				String jsonSalida = recibirDatos(jsonEntrada);
-				this.salida.writeUTF(jsonSalida);
+				svRequest = this.entrada.readUTF();
+				ServerResponse svResponse = recibirDatos(svRequest);
+				this.salida.writeUTF(om.writeValueAsString(svResponse));
 			} catch (IOException e) {
 				conexionActiva = false;
 				e.printStackTrace();
@@ -51,26 +54,40 @@ public class HiloServidor implements Runnable {
 		}
 	}
 
-	private String recibirDatos(String jsonEntrada) {
+	private ServerResponse recibirDatos(String jsonEntrada) {
 		Usuario user = new Usuario();
+		ServerRequest sr = new ServerRequest();
 		try {
 			System.out.println("Convirtiendo json a USUARIO");
 			ObjectMapper om = new ObjectMapper();
-			user = om.readValue(jsonEntrada, Usuario.class);
+			sr = om.readValue(jsonEntrada, ServerRequest.class);
+			user = om.readValue(sr.getBody(), Usuario.class);
 		}catch (Exception e) {
 			System.out.println("ERROR AL CONVERTIR JSON A USUARIO");
 			e.printStackTrace();
 		}
 		
+		ServerResponse sResponse = new ServerResponse();
 		if(user.getAccionCliente().equals(EstadoUsuarioEnum.LOGIN)) {
 			EstadoUsuarioEnum loginUsuarioEstado = bd.validarUsuario(user);
-			return JSONMapper.fromObjectToJSON(loginUsuarioEstado);
+			if(!loginUsuarioEstado.equals(EstadoUsuarioEnum.LOGIN_OK)) {
+				sResponse.setStatus(400);
+			} else {
+				sResponse.setStatus(200);
+			}
+			user.setAccionCliente(loginUsuarioEstado);
 		} else if(user.getAccionCliente().equals(EstadoUsuarioEnum.REGISTRO)) {
 			EstadoUsuarioEnum crearUsuarioEstado = bd.crearUsuario(user);
-			return JSONMapper.fromObjectToJSON(crearUsuarioEstado);
+			if(!crearUsuarioEstado.equals(EstadoUsuarioEnum.REGISTRO_OK)) {
+				sResponse.setStatus(400);
+			} else {
+				sResponse.setStatus(200);
+			}
+			user.setAccionCliente(crearUsuarioEstado);
 		}
 		
-		return jsonEntrada;
+		sResponse.setBody(user.convertirDeObjAJSON());
+		return sResponse;
 	}
 
 }
