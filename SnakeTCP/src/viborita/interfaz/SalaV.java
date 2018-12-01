@@ -19,11 +19,14 @@ import javax.swing.SwingConstants;
 
 import entidades.Direcciones;
 import entidades.Ventana;
+import viborita.cliente.HiloCliente;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Mapa;
+import viborita.entidades.PaqueteUsuario;
 import viborita.entidades.Punto;
 import viborita.entidades.Vibora;
+import viborita.enums.EstadoUsuarioEnum;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -54,16 +57,18 @@ public class SalaV {
 
 	/**
 	 * Create the application.
+	 * @param hc 
 	 */
-	public SalaV() {
-		initialize();
+	public SalaV(HiloCliente hc) {
+		initialize(hc);
 		frame.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @param hc 
 	 */
-	private void initialize() {
+	private void initialize(HiloCliente hc) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -75,6 +80,17 @@ public class SalaV {
 						"¿Estas seguro que deseas abandonar la sala?", "¿Abandonar sala?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {
+					PaqueteUsuario mensaje = new PaqueteUsuario();
+					mensaje.setNombreSala(lblNomSala.getText());
+					mensaje.setUsername(hc.getUsernameCliente());
+					System.out.println(mensaje.getUsername() + " - " +lblNomDueno.getText());
+					if (mensaje.getUsername().equals(lblNomDueno.getText())) {
+						mensaje.setAccionCliente(EstadoUsuarioEnum.ELIMINAR_SALA);
+						hc.eliminar_sala(mensaje.convertirDeObjAJSON());
+					}else {
+						mensaje.setAccionCliente(EstadoUsuarioEnum.DESCONECTAR_SALA);
+						hc.desconectarDeSala(mensaje.convertirDeObjAJSON());
+					}
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				}
@@ -123,9 +139,22 @@ public class SalaV {
 				int jPaneResult = JOptionPane.showConfirmDialog(null,
 						"¿Estas seguro que deseas abandonar la sala?", "¿Abandonar sala?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (jPaneResult == JOptionPane.YES_OPTION) {	
+				if (jPaneResult == JOptionPane.YES_OPTION) {
+					PaqueteUsuario mensaje = new PaqueteUsuario();
+					mensaje.setNombreSala(lblNomSala.getText());
+					mensaje.setUsername(hc.getUsernameCliente());
+					System.out.println(mensaje.getUsername() + " - " +lblNomDueno.getText());
+					if (mensaje.getUsername().equals(lblNomDueno.getText())) {
+						mensaje.setAccionCliente(EstadoUsuarioEnum.ELIMINAR_SALA);
+						hc.eliminar_sala(mensaje.convertirDeObjAJSON());
+					}else {
+						mensaje.setAccionCliente(EstadoUsuarioEnum.DESCONECTAR_SALA);
+						hc.desconectarDeSala(mensaje.convertirDeObjAJSON());
+					}
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.dispose();
 				}
+				
 			}
 		});
 		btnSalir.setBounds(10, 212, 125, 38);

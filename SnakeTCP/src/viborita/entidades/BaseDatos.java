@@ -46,13 +46,13 @@ public class BaseDatos {
 			List<String> listUsuarios = q.getResultList();
 			for(String n: listUsuarios) 
 				if(n.compareTo(u.getUsuario()) == 0) {
-					JOptionPane.showMessageDialog(null,"Nombre usuario esta en uso","Error nombre usuario",JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null,"Nombre usuario esta en uso","Error nombre usuario",JOptionPane.ERROR_MESSAGE);
 					tx.rollback();
 					return EstadoUsuarioEnum.USUARIO_EXISTENTE;
 				}
 			
 			if(u.getContrasenia().length() < 5) {
-				JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
+				//JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
 				tx.rollback();
 				return EstadoUsuarioEnum.PW_MENOR_DE_CINCO_CHAR;
 			}

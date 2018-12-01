@@ -8,6 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+
+import viborita.cliente.HiloCliente;
+import viborita.entidades.PaqueteUsuario;
+import viborita.entidades.Sala;
+import viborita.entidades.Usuario;
+import viborita.enums.EstadoUsuarioEnum;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,7 +32,7 @@ public class CrearSala {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CrearSala window = new CrearSala();
+					CrearSala window = new CrearSala(null);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,16 +43,18 @@ public class CrearSala {
 
 	/**
 	 * Create the application.
+	 * @param hilocliente 
 	 */
-	public CrearSala() {
-		initialize();
+	public CrearSala(HiloCliente hilocliente) {
+		initialize(hilocliente);
 		frame.setVisible(true);
 	}
  
 	/**
 	 * Initialize the contents of the frame.
+	 * @param hc 
 	 */
-	private void initialize() {
+	private void initialize(HiloCliente hc) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		
@@ -75,12 +84,19 @@ public class CrearSala {
 				
 				frame.dispose();
 				
-				SalaV sala = new SalaV();
-				
+				SalaV sala = new SalaV(hc);
 				sala.setDescripcionSala(textPaneDescrip.getText());
 				sala.setNomSala(textFieldNomSala.getText());
-				
+				sala.setDueño(hc.getUsernameCliente());
 				sala.setIdSala(generarIdSala());
+				
+				PaqueteUsuario room = new PaqueteUsuario();
+				room.setDescSala(textPaneDescrip.getText());
+				room.setNombreSala(textFieldNomSala.getText());
+				room.setUsername(hc.getUsernameCliente());
+				room.setAccionCliente(EstadoUsuarioEnum.CREAR_SALA);
+				
+				hc.crearSala(room.convertirDeObjAJSON());
 				
 			}
 		});

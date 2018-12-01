@@ -2,6 +2,7 @@ package viborita.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -25,19 +26,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import viborita.cliente.HiloCliente;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
 import viborita.entidades.Musica;
+import viborita.entidades.PaqueteSalas;
 import viborita.entidades.Punto;
+import viborita.entidades.Sala;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
+import viborita.enums.EstadoUsuarioEnum;
 
 public class SalaInterfaz extends JFrame{
 
@@ -62,7 +68,7 @@ public class SalaInterfaz extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SalaInterfaz frame = new SalaInterfaz();
+					SalaInterfaz frame = new SalaInterfaz(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,11 +79,12 @@ public class SalaInterfaz extends JFrame{
 
 	/**
 	 * Crea el frame.
+	 * @param hc 
 	 * @throws IOException 
 	 * @throws UnsupportedAudioFileException 
 	 * @throws LineUnavailableException 
 	 */
-	public SalaInterfaz() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public SalaInterfaz(HiloCliente hc) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1080,720);
 		contentPane = new JPanel();
@@ -119,14 +126,16 @@ public class SalaInterfaz extends JFrame{
 //		panelPrincipal.add(panelSala);
 //		panelSala.setLayout(null);
 		
-		listSalas = new JList<>();
+		listSalas = new JList<>(new DefaultListModel<>());
 		listSalas.setBackground(Color.LIGHT_GRAY);
 		listSalas.setBounds(350, 20, 630, 570);
-		panelPrincipal.add(listSalas);
+		//panelPrincipal.add(listSalas);
 		listSalas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listSalas.setModel(modeloLista);
-		
-		
+		JScrollPane panelListaSalas = new JScrollPane();
+		panelListaSalas.setBounds(350, 20, 630, 570);
+		panelListaSalas.setViewportView(listSalas);
+		panelPrincipal.add(panelListaSalas);
 		
 		
 //		JButton btnIniciar = new JButton("Iniciar Juego");
@@ -168,24 +177,61 @@ public class SalaInterfaz extends JFrame{
 //		btnIniciar.setFont(new Font("ComicSans", Font.PLAIN, 20));
 //		panelPrincipal.add(btnIniciar);
 		
+		JButton btnActualizar = new JButton("Actualizar Salas");
+		btnActualizar.setForeground(new Color(51, 153, 255));
+		btnActualizar.setBounds(35, 450, 300, 40);
+		btnActualizar.setFocusable(false);
+		btnActualizar.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnActualizar);
+		
+		btnActualizar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PaqueteSalas salasActivas = hc.actulizarSalas();
+				
+				if (salasActivas == null) {
+					return;
+				}
+				
+				ArrayList<String> nombre_Sala = salasActivas.getSalasActivas();
+				ArrayList<String> nombre_duenio = salasActivas.getUsuarioDuenio();
+				modeloLista.clear();
+				for (int i = 0; i < nombre_Sala.size(); i++) {
+					modeloLista.addElement(nombre_Sala.get(i) + " - "+ nombre_duenio.get(i));
+				}
+				
+			}
+		});
+		
 		JButton btnUnirse = new JButton("Unirse a sala");
 		btnUnirse.setForeground(new Color(51, 153, 255));
 		btnUnirse.setBounds(35, 550, 300, 40);
 		btnUnirse.setFocusable(false);
 		btnUnirse.setFont(new Font("ComicSans", Font.PLAIN, 20));
+			
+		btnUnirse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		panelPrincipal.add(btnUnirse);
+		
 		
 		JButton btnCrearSala = new JButton("Crear sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
 				
-				CrearSala crearSala = new CrearSala();
-			
+				CrearSala crearSala = new CrearSala(hc);
+			/*
 				///No pone nada ya que toma los textFields vacios
 				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
 				
-				ponerSalasEnLista();
+				ponerSalasEnLista();*/
+				
 			}
 		});
 		

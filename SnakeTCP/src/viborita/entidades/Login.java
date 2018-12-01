@@ -38,7 +38,7 @@ public class Login extends JFrame{
 	private JPasswordField passField;
 	private Musica musica;
 	private boolean musicOn = true;
-	private BaseDatos bd = new BaseDatos();
+	//private BaseDatos bd = new BaseDatos();
 	private SalaInterfaz sala;
 
 	/**
@@ -124,23 +124,35 @@ public class Login extends JFrame{
 		
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-						
-				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-				usuario.setAccionCliente(EstadoUsuarioEnum.LOGIN);
-				hc.enviarData(usuario.convertirDeObjAJSON());
 				
+				PaqueteUsuario enviarDatos = new PaqueteUsuario();
+				enviarDatos.setUsername(textFieldUsuario.getText());
+				enviarDatos.setPassword(new String(passField.getPassword()));
+				enviarDatos.setAccionCliente(EstadoUsuarioEnum.LOGIN);
+				//hc.enviarData(usuario.convertirDeObjAJSON());
+				hc.loguear(enviarDatos.convertirDeObjAJSON());
+				
+
+
 				if(HiloCliente.estadoUser != null) {
 					switch (HiloCliente.estadoUser) {
 					case DATOS_INCORRECTOS:
-						JOptionPane.showMessageDialog(null,"El usuario ingeresado no se encontro","Usuario no encontrado",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"El usuario ingresado no se encontro","Usuario no encontrado",JOptionPane.ERROR_MESSAGE);
 						break;
 					case USUARIO_INVALIDO:
 						JOptionPane.showMessageDialog(null,"Ingrese un nombre de usuario valido","Error nombre de usuario",JOptionPane.ERROR_MESSAGE);
 						break;
 					case PW_MENOR_DE_CINCO_CHAR:
-						JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 8 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
 						break;
 					case LOGIN_OK: {
+						SalaInterfaz salainter = null;
+						try {
+							salainter = new SalaInterfaz(hc);
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+							e.printStackTrace();
+						}
+						salainter.setVisible(true);
 						frame.dispose();
 //						clip.stop();
 						musica.detener();
@@ -177,14 +189,50 @@ public class Login extends JFrame{
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
-				usuario.setAccionCliente(EstadoUsuarioEnum.REGISTRO);
-				String json = usuario.convertirDeObjAJSON();
-				hc.enviarData(json);
+				PaqueteUsuario enviarDatos = new PaqueteUsuario();
+				enviarDatos.setUsername(textFieldUsuario.getText());
+				enviarDatos.setPassword(new String(passField.getPassword()));
+				enviarDatos.setAccionCliente(EstadoUsuarioEnum.REGISTRO);
+				hc.registrarUsuario(enviarDatos.convertirDeObjAJSON());
+				
+//				Usuario usuario = new Usuario(textFieldUsuario.getText(),new String(passField.getPassword()));
+//				usuario.setAccionCliente(EstadoUsuarioEnum.REGISTRO);
+//				String json = usuario.convertirDeObjAJSON();
+//				hc.enviarData(json);
 				
 				//Hacer esto desde el sv
 //				bd.crearUsuario(usuario);
 				
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				if(HiloCliente.estadoUser != null) {
+					switch (HiloCliente.estadoUser) {
+					case USUARIO_EXISTENTE:
+						JOptionPane.showMessageDialog(null,"Nombre usuario esta en uso","Error nombre usuario",JOptionPane.ERROR_MESSAGE);
+						break;
+					case PW_MENOR_DE_CINCO_CHAR:
+						JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
+						break;
+					case REGISTRO_OK:{
+						SalaInterfaz salainter = null;
+						try {
+							salainter = new SalaInterfaz(hc);
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+							e.printStackTrace();
+						}
+						salainter.setVisible(true);
+						frame.dispose();
+						musica.detener();
+						break;
+					}
+					default:
+						break;
+					}
+				}
 			}
 		});
 		

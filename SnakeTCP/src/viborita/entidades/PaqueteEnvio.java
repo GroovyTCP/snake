@@ -1,27 +1,35 @@
 package viborita.entidades;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.mapper.JSONMapperInterface;
 
-public class Usuario implements JSONMapperInterface {
+public class PaqueteEnvio implements JSONMapperInterface, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3676514245879764079L;
 	private String usuario;
 	private String contrasenia;
 	private EstadoUsuarioEnum accionCliente;
 	
-	public Usuario() {
+	public PaqueteEnvio() {
 		
 	}
 	
-	public Usuario(String usuario, String pass) {
+	public PaqueteEnvio(String usuario, String pass) {
 		this.usuario = usuario;
 		this.contrasenia = pass;
 	}
 	
-	public Usuario(EstadoUsuarioEnum accionCliente) {
+	public PaqueteEnvio(String usuario, String pass, EstadoUsuarioEnum accionCliente) {
+		this.usuario = usuario;
+		this.contrasenia = pass;
 		this.accionCliente = accionCliente;
 	}
 	
@@ -30,7 +38,7 @@ public class Usuario implements JSONMapperInterface {
 		ObjectMapper objM = new ObjectMapper();
 		String json = "";
 		try {
-			json = objM.writeValueAsString((Usuario)this);
+			json = objM.writeValueAsString((PaqueteEnvio)this);
 		} catch (JsonProcessingException e) {
 			System.out.println("Error al parsear object Usuario to JSON");
 			e.printStackTrace();
