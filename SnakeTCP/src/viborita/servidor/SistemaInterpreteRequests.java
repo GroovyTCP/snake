@@ -7,7 +7,10 @@ import viborita.conexion.ServerResponse;
 import viborita.servidor.interpretesrequests.InterpreteRequestLogin;
 import viborita.servidor.interpretesrequests.InterpreteRequestRegistro;
 import viborita.servidor.interpretesrequests.InterpreteRequests;
+import viborita.servidor.interpretesrequests.InterpreteSerpiente;
+import viborita.servidor.interpretesrequests.InterpreterRequestCrearLobby;
 import viborita.servidor.interpretesrequests.InterpreterRequestLobby;
+import viborita.servidor.interpretesrequests.InterpreterRequestUnirseLobby;
 
 public class SistemaInterpreteRequests {
 
@@ -34,8 +37,11 @@ public class SistemaInterpreteRequests {
 
 	public static SistemaInterpreteRequests instanciar(Servidor servidor) {
 		InterpreteRequests[] interpretes = new InterpreteRequests[] {
+			new InterpreteSerpiente(),
 			new InterpreterRequestLobby(),
+			new InterpreterRequestUnirseLobby(),
 			new InterpreteRequestLogin(),
+			new InterpreterRequestCrearLobby(),
 			new InterpreteRequestRegistro()
 		};
 		
