@@ -146,47 +146,11 @@ public class Login extends JFrame {
 				request.setPath(EstadoUsuarioEnum.LOGIN.name());
 				request.setBody(usuario.convertirDeObjAJSON());
 
+				
+				/**
+				 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
+				 */
 				connectionThread.doRequest(request, Login.this::processLoginResponse);
-
-				if (HiloCliente.estadoUser != null) {
-					switch (HiloCliente.estadoUser) {
-					case DATOS_INCORRECTOS:
-						JOptionPane.showMessageDialog(null, "El usuario ingeresado no se encontro",
-								"Usuario no encontrado", JOptionPane.ERROR_MESSAGE);
-						break;
-					case USUARIO_INVALIDO:
-						JOptionPane.showMessageDialog(null, "Ingrese un nombre de usuario valido",
-								"Error nombre de usuario", JOptionPane.ERROR_MESSAGE);
-						break;
-					case PW_MENOR_DE_CINCO_CHAR:
-						JOptionPane.showMessageDialog(null, "Ingrese una contraseña de al menos 8 caracteres",
-								"Error contraseña", JOptionPane.ERROR_MESSAGE);
-						break;
-					case LOGIN_OK: {
-						frame.dispose();
-//						clip.stop();
-						musica.detener();
-						break;
-					}
-					default:
-						break;
-					}
-				}
-
-				// Hacer esto desde el sv
-//				if(bd.validarUsuario(usuario)) {
-//					try {
-//						sala = new SalaInterfaz();
-//						sala.setVisible(true);
-//						frame.dispose();
-//						clip.stop();
-//					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-//						e1.printStackTrace();
-//					}
-//					
-//					bd.close();
-//				}
-
 			}
 		});
 

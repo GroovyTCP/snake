@@ -37,11 +37,11 @@ public class HiloCliente extends Thread {
 		this.salida = new DataOutputStream(this.cliente.getSocketCliente().getOutputStream());
 	}
 
-	public void doRequest(ServerRequest request, Consumer<ServerResponse> callback) {
+	public synchronized void doRequest(ServerRequest request, Consumer<ServerResponse> callback) {
 		this.doRequest(request, callback, null);
 	}
 
-	public void doRequest(ServerRequest request, Consumer<ServerResponse> callback, Consumer<Exception> errorCallback) {
+	public synchronized void doRequest(ServerRequest request, Consumer<ServerResponse> callback, Consumer<Exception> errorCallback) {
 		try {
 			this.salida.writeUTF(objectMapper.writeValueAsString(request));
 			callback.accept(this.recibirData(callback, errorCallback));
