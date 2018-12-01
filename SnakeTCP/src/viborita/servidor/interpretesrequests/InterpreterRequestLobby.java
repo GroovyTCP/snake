@@ -1,36 +1,25 @@
-/**
- * 
- */
 package viborita.servidor.interpretesrequests;
 
 import java.io.IOException;
+import java.util.List;
 
 import viborita.cliente.ServerRequest;
 import viborita.cliente.ServerResponse;
+import viborita.entidades.Sala;
+import viborita.enums.EstadoUsuarioEnum;
+import viborita.repositorio.LobbyService;
 
-
-/**
- * @author mcurrao
- *
- */
 public class InterpreterRequestLobby extends InterpreteRequests {
 
-	/* (non-Javadoc)
-	 * @see viborita.servidor.interpretesrequests.InterpreteRequests#soporta(viborita.cliente.ServerRequest)
-	 */
 	@Override
 	public boolean soporta(ServerRequest request) {
-		// TODO Auto-generated method stub
-		return false;
+		return validoParaPath(request, EstadoUsuarioEnum.LOBBY);
 	}
 
-	/* (non-Javadoc)
-	 * @see viborita.servidor.interpretesrequests.InterpreteRequests#procesar(viborita.cliente.ServerRequest)
-	 */
 	@Override
 	public ServerResponse procesar(ServerRequest request) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Sala> salas = LobbyService.getInstance().listarSalas();
+		return new ServerResponse(200, om.writeValueAsString(salas));
 	}
 
 }

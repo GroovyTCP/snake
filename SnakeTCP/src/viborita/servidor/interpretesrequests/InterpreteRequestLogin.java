@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import viborita.cliente.ServerRequest;
 import viborita.cliente.ServerResponse;
-import viborita.entidades.BaseDatos;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
+import viborita.repositorio.BaseDatos;
 
 public class InterpreteRequestLogin extends InterpreteRequests {
 
