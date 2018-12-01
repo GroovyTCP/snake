@@ -175,26 +175,23 @@ public class SalaInterfaz extends JFrame{
 		btnUnirse.setFont(new Font("ComicSans", Font.PLAIN, 20));
 		panelPrincipal.add(btnUnirse);
 		
-		JButton btnCrearSala = new JButton("Crear sala");
-		btnCrearSala.addActionListener(new ActionListener() {
+		JButton btnCreacionSala = new JButton("Creacion sala");
+		btnCreacionSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
-				
 				CrearSala crearSala = new CrearSala();
-			
 				///No pone nada ya que toma los textFields vacios
 				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
-				
 				ponerSalasEnLista();
 			}
 		});
 		
 		
-		btnCrearSala.setForeground(new Color(51, 153, 255));
-		btnCrearSala.setBounds(35, 500, 300, 40);
-		btnCrearSala.setFocusable(false);
-		btnCrearSala.setFont(new Font("ComicSans", Font.PLAIN, 20));
-		panelPrincipal.add(btnCrearSala);
+		btnCreacionSala.setForeground(new Color(51, 153, 255));
+		btnCreacionSala.setBounds(35, 500, 300, 40);
+		btnCreacionSala.setFocusable(false);
+		btnCreacionSala.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnCreacionSala);
 		
 		//boton cerrar Sesion
 		JButton btnCerrarSesion = new JButton();
