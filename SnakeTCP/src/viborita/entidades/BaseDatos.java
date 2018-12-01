@@ -1,5 +1,9 @@
 package viborita.entidades;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,11 +11,6 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import viborita.enums.EstadoUsuarioEnum;
-
-import java.util.List;
-
-import javax.persistence.Query;
-import javax.swing.JOptionPane;
 
 public class BaseDatos {
 	

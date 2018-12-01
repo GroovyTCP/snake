@@ -6,8 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 import java.awt.FlowLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -25,11 +28,13 @@ import viborita.entidades.Cuerpo;
 import viborita.entidades.Mapa;
 import viborita.entidades.PaqueteUsuario;
 import viborita.entidades.Punto;
+import viborita.entidades.Sala;
 import viborita.entidades.Vibora;
 import viborita.enums.EstadoUsuarioEnum;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 
 public class SalaV {
 
@@ -38,6 +43,7 @@ public class SalaV {
 	private JTextPane txtpnDescrip;
 	private JLabel lblNomSala;
 	private JLabel lblNomDueno;
+	private DefaultListModel<String> modeloLista = new DefaultListModel<>();
 
 	/**
 	 * Launch the application.
@@ -83,7 +89,7 @@ public class SalaV {
 					PaqueteUsuario mensaje = new PaqueteUsuario();
 					mensaje.setNombreSala(lblNomSala.getText());
 					mensaje.setUsername(hc.getUsernameCliente());
-					System.out.println(mensaje.getUsername() + " - " +lblNomDueno.getText());
+					
 					if (mensaje.getUsername().equals(lblNomDueno.getText())) {
 						mensaje.setAccionCliente(EstadoUsuarioEnum.ELIMINAR_SALA);
 						hc.eliminar_sala(mensaje.convertirDeObjAJSON());
@@ -91,6 +97,7 @@ public class SalaV {
 						mensaje.setAccionCliente(EstadoUsuarioEnum.DESCONECTAR_SALA);
 						hc.desconectarDeSala(mensaje.convertirDeObjAJSON());
 					}
+					
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				}
@@ -102,6 +109,11 @@ public class SalaV {
 		JButton btnJugar = new JButton("Iniciar Juego");
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				//hc.iniciarJuego();
+				
 				
 				Vibora[] snake = new Vibora[2];
 				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
@@ -160,8 +172,12 @@ public class SalaV {
 		btnSalir.setBounds(10, 212, 125, 38);
 		frame.getContentPane().add(btnSalir);
 		
-		JList listUsuarios = new JList();
+		//276, 11, 148, 239);
+		JList<String>listUsuarios = new JList<>(new DefaultListModel<>());
 		listUsuarios.setBounds(276, 11, 148, 239);
+		//panelPrincipal.add(listSalas);
+		listUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listUsuarios.setModel(modeloLista);
 		frame.getContentPane().add(listUsuarios);
 		
 		JLabel lblSala = new JLabel("         Sala :");
@@ -189,6 +205,8 @@ public class SalaV {
 		JLabel lblNewLabel = new JLabel("Descripcion sala");
 		lblNewLabel.setBounds(10, 68, 85, 14);
 		frame.getContentPane().add(lblNewLabel);
+		
+		modeloLista.addElement(hc.getUsernameCliente());
 	}
 	
 	public void setNomSala(String nomSala) {
@@ -210,5 +228,15 @@ public class SalaV {
 	
 	public void setDueño(String dueño) {
 		this.lblNomDueno.setText(dueño);
+	}
+	
+	public void setSala(Sala sala) {
+		this.lblNomDueno.setText(sala.getAdmin());
+		this.lblNomSala.setText(sala.getNombreSala());
+		this.txtpnDescrip.setText(sala.getDescripcion());
+		this.modeloLista.clear();
+		for (String jugador : sala.getUsuarios()) {
+			this.modeloLista.addElement(jugador);
+		}
 	}
 }

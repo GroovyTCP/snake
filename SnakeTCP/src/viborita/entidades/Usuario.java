@@ -1,13 +1,17 @@
 package viborita.entidades;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.mapper.JSONMapperInterface;
 
-public class Usuario implements JSONMapperInterface {
+public class Usuario implements JSONMapperInterface, Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String usuario;
 	private String contrasenia;
 	private EstadoUsuarioEnum accionCliente;

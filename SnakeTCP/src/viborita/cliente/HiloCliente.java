@@ -10,10 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import viborita.entidades.PaqueteEnvio;
 import viborita.entidades.PaqueteSalas;
 import viborita.entidades.PaqueteUsuario;
+import viborita.entidades.Sala;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.interfaz.SalaInterfaz;
-import viborita.interfaz.SalaV;
+import viborita.mapper.JSONMapper;
 
 public class HiloCliente implements Runnable {
 
@@ -114,6 +115,24 @@ public class HiloCliente implements Runnable {
 
 	}
 	
+	public PaqueteSalas actualizarSalas() {
+		PaqueteSalas sala = new PaqueteSalas();
+		try {
+			
+			PaqueteUsuario usuario = new PaqueteUsuario();
+			usuario.setAccionCliente(EstadoUsuarioEnum.OBTENER_SALAS);
+			salida.writeUTF(usuario.convertirDeObjAJSON());
+			String jsonEntrada = entrada.readUTF();
+			
+			ObjectMapper om = new ObjectMapper();
+			sala = om.readValue(jsonEntrada, PaqueteSalas.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return sala;
+	}
+	
 	public void registrarUsuario(String paqueteDatos) {
 
 		try {
@@ -134,32 +153,12 @@ public class HiloCliente implements Runnable {
 	}
 	
 
-	public PaqueteSalas actulizarSalas() {
-		PaqueteSalas sala = null;
-		try {
-
-			PaqueteUsuario usuario = new PaqueteUsuario();
-			usuario.setAccionCliente(EstadoUsuarioEnum.OBTENER_SALAS);
-			salida.writeUTF(usuario.convertirDeObjAJSON());
-			String jsonEntrada = entrada.readUTF();
-			
-			ObjectMapper om = new ObjectMapper();
-			sala = om.readValue(jsonEntrada, PaqueteSalas.class);
-			estadoUser = EstadoUsuarioEnum.REGISTRO_OK;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return sala;
-	}
-
 	public void crearSala(String paqueteDatos) {
 		try {
 
 			salida.writeUTF(paqueteDatos);
 			
 			String jsonEntrada = entrada.readUTF();
-			//EstadoUsuarioEnum respuesta = null;
 			
 			ObjectMapper om = new ObjectMapper();
 			estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
@@ -171,8 +170,20 @@ public class HiloCliente implements Runnable {
 	}
 
 	// desconectar a un cliente de la sala
-	public void desconectarDeSala(String string) {
-		// TODO Auto-generated method stub
+	public void desconectarDeSala(String paqueteDatos) {
+		try {
+
+			salida.writeUTF(paqueteDatos);
+			
+			String jsonEntrada = entrada.readUTF();
+			
+			ObjectMapper om = new ObjectMapper();
+			estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -191,6 +202,34 @@ public class HiloCliente implements Runnable {
 		}
 	}
 	
+	//reemplazaria a crear sala, eliminar sala y desconectar
+	public void ejecutar(String paqueteDatos) {
+
+		try {
+
+			salida.writeUTF(paqueteDatos);
+			
+			String jsonEntrada = entrada.readUTF();
+			
+			ObjectMapper om = new ObjectMapper();
+			estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	//pedir sala al server
+	public Sala ingresarSala() {
+		
+		Sala sala = new Sala("probando", "123", "admin");
+		sala.agregarJugador(this.getUsernameCliente());
+		sala.agregarJugador("probando");
+		sala.agregarJugador("jugador");
+		return sala;
+	}
 	
 	
 	

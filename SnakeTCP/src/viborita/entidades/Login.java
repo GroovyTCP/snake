@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
@@ -39,7 +35,7 @@ public class Login extends JFrame{
 	private Musica musica;
 	private boolean musicOn = true;
 	//private BaseDatos bd = new BaseDatos();
-	private SalaInterfaz sala;
+	//private SalaInterfaz sala;
 
 	/**
 	 * 
@@ -129,10 +125,7 @@ public class Login extends JFrame{
 				enviarDatos.setUsername(textFieldUsuario.getText());
 				enviarDatos.setPassword(new String(passField.getPassword()));
 				enviarDatos.setAccionCliente(EstadoUsuarioEnum.LOGIN);
-				//hc.enviarData(usuario.convertirDeObjAJSON());
 				hc.loguear(enviarDatos.convertirDeObjAJSON());
-				
-
 
 				if(HiloCliente.estadoUser != null) {
 					switch (HiloCliente.estadoUser) {
@@ -268,7 +261,7 @@ public class Login extends JFrame{
 
 	public void run() {
 		try {
-			this.frame.setVisible(true);
+			Login.frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("No se pudo abrir pantalla login");

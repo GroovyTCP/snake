@@ -5,16 +5,19 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import viborita.entidades.BaseDatos;
 import viborita.entidades.PaqueteEnvio;
 import viborita.entidades.PaqueteSalas;
 import viborita.entidades.PaqueteUsuario;
+import viborita.entidades.Sala;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.mapper.JSONMapper;
+import viborita.mapper.JSONMapperInterface;
 
 public class HiloServidor implements Runnable {
 
@@ -22,20 +25,21 @@ public class HiloServidor implements Runnable {
 	private DataInputStream entrada;
 	private DataOutputStream salida;
 	private static BaseDatos bd = new BaseDatos();
-	private static ArrayList<String> salasActivas;
-	private static ArrayList<String> duenios;
-	private static ArrayList<String> descripcion;
+	
+	
+	public static ArrayList<Sala> salasActivas = new ArrayList<>();
+	public static ArrayList<String> salasNombresDisponibles = new ArrayList<String>();
+	public static Map<String, Socket> mapConectados = new HashMap<>();
+	//private static ArrayList<String> usuarioConectados = new ArrayList<>();
 	
 	public HiloServidor(Socket socket) {
-		this.salasActivas = new ArrayList<>();
-		this.duenios = new ArrayList<>();
-		this.descripcion = new ArrayList<>();
+		
+		HiloServidor.salasActivas = new ArrayList<>();
 		this.socketCliente = socket;
 		
 		try {
-			System.out.println("Leyendo datos desde servidor");
-			entrada = new DataInputStream(socket.getInputStream());
-			salida = new DataOutputStream(socket.getOutputStream());
+			entrada = new DataInputStream(socketCliente.getInputStream());
+			salida = new DataOutputStream(socketCliente.getOutputStream());
 		} catch (IOException e) {
 			System.out.println("Error al obtener datos entrada y salida");
 			e.printStackTrace();
@@ -69,7 +73,7 @@ public class HiloServidor implements Runnable {
 			//user = om.readValue(jsonEntrada, Usuario.class);
 			paquete = om.readValue(jsonEntrada, PaqueteUsuario.class);
 		}catch (Exception e) {
-			System.out.println("ERROR AL CONVERTIR JSON A USUARIO");
+			System.out.println("ERROR AL CONVERTIR JSON A PAQUETEUSUARIO");
 			e.printStackTrace();
 		}
 		
@@ -88,31 +92,47 @@ public class HiloServidor implements Runnable {
 				
 			}
 			case OBTENER_SALAS:{
-				PaqueteSalas mensaje = new PaqueteSalas(this.salasActivas, this.duenios, EstadoUsuarioEnum.REGISTRO_OK);
+				PaqueteSalas mensaje = new PaqueteSalas(salasActivas);
 				return mensaje.convertirDeObjAJSON();
 				
 			}
 			case CREAR_SALA:{
 				String nombre = paquete.getNombreSala();
-				for (String salaNombre : salasActivas) {
-					if (nombre.equals(salaNombre)) {
-						return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.SALA_REPETIDA);
+				for (Sala salaNombre : salasActivas) {
+					if (nombre.equals(salaNombre.getNombreSala())) {
+						return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.SALA_EXISTENTE); //FALTA la ventana, para avisar
 					}
 				}
-				salasActivas.add(nombre);
-				duenios.add(paquete.getUsername());
-				descripcion.add(paquete.getDescSala());
-				return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.CREACION_OK);
+				
+				mapConectados.put(nombre, socketCliente);
+				salasActivas.add(new Sala(nombre, paquete.getDescSala(), paquete.getUsername()));
+				return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.TODO_OK);
 				
 			}
 			case ELIMINAR_SALA:{
-				int indiceSala = salasActivas.indexOf(paquete.getNombreSala());
-				System.out.println(indiceSala + " indice sala");
-				salasActivas.remove(indiceSala);
-				duenios.remove(indiceSala);
-				descripcion.remove(indiceSala);
-				return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.CREACION_OK);
+				if (salasActivas.size() == 0) {
+					return null;
+				}
+				int indiceSala = 0;
+				String nombredelasala = paquete.getNombreSala();
 				
+				for (int i = 0; i < salasActivas.size(); i++) 
+					if(nombredelasala.equals(salasActivas.get(i).getNombreSala())) 
+						indiceSala = i;
+
+				salasActivas.remove(indiceSala);
+				return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.TODO_OK);
+				
+			}
+			case DESCONECTAR:{
+				String jugador = paquete.getUsername();
+				String sala_nombre = paquete.getNombreSala();
+				for (Sala sala : salasActivas) {
+					if (sala_nombre.equals(sala.getNombreSala())) {
+						sala.eliminarJugador(jugador);
+					}
+				}
+				return JSONMapper.fromObjectToJSON(EstadoUsuarioEnum.TODO_OK);
 			}
 			default:
 				break;

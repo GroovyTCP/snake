@@ -12,24 +12,21 @@ import viborita.mapper.JSONMapperInterface;
 public class PaqueteSalas implements JSONMapperInterface, Serializable {
 
 	
-	private static final long serialVersionUID = 7065266977120038678L;
+	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<String> salasActivas;
-	private ArrayList<String> usuarioDuenio;
+	private ArrayList<Sala> salasActivas = new ArrayList<>();
 	private EstadoUsuarioEnum accionCliente;
 	
 	public PaqueteSalas() {
 		
 	}
 	
-	public PaqueteSalas(ArrayList<String> salasActivas, ArrayList<String> usuarioDuenio) {
+	public PaqueteSalas(ArrayList<Sala> salasActivas) {
 		this.salasActivas = salasActivas;
-		this.usuarioDuenio = usuarioDuenio;
 	}
 	
-	public PaqueteSalas(ArrayList<String> salasActivas, ArrayList<String> usuarioDuenio, EstadoUsuarioEnum accionCliente) {
+	public PaqueteSalas(ArrayList<Sala> salasActivas, EstadoUsuarioEnum accionCliente) {
 		this.salasActivas = salasActivas;
-		this.usuarioDuenio = usuarioDuenio;
 		this.accionCliente = accionCliente;
 	}
 	
@@ -48,11 +45,11 @@ public class PaqueteSalas implements JSONMapperInterface, Serializable {
 
 
 
-	public ArrayList<String> getSalasActivas() {
+	public ArrayList<Sala> getSalasActivas() {
 		return salasActivas;
 	}
 
-	public void setSalasActivas(ArrayList<String> salasActivas) {
+	public void setSalasActivas(ArrayList<Sala> salasActivas) {
 		this.salasActivas = salasActivas;
 	}
 
@@ -62,14 +59,6 @@ public class PaqueteSalas implements JSONMapperInterface, Serializable {
 
 	public void setAccionCliente(EstadoUsuarioEnum accionCliente) {
 		this.accionCliente = accionCliente;
-	}
-
-	public ArrayList<String> getUsuarioDuenio() {
-		return usuarioDuenio;
-	}
-
-	public void setUsuarioDuenio(ArrayList<String> usuarioDuenio) {
-		this.usuarioDuenio = usuarioDuenio;
 	}
 
 	public static long getSerialversionuid() {

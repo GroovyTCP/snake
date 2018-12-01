@@ -82,14 +82,6 @@ public class CrearSala {
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				frame.dispose();
-				
-				SalaV sala = new SalaV(hc);
-				sala.setDescripcionSala(textPaneDescrip.getText());
-				sala.setNomSala(textFieldNomSala.getText());
-				sala.setDueño(hc.getUsernameCliente());
-				sala.setIdSala(generarIdSala());
-				
 				PaqueteUsuario room = new PaqueteUsuario();
 				room.setDescSala(textPaneDescrip.getText());
 				room.setNombreSala(textFieldNomSala.getText());
@@ -97,6 +89,18 @@ public class CrearSala {
 				room.setAccionCliente(EstadoUsuarioEnum.CREAR_SALA);
 				
 				hc.crearSala(room.convertirDeObjAJSON());
+				
+				if (hc.estadoUser == EstadoUsuarioEnum.SALA_EXISTENTE) {
+					return;
+				}
+				
+				SalaV sala = new SalaV(hc);
+				sala.setDescripcionSala(textPaneDescrip.getText());
+				sala.setNomSala(textFieldNomSala.getText());
+				sala.setDueño(hc.getUsernameCliente());
+				sala.setIdSala(generarIdSala());
+				
+				frame.dispose();
 				
 			}
 		});

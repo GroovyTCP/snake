@@ -2,21 +2,14 @@ package viborita.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.management.modelmbean.ModelMBeanOperationInfo;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.DefaultListModel;
@@ -33,17 +26,11 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import viborita.cliente.HiloCliente;
-import viborita.entidades.Cabeza;
-import viborita.entidades.Cuerpo;
-import viborita.entidades.Direcciones;
-import viborita.entidades.Mapa;
+import viborita.entidades.Login;
 import viborita.entidades.Musica;
 import viborita.entidades.PaqueteSalas;
-import viborita.entidades.Punto;
+import viborita.entidades.PaqueteUsuario;
 import viborita.entidades.Sala;
-import viborita.entidades.Ventana;
-import viborita.entidades.Vibora;
-import viborita.enums.EstadoUsuarioEnum;
 
 public class SalaInterfaz extends JFrame{
 
@@ -188,17 +175,16 @@ public class SalaInterfaz extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PaqueteSalas salasActivas = hc.actulizarSalas();
+				PaqueteSalas salasActivas = hc.actualizarSalas();
 				
 				if (salasActivas == null) {
 					return;
 				}
 				
-				ArrayList<String> nombre_Sala = salasActivas.getSalasActivas();
-				ArrayList<String> nombre_duenio = salasActivas.getUsuarioDuenio();
+				ArrayList<Sala> nombre_Sala = salasActivas.getSalasActivas();
 				modeloLista.clear();
 				for (int i = 0; i < nombre_Sala.size(); i++) {
-					modeloLista.addElement(nombre_Sala.get(i) + " - "+ nombre_duenio.get(i));
+					modeloLista.addElement(nombre_Sala.get(i).getNombreSala() + " - "+ nombre_Sala.get(i).getAdmin());
 				}
 				
 			}
@@ -214,6 +200,10 @@ public class SalaInterfaz extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int indice = listSalas.getSelectedIndex();
+				Sala room = hc.ingresarSala();
+				SalaV test = new SalaV(hc);
+				test.setSala(room);
 				
 			}
 		});
@@ -225,7 +215,8 @@ public class SalaInterfaz extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
 				
-				CrearSala crearSala = new CrearSala(hc);
+				//CrearSala crearSala = 
+				new CrearSala(hc);
 			/*
 				///No pone nada ya que toma los textFields vacios
 				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
@@ -251,6 +242,12 @@ public class SalaInterfaz extends JFrame{
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				///Cerrar sesion y volver a abrir la ventana login
+				dispose();
+				try {
+					new Login();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		

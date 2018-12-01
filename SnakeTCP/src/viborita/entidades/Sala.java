@@ -10,21 +10,24 @@ import viborita.mapper.JSONMapperInterface;
 
 public class Sala implements JSONMapperInterface, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8053507170207388956L;
 
 	public final static int CANT_MAX_JUGADORES = 4; 
 	
 	private String nombreSala;
-	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+	private String descripcion;
+	private ArrayList<String> usuarios = new ArrayList<String>();
 	private int cantJugadoresActuales = 0;
-	private Usuario admin;
+	private String admin;
 	
-	public Sala(String nombreSala, Usuario admin) {
+	public Sala() {
+		
+	}
+	
+	public Sala(String nombreSala, String descripcion, String admin) {
 		this.nombreSala = nombreSala;
 		this.admin = admin;
+		this.setDescripcion(descripcion);
 	}
 
 	@Override
@@ -48,11 +51,11 @@ public class Sala implements JSONMapperInterface, Serializable {
 		this.nombreSala = nombreSala;
 	}
 
-	public ArrayList<Usuario> getUsuarios() {
+	public ArrayList<String> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(ArrayList<Usuario> usuarios) {
+	public void setUsuarios(ArrayList<String> usuarios) {
 		this.usuarios = usuarios;
 	}
 
@@ -64,18 +67,32 @@ public class Sala implements JSONMapperInterface, Serializable {
 		this.cantJugadoresActuales = cantJugadoresActuales;
 	}
 
-	public Usuario getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Usuario admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 
 	public static int getCantMaxJugadores() {
 		return CANT_MAX_JUGADORES;
 	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	
+	public void eliminarJugador(String name) {
+		this.usuarios.remove(name);
+	}
 	
+	public void agregarJugador(String name) {
+		this.usuarios.add(name);
+	}
 	
 }
