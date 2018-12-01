@@ -87,9 +87,10 @@ public class CrearSala extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				SalaV sala = new SalaV(connectionThread);
-				sala.setDescripcionSala(textPaneDescrip.getText());
-				sala.setNomSala(textFieldNomSala.getText());
-				sala.setIdSala(generarIdSala());
+				sala.setVisible(true);
+//				sala.setDescripcionSala(textPaneDescrip.getText());
+//				sala.setNomSala(textFieldNomSala.getText());
+//				sala.setIdSala(generarIdSala());
 			}
 		});
 		btnCrearSala.setBounds(189, 190, 140, 39);

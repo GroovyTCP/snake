@@ -37,6 +37,7 @@ import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
 import viborita.entidades.Musica;
 import viborita.entidades.Punto;
+import viborita.entidades.Usuario;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
@@ -48,6 +49,7 @@ public class SalaInterfaz extends JFrame {
 	private DefaultListModel<String> modeloLista = new DefaultListModel<>();
 	private Musica musica;
 	private HiloCliente connectionThread;
+	private Usuario user;
 	
 	/**
 	 * 
@@ -79,13 +81,15 @@ public class SalaInterfaz extends JFrame {
 	
 	/**
 	 * Crea el frame.
+	 * @param user 
 	 * @throws IOException 
 	 * @throws UnsupportedAudioFileException 
 	 * @throws LineUnavailableException 
 	 */
-	public SalaInterfaz(HiloCliente connectionThread) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public SalaInterfaz(HiloCliente connectionThread, Usuario user) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		initialize();
 		this.connectionThread = connectionThread;
+		this.user = user;
 	}
 	
 	private void initialize() {

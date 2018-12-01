@@ -21,24 +21,20 @@ import viborita.entidades.Punto;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
-public class SalaV {
+public class SalaV extends JFrame {
 
 	private int idSala;
-	private JFrame frame;
 	private JTextPane txtpnDescrip;
 	private JLabel lblNomSala;
 	private JLabel lblNomDueno;
 	private HiloCliente connectionThread;
 
-	/**
-	 * Launch the application.
-	 */
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
 //					Sala window = new Sala();
-//					window.frame.setVisible(true);
+//					window.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();
 //				}
@@ -46,12 +42,8 @@ public class SalaV {
 //		});
 //	}
 
-	/**
-	 * Create the application.
-	 */
 	public SalaV() {
 		initialize();
-		frame.setVisible(true);
 	}
 
 	public SalaV(HiloCliente connectionThread) {
@@ -59,14 +51,10 @@ public class SalaV {
 		this.connectionThread = connectionThread;
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 
@@ -74,13 +62,13 @@ public class SalaV {
 						"¿Estas seguro que deseas abandonar la sala?", "¿Abandonar sala?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 				}
 			}
 		});
 		
-		frame.getContentPane().setLayout(null);
+		getContentPane().setLayout(null);
 		
 		JButton btnJugar = new JButton("Iniciar Juego");
 		btnJugar.addActionListener(new ActionListener() {
@@ -114,7 +102,7 @@ public class SalaV {
 			}
 		});
 		btnJugar.setBounds(145, 212, 125, 38);
-		frame.getContentPane().add(btnJugar);
+		getContentPane().add(btnJugar);
 		
 		JButton btnSalir = new JButton("Salir de sala");
 		btnSalir.addActionListener(new ActionListener() {
@@ -123,42 +111,42 @@ public class SalaV {
 						"Estas seguro que deseas abandonar la sala?", "Abandonar sala?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {	
-					frame.dispose();
+					dispose();
 				}
 			}
 		});
 		btnSalir.setBounds(10, 212, 125, 38);
-		frame.getContentPane().add(btnSalir);
+		getContentPane().add(btnSalir);
 		
 		JList listUsuarios = new JList();
 		listUsuarios.setBounds(276, 11, 148, 239);
-		frame.getContentPane().add(listUsuarios);
+		getContentPane().add(listUsuarios);
 		
 		JLabel lblSala = new JLabel("         Sala :");
 		lblSala.setBounds(0, 0, 77, 23);
-		frame.getContentPane().add(lblSala);
+		getContentPane().add(lblSala);
 		
 		JLabel lblDueno = new JLabel("         Due\u00F1o :");
 		lblDueno.setBounds(0, 34, 77, 23);
-		frame.getContentPane().add(lblDueno);
+		getContentPane().add(lblDueno);
 		
 		txtpnDescrip = new JTextPane();
 		txtpnDescrip.setEditable(false);
 		txtpnDescrip.setText("Bienvenido!");
 		txtpnDescrip.setBounds(10, 85, 260, 116);
-		frame.getContentPane().add(txtpnDescrip);
+		getContentPane().add(txtpnDescrip);
 		
 		lblNomSala = new JLabel("");
 		lblNomSala.setBounds(74, 2, 192, 21);
-		frame.getContentPane().add(lblNomSala);
+		getContentPane().add(lblNomSala);
 		
 		lblNomDueno = new JLabel("");
 		lblNomDueno.setBounds(87, 38, 183, 19);
-		frame.getContentPane().add(lblNomDueno);
+		getContentPane().add(lblNomDueno);
 		
 		JLabel lblNewLabel = new JLabel("Descripcion sala");
 		lblNewLabel.setBounds(10, 68, 85, 14);
-		frame.getContentPane().add(lblNewLabel);
+		getContentPane().add(lblNewLabel);
 	}
 	
 	public void setNomSala(String nomSala) {

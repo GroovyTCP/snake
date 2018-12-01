@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import viborita.cliente.HiloCliente;
 import viborita.conexion.ServerRequest;
 import viborita.conexion.ServerResponse;
@@ -35,6 +37,7 @@ public class Login extends JFrame {
 	private boolean musicOn = true;
 	private SalaInterfaz sala;
 	private HiloCliente connectionThread;
+	private Usuario user;
 
 	/**
 	 * 
@@ -118,14 +121,13 @@ public class Login extends JFrame {
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				Usuario usuario = new Usuario(textFieldUsuario.getText(), new String(passField.getPassword()));
-				usuario.setAccionCliente(EstadoUsuarioEnum.LOGIN);
+				Login.this.user = new Usuario(textFieldUsuario.getText(), new String(passField.getPassword()));
+				Login.this.user.setAccionCliente(EstadoUsuarioEnum.LOGIN);
 
 				ServerRequest request = new ServerRequest();
 				request.setPath(EstadoUsuarioEnum.LOGIN.name());
-				request.setBody(usuario.convertirDeObjAJSON());
+				request.setBody(Login.this.user.convertirDeObjAJSON());
 
-				
 				/**
 				 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
 				 */
@@ -183,7 +185,7 @@ public class Login extends JFrame {
 	
 	private void iniciarLobby() {
 		try {
-			sala = new SalaInterfaz(connectionThread);
+			sala = new SalaInterfaz(connectionThread, user);
 			sala.setVisible(true);
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
