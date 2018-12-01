@@ -32,6 +32,7 @@ import viborita.cliente.ServerResponse;
 import viborita.enums.EstadoUsuarioEnum;
 //import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
+import viborita.repositorio.BaseDatos;
 import viborita.servidor.ConfiguracionServidor;
 
 public class Login extends JFrame {
@@ -41,7 +42,6 @@ public class Login extends JFrame {
 	private JPasswordField passField;
 	private Musica musica;
 	private boolean musicOn = true;
-	private BaseDatos bd = new BaseDatos();
 	private SalaInterfaz sala;
 	private HiloCliente connectionThread;
 
@@ -59,7 +59,6 @@ public class Login extends JFrame {
 	protected void processLoginResponse(ServerResponse response) {
 		if (response.getStatus() == 200) {
 			frame.dispose();
-//			clip.stop();
 			musica.detener();
 			//doLogin();
 		} else {
@@ -169,10 +168,6 @@ public class Login extends JFrame {
 				request.setBody(usuario.convertirDeObjAJSON());
 				
 				connectionThread.doRequest(request, Login.this::processRegistrationCallback);
-
-				// Hacer esto desde el sv
-//				bd.crearUsuario(usuario);
-
 			}
 		});
 
@@ -206,13 +201,19 @@ public class Login extends JFrame {
 
 	}
 	
-	public void processRegistrationCallback(ServerResponse response) {
-		
+	protected void processRegistrationCallback(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			JOptionPane.showMessageDialog(null, "El registro ha sido exitoso. Ya puede iniciar sesion", "Registro exitoso",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "El usuario se encuentra registrado o no ha completado todos los campos", "Error de registro",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void run() {
 		try {
-			this.frame.setVisible(true);
+			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("No se pudo abrir pantalla login");

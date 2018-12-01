@@ -25,20 +25,21 @@ public class BaseDatos extends BaseDatosBase {
 			List<String> listUsuarios = q.getResultList();
 			for (String n : listUsuarios)
 				if (n.compareTo(u.getUsuario()) == 0) {
-					JOptionPane.showMessageDialog(null, "Nombre usuario esta en uso", "Error nombre usuario", JOptionPane.ERROR_MESSAGE);
 					tx.rollback();
 					return EstadoUsuarioEnum.USUARIO_EXISTENTE;
 				}
 
 			if (u.getContrasenia().length() < 5) {
-				JOptionPane.showMessageDialog(null, "Ingrese una contrase\u00F1a de al menos 5 caracteres", "Error contrase\u00F1a", JOptionPane.ERROR_MESSAGE);
 				tx.rollback();
 				return EstadoUsuarioEnum.PW_MENOR_DE_CINCO_CHAR;
 			}
+			
+			if(u.getUsuario().isEmpty() || u.getContrasenia().isEmpty()) {
+				tx.rollback();
+				return EstadoUsuarioEnum.CAMPOS_VACIOS;
+			}
 
 			session.save(u);
-			// JOptionPane.showMessageDialog(null,"Usuario generado con
-			// exito","Usuario generado",JOptionPane.INFORMATION_MESSAGE);
 
 			tx.commit();
 
