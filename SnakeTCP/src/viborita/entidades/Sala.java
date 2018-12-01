@@ -1,13 +1,14 @@
 package viborita.entidades;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Sala {
 
 	public final static int CANT_MAX_JUGADORES = 4;
 
 	private String nombre;
-	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+	private Set<Usuario> usuarios = new HashSet<>();
 	private Usuario admin;
 
 	public Sala(String nombreSala, Usuario admin) {
@@ -23,11 +24,11 @@ public class Sala {
 		this.nombre = nombre;
 	}
 
-	public ArrayList<Usuario> getUsuarios() {
+	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(ArrayList<Usuario> usuarios) {
+	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
 
