@@ -7,6 +7,7 @@ import viborita.conexion.ServerResponse;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.repositorio.BaseDatos;
+import viborita.servidor.AdministradorDeSesiones;
 
 public class InterpreteRequestLogin extends InterpreteRequests {
 
@@ -19,6 +20,7 @@ public class InterpreteRequestLogin extends InterpreteRequests {
 		Usuario usuario = requestComo(request, Usuario.class);
 		EstadoUsuarioEnum estado = BaseDatos.getInstance().validarUsuario(usuario);
 		if (estado == EstadoUsuarioEnum.LOGIN_OK) {
+			AdministradorDeSesiones.getInstance().vincularUsuario(usuario.getUsuario(), Thread.currentThread());
 			return new ServerResponse(200, null);
 		} else {
 			return new ServerResponse(401, om.writeValueAsString(estado));

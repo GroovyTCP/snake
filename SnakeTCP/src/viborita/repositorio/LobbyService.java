@@ -66,6 +66,12 @@ public class LobbyService {
 		// Si se quiere ir y ya no esta, no hago nada
 	}
 
+	public void dejarTodasLasSalas(String usuarioVinculado) {
+		Usuario pedidoDeAbandono = new Usuario();
+		pedidoDeAbandono.setUsuario(usuarioVinculado);
+		dejarTodasLasSalas(pedidoDeAbandono);
+	}
+
 	public synchronized void dejarTodasLasSalas(Usuario usuario) {
 		// el usuario provisto abandona todas las salas en las que se encuentre
 		for (Sala sala : salas.values()) {
@@ -99,4 +105,5 @@ public class LobbyService {
 		if (sala == null || sala.getNombre() == null || sala.getNombre().trim().equals(""))
 			throw new NullPointerException("El nombre de la sala no puede estar vacio");
 	}
+
 }

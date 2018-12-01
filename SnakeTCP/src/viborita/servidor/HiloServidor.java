@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import viborita.entidades.Usuario;
 import viborita.conexion.ServerRequest;
 import viborita.conexion.ServerResponse;
 
@@ -74,9 +73,9 @@ public class HiloServidor extends Thread {
 	}
 
 	private void processUserDisconnection() {
-		Usuario usuarioVinculado = AdministradorDeSesiones.getInstance().obtenerUsuarioVinculado(this);
+		String usuarioVinculado = AdministradorDeSesiones.getInstance().obtenerUsuarioVinculado(this);
 		if (usuarioVinculado != null) {
-			System.out.println("[WARN] Se desconecto un hilo, asociado al usuario " + usuarioVinculado.getUsuario());
+			System.out.println("[WARN] Se desconecto un hilo, asociado al usuario " + usuarioVinculado);
 			AdministradorDeSesiones.getInstance().desconectar(this);
 		} else {
 			System.out.println("[WARN] Se desconecto un hilo. El hilo no poseia un usuario asociado.");
