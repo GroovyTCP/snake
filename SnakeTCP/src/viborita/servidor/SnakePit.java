@@ -17,7 +17,7 @@ public class SnakePit {
 		return snakePit;
 	}
 
-	public Map<String, Vibora> revolver(UpdateVivora update) {
+	public synchronized Map<String, Vibora> revolver(UpdateVivora update) {
 		if (update == null || update.getSala() == null)
 			throw new RuntimeException("Debe ingresar a una sala para poder jugar");
 
