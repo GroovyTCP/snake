@@ -25,8 +25,7 @@ public class Servidor {
 				System.out.println("Cliente " + clienteSocket.getInetAddress().getHostName() + " conectado.");
 				clientes.add(clienteSocket);
 				HiloServidor sv = new HiloServidor(clienteSocket, interpreteRequests);
-				Thread hsv = new Thread(sv);
-				hsv.start();
+				sv.start();
 			}
 
 		} catch (Exception e) {

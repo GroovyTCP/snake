@@ -42,13 +42,8 @@ public class LobbyService {
 		salas.put(nuevaSala.getNombre(), nuevaSala);
 	}
 
-	public synchronized void unirseASala(Sala nuevaSala) {
-		validarNombreSala(nuevaSala);
-		String nombreSala = nuevaSala.getNombre();
-		if (!salas.containsKey(nombreSala) || salas.get(nombreSala) == null)
-			throw new RuntimeException("No se encuentra la sala seleccionada");
-
-		Sala salaActiva = salas.get(nuevaSala.getNombre());
+	public synchronized void unirseASala(Sala salaAUnirse) {
+		Sala salaActiva = obtenerSalaActiva(salaAUnirse);
 		if (salaActiva.getUsuarios().size() == Sala.CANT_MAX_JUGADORES)
 			throw new RuntimeException("La sala seleccionada ya se encuentra llena");
 
@@ -56,9 +51,39 @@ public class LobbyService {
 		if (salaActiva.getAdmin() == null)
 			throw new RuntimeException("Nadie quiere entrar, entonces nadie entra");
 		// si el tipito quedo adentro, no hago nada pero tampoco tiro error
-		if (!salaContieneUsuario(salaActiva, salaActiva.getAdmin())) {
-			salaActiva.getUsuarios().add(nuevaSala.getAdmin());
+		if (!salaContieneUsuario(salaActiva, salaAUnirse.getAdmin())) {
+			salaActiva.getUsuarios().add(salaAUnirse.getAdmin());
 		}
+	}
+
+	public synchronized void dejarSala(Sala sala) {
+		Sala salaActiva = obtenerSalaActiva(sala);
+
+		if (salaContieneUsuario(salaActiva, sala.getAdmin())) {
+			// Remuevo al usuario que coincida con el nombre solicitado
+			salaActiva.getUsuarios().removeIf(usuario -> usuario.getUsuario().equals(sala.getAdmin().getUsuario()));
+		}
+		// Si se quiere ir y ya no esta, no hago nada
+	}
+
+	public synchronized void dejarTodasLasSalas(Usuario usuario) {
+		// el usuario provisto abandona todas las salas en las que se encuentre
+		for (Sala sala : salas.values()) {
+			// Creo una "peticion de abandono"
+			// para poder re-usar el otro metodo
+			Sala abandono = new Sala(sala.getNombre(), usuario);
+			dejarSala(abandono);
+		}
+	}
+
+	private Sala obtenerSalaActiva(Sala sala) {
+		// Valida que exista una sala, y devuelve la sala en el servidor
+		validarNombreSala(sala);
+		String nombreSala = sala.getNombre();
+		if (!salas.containsKey(nombreSala) || salas.get(nombreSala) == null)
+			throw new RuntimeException("No se encuentra la sala seleccionada");
+
+		return salas.get(nombreSala);
 	}
 
 	protected boolean salaContieneUsuario(Sala sala, Usuario usuario) {

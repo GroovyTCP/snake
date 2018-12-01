@@ -13,12 +13,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viborita.cliente.ServerRequest;
 import viborita.cliente.ServerResponse;
+import viborita.entidades.Usuario;
 
-public class HiloServidor implements Runnable {
+public class HiloServidor extends Thread {
 
-	private Socket socketCliente;
-	private DataInputStream entrada;
-	private DataOutputStream salida;
+	protected Socket socketCliente;
+	protected DataInputStream entrada;
+	protected DataOutputStream salida;
 
 	private SistemaInterpreteRequests interpreteRequests;
 
@@ -73,7 +74,13 @@ public class HiloServidor implements Runnable {
 	}
 
 	private void processUserDisconnection() {
-		System.out.println("[WARN] Se desconecto un hilo");
+		Usuario usuarioVinculado = AdministradorDeSesiones.getInstance().obtenerUsuarioVinculado(this);
+		if (usuarioVinculado != null) {
+			System.out.println("[WARN] Se desconecto un hilo, asociado al usuario " + usuarioVinculado.getUsuario());
+			AdministradorDeSesiones.getInstance().desconectar(this);
+		} else {
+			System.out.println("[WARN] Se desconecto un hilo. El hilo no poseia un usuario asociado.");
+		}
 	}
 
 }
