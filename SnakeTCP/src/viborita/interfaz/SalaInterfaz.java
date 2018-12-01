@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import viborita.cliente.HiloCliente;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
@@ -39,13 +40,14 @@ import viborita.entidades.Punto;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
-public class SalaInterfaz extends JFrame{
+public class SalaInterfaz extends JFrame {
 
 	private List<String> salas = new ArrayList<>();
 	private boolean musicOn = true;
 	private JList<String> listSalas; 
 	private DefaultListModel<String> modeloLista = new DefaultListModel<>();
 	private Musica musica;
+	private HiloCliente connectionThread;
 	
 	/**
 	 * 
@@ -71,13 +73,21 @@ public class SalaInterfaz extends JFrame{
 		});
 	}
 
+	public SalaInterfaz() {
+	}
+	
 	/**
 	 * Crea el frame.
 	 * @throws IOException 
 	 * @throws UnsupportedAudioFileException 
 	 * @throws LineUnavailableException 
 	 */
-	public SalaInterfaz() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public SalaInterfaz(HiloCliente connectionThread) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		initialize();
+		this.connectionThread = connectionThread;
+	}
+	
+	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1080,720);
 		contentPane = new JPanel();
@@ -175,26 +185,23 @@ public class SalaInterfaz extends JFrame{
 		btnUnirse.setFont(new Font("ComicSans", Font.PLAIN, 20));
 		panelPrincipal.add(btnUnirse);
 		
-		JButton btnCrearSala = new JButton("Crear sala");
-		btnCrearSala.addActionListener(new ActionListener() {
+		JButton btnCreacionSala = new JButton("Creacion sala");
+		btnCreacionSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
-				
 				CrearSala crearSala = new CrearSala();
-			
 				///No pone nada ya que toma los textFields vacios
 				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
-				
 				ponerSalasEnLista();
 			}
 		});
 		
 		
-		btnCrearSala.setForeground(new Color(51, 153, 255));
-		btnCrearSala.setBounds(35, 500, 300, 40);
-		btnCrearSala.setFocusable(false);
-		btnCrearSala.setFont(new Font("ComicSans", Font.PLAIN, 20));
-		panelPrincipal.add(btnCrearSala);
+		btnCreacionSala.setForeground(new Color(51, 153, 255));
+		btnCreacionSala.setBounds(35, 500, 300, 40);
+		btnCreacionSala.setFocusable(false);
+		btnCreacionSala.setFont(new Font("ComicSans", Font.PLAIN, 20));
+		panelPrincipal.add(btnCreacionSala);
 		
 		//boton cerrar Sesion
 		JButton btnCerrarSesion = new JButton();
@@ -229,8 +236,16 @@ public class SalaInterfaz extends JFrame{
 		});
 
 		//Musica
-		musica = new Musica("musicaSalas.wav");
-		musica.reproducir();		
+		try {
+			musica = new Musica("musicaSalas.wav");
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		musica.reproducir();	
 	}
 	
 	public void ponerSalasEnLista() {

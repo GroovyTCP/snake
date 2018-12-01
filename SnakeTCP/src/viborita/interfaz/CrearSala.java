@@ -48,7 +48,8 @@ public class CrearSala {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setTitle("Crear sala");
 		
 		frame.getContentPane().setLayout(null);
 		
@@ -72,16 +73,11 @@ public class CrearSala {
 		JButton btnCrearSala = new JButton("Crear sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				frame.dispose();
-				
 				SalaV sala = new SalaV();
-				
 				sala.setDescripcionSala(textPaneDescrip.getText());
 				sala.setNomSala(textFieldNomSala.getText());
-				
 				sala.setIdSala(generarIdSala());
-				
 			}
 		});
 		btnCrearSala.setBounds(189, 190, 140, 39);
