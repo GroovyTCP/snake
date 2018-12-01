@@ -41,8 +41,8 @@ public class Mapa {
 		int x = 0;
 		int y = 0;
 		do {
-			x = (r.nextInt(this.ancho - 15) / 10) * 10;
-			y = (r.nextInt(this.alto - 40) / 10) * 10;
+			x = (r.nextInt(this.ancho) / 10) * 10;
+			y = (r.nextInt(this.alto) / 10) * 10;
 			// Sigue hasta que encuentre una casilla vacia
 		} while (hayCuerpo(new Punto(x, y)));
 		return new Punto(x, y);
@@ -140,8 +140,8 @@ public class Mapa {
 			/// Se fue del mapa y mulio
 			if (vibora.getCabeza().getPosicion().getX() < 0 
 					|| vibora.getCabeza().getPosicion().getY() < 0
-						|| vibora.getCabeza().getPosicion().getX() > this.ancho - 15
-							|| vibora.getCabeza().getPosicion().getY() > this.alto - 40)
+						|| vibora.getCabeza().getPosicion().getX() > this.ancho
+							|| vibora.getCabeza().getPosicion().getY() > this.alto)
 				vibora.morir();
 
 			/// Si hay otro cuerpo o cabeza la queda

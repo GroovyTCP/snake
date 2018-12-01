@@ -1,6 +1,7 @@
 package viborita.entidades;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -56,14 +57,17 @@ public class Ventana extends JFrame {
 				setMovimiento(tecla);
 			}
 		});
-		setBounds(0, 0, mapa.getAncho()+Mapa.getAnchotabladepuntos(), mapa.getAlto());
-
+//		setBounds(0, 0, mapa.getAncho()+Mapa.getAnchotabladepuntos(), mapa.getAlto());
+		
 		contentPane = new SnakeGrafico(mapa);
+		
+		contentPane.setPreferredSize(new Dimension(mapa.getAncho()+Mapa.getAnchotabladepuntos() + 10, mapa.getAlto() + 10));
+		
 		setBackground(Color.BLACK);
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
+		pack();
 		setVisible(true);
-
 	}
 
 	private void setMovimiento(KeyEvent evento) {
@@ -104,24 +108,24 @@ public class Ventana extends JFrame {
 	}
 
 
-//	@Override
-//	public void run() {
-//		
-////		mapa.ponerNombreViboras();
-//
-//		while (mapa.cantidadViborasVivas() > 0) {
-//			try {
-//				Thread.sleep(intervaloDeTiempo);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//
-//			mapa.evaluarMovimientoViborita();
-//			repaint();
-//		}
-//		if(!finDelJuego)
-//			mostrarGanador();
-//	}
+	//@Override
+	public void run() {
+		
+//		mapa.ponerNombreViboras();
+
+		while (mapa.cantidadViborasVivas() > 0) {
+			try {
+				Thread.sleep(intervaloDeTiempo);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			mapa.evaluarMovimientoViborita();
+			repaint();
+		}
+		if(!finDelJuego)
+			mostrarGanador();
+	}
 
 	private void mostrarGanador() {
 		ArrayList<Vibora> ganadoras = new ArrayList<>();
@@ -169,5 +173,28 @@ public class Ventana extends JFrame {
 		}
 	}
 	
-	
+	public static void main(String[] args) {
+		Vibora[] snake = new Vibora[2];
+		snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
+		ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
+		cuerpo1.add(new Punto(50, 50));
+		cuerpo1.add(new Punto(40, 50));
+		snake[0].setCuerpo(new Cuerpo(cuerpo1));
+		
+		snake[1] = new Vibora(new Cabeza(new Punto(540, 450)), "2", Color.CYAN, Direcciones.IZQUIERDA);
+		ArrayList<Punto> cuerpo2 = new ArrayList<Punto>();
+		cuerpo2.add(new Punto(550, 450));
+		cuerpo2.add(new Punto(560, 450));
+		snake[1].setCuerpo(new Cuerpo(cuerpo2));
+		
+		/*
+		 * snake array viboras
+		 * 600 ancho mapa
+		 * 500 largo mapa
+		 * 100 puntaje por comer una fruta
+		 */
+		Mapa game = new Mapa(snake, 600, 500, 100);
+		
+		new Ventana(game).run();
+	}
 }

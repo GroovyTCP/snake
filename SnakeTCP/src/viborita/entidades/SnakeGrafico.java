@@ -37,11 +37,11 @@ public class SnakeGrafico extends JPanel {
 		
 		/// Blanco = Jugador Vivo - Rojo = Jugador Muerto
 		g.setColor(Color.GRAY);
-		g.fillRect(mapa.getAncho() - 10,0, Mapa.getAnchotabladepuntos() + 10, mapa.getAlto());
+		g.fillRect(mapa.getAncho() + 10,0, Mapa.getAnchotabladepuntos(), mapa.getAlto() + 10);
 		int nroJugador = 0;
 		g.setFont(new Font("ComicSans", Font.PLAIN, 15));
 		g.setColor(Color.WHITE);
-		g.drawString("Jugador", mapa.getAncho()+10, 20);
+		g.drawString("Jugador", mapa.getAncho()+30, 20);
 		g.drawString("Color", mapa.getAncho()+Mapa.getAnchotabladepuntos()/2, 20);
 		g.drawString("Puntaje", mapa.getAncho()+Mapa.getAnchotabladepuntos()-Mapa.getAnchotabladepuntos()/4, 20);
 		
@@ -50,7 +50,7 @@ public class SnakeGrafico extends JPanel {
 			//g.drawString(e.isMuerta()?"�":"", mapa.getAncho()+1, 60+i*20);
 			
 			///g.drawString("Jugador " +(nroJugador+1), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
-			g.drawString(e.getNombre(), mapa.getAncho()+10, 60+nroJugador*sepacionEntreJugadores);
+			g.drawString(e.getNombre(), mapa.getAncho()+30, 60+nroJugador*sepacionEntreJugadores);
 			g.setColor(e.getColor());
 			g.fillRect(mapa.getAncho()+Mapa.getAnchotabladepuntos()/2,50+nroJugador*sepacionEntreJugadores, 50, 10);
 			g.setColor(Color.WHITE);
