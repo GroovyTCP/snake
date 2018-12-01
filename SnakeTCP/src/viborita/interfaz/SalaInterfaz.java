@@ -190,9 +190,8 @@ public class SalaInterfaz extends JFrame {
 		btnCreacionSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
-				CrearSala crearSala = new CrearSala();
-				///No pone nada ya que toma los textFields vacios
-				salas.add(crearSala.getNomSala()+" - "+crearSala.getDescripcion());
+				CrearSala crearSala = new CrearSala(connectionThread);
+				crearSala.setVisible(true);
 				ponerSalasEnLista();
 			}
 		});

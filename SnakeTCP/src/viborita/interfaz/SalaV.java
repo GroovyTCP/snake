@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
+import viborita.cliente.HiloCliente;
 import viborita.entidades.Cabeza;
 import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
@@ -27,6 +28,7 @@ public class SalaV {
 	private JTextPane txtpnDescrip;
 	private JLabel lblNomSala;
 	private JLabel lblNomDueno;
+	private HiloCliente connectionThread;
 
 	/**
 	 * Launch the application.
@@ -50,6 +52,11 @@ public class SalaV {
 	public SalaV() {
 		initialize();
 		frame.setVisible(true);
+	}
+
+	public SalaV(HiloCliente connectionThread) {
+		initialize();
+		this.connectionThread = connectionThread;
 	}
 
 	/**

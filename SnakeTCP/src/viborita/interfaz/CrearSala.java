@@ -8,15 +8,22 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+
+import viborita.cliente.HiloCliente;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CrearSala {
+public class CrearSala extends JFrame {
 
-	private JFrame frame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNomSala;
 	private JTextPane textPaneDescrip;
+	private HiloCliente connectionThread;
 
 	/**
 	 * Launch the application.
@@ -26,7 +33,7 @@ public class CrearSala {
 			public void run() {
 				try {
 					CrearSala window = new CrearSala();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,49 +46,54 @@ public class CrearSala {
 	 */
 	public CrearSala() {
 		initialize();
-		frame.setVisible(true);
+		setVisible(true);
 	}
  
+	public CrearSala(HiloCliente connectionThread) {
+		initialize();
+		setVisible(true);
+		this.connectionThread = connectionThread;
+	}
+
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the 
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setTitle("Crear sala");
+		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setTitle("Crear sala");
 		
-		frame.getContentPane().setLayout(null);
+		getContentPane().setLayout(null);
 		
 		JLabel lblNombreDeSala = new JLabel("    Nombre de sala:");
 		lblNombreDeSala.setBounds(22, 23, 106, 25);
-		frame.getContentPane().add(lblNombreDeSala);
+		getContentPane().add(lblNombreDeSala);
 		
 		textFieldNomSala = new JTextField();
 		textFieldNomSala.setBounds(138, 25, 246, 20);
-		frame.getContentPane().add(textFieldNomSala);
+		getContentPane().add(textFieldNomSala);
 		textFieldNomSala.setColumns(10);
 		
-		JLabel lblDescripcion = new JLabel("      Descripcion:");
-		lblDescripcion.setBounds(37, 68, 91, 25);
-		frame.getContentPane().add(lblDescripcion);
+//		JLabel lblDescripcion = new JLabel("      Descripcion:");
+//		lblDescripcion.setBounds(37, 68, 91, 25);
+//		getContentPane().add(lblDescripcion);
 		
 		textPaneDescrip = new JTextPane();
 		textPaneDescrip.setBounds(138, 68, 246, 96);
-		frame.getContentPane().add(textPaneDescrip);
+		getContentPane().add(textPaneDescrip);
 		
 		JButton btnCrearSala = new JButton("Crear sala");
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				SalaV sala = new SalaV();
+				dispose();
+				SalaV sala = new SalaV(connectionThread);
 				sala.setDescripcionSala(textPaneDescrip.getText());
 				sala.setNomSala(textFieldNomSala.getText());
 				sala.setIdSala(generarIdSala());
 			}
 		});
 		btnCrearSala.setBounds(189, 190, 140, 39);
-		frame.getContentPane().add(btnCrearSala);
+		getContentPane().add(btnCrearSala);
 	}
 
 	public String getDescripcion() {
