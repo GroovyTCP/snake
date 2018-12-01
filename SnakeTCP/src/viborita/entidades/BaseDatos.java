@@ -54,7 +54,7 @@ public class BaseDatos {
 				}
 			
 			if(u.getContrasenia().length() < 5) {
-				JOptionPane.showMessageDialog(null,"Ingrese una contraseña de al menos 5 caracteres","Error contraseña",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,"Ingrese una contrase\u00F1a de al menos 5 caracteres","Error contrase\u00F1a",JOptionPane.ERROR_MESSAGE);
 				tx.rollback();
 				return EstadoUsuarioEnum.PW_MENOR_DE_CINCO_CHAR;
 			}
