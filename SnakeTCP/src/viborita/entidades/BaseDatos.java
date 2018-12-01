@@ -107,7 +107,7 @@ public class BaseDatos {
 		
 	}
 	
-	public static BaseDatos getInstance() {
+	public synchronized static BaseDatos getInstance() {
 		if(instancia == null)
 			instancia = new BaseDatos();
 		return instancia;
