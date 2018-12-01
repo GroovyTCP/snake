@@ -194,7 +194,7 @@ public class SalaInterfaz extends JFrame {
 		btnCreacionSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				musica.detener();
-				CrearSala crearSala = new CrearSala(connectionThread);
+				CrearSala crearSala = new CrearSala(connectionThread, SalaInterfaz.this.user);
 				crearSala.setVisible(true);
 				ponerSalasEnLista();
 			}

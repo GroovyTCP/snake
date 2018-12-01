@@ -10,6 +10,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import viborita.cliente.HiloCliente;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
+import viborita.entidades.Login;
+import viborita.entidades.Sala;
+import viborita.entidades.Usuario;
+import viborita.enums.EstadoUsuarioEnum;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,6 +30,7 @@ public class CrearSala extends JFrame {
 	private JTextField textFieldNomSala;
 	private JTextPane textPaneDescrip;
 	private HiloCliente connectionThread;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -49,10 +56,11 @@ public class CrearSala extends JFrame {
 		setVisible(true);
 	}
  
-	public CrearSala(HiloCliente connectionThread) {
+	public CrearSala(HiloCliente connectionThread, Usuario user) {
 		initialize();
 		setVisible(true);
 		this.connectionThread = connectionThread;
+		this.user = user;
 	}
 
 	/**
@@ -86,8 +94,20 @@ public class CrearSala extends JFrame {
 		btnCrearSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				SalaV sala = new SalaV(connectionThread);
-				sala.setVisible(true);
+				
+				Sala sala = new Sala(textFieldNomSala.getText(), CrearSala.this.user);
+				
+				ServerRequest request = new ServerRequest();
+				request.setPath(EstadoUsuarioEnum.CREAR_LOBBY.name());
+				request.setBody(sala.convertirDeObjAJSON());
+
+				/**
+				 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
+				 */
+				connectionThread.doRequest(request, CrearSala.this::processCreacionLobbyResponse);
+				
+//				SalaV sala = new SalaV(connectionThread);
+//				sala.setVisible(true);
 //				sala.setDescripcionSala(textPaneDescrip.getText());
 //				sala.setNomSala(textFieldNomSala.getText());
 //				sala.setIdSala(generarIdSala());
@@ -97,6 +117,12 @@ public class CrearSala extends JFrame {
 		getContentPane().add(btnCrearSala);
 	}
 
+	protected void processCreacionLobbyResponse(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			dispose();
+		}
+	}
+	
 	public String getDescripcion() {
 		return textPaneDescrip.getText();
 	}

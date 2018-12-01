@@ -3,7 +3,12 @@ package viborita.entidades;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Sala {
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import viborita.mapper.JSONMapperInterface;
+
+public class Sala implements JSONMapperInterface {
 
 	public final static int CANT_MAX_JUGADORES = 4;
 
@@ -11,6 +16,10 @@ public class Sala {
 	private Set<Usuario> usuarios = new HashSet<>();
 	private Usuario admin;
 
+	public Sala() {
+		
+	}
+	
 	public Sala(String nombreSala, Usuario admin) {
 		this.nombre = nombreSala;
 		this.admin = admin;
@@ -38,6 +47,18 @@ public class Sala {
 
 	public void setAdmin(Usuario admin) {
 		this.admin = admin;
+	}
+
+	public String convertirDeObjAJSON() {
+		ObjectMapper objM = new ObjectMapper();
+		String json = "";
+		try {
+			json = objM.writeValueAsString((Sala)this);
+		} catch (JsonProcessingException e) {
+			System.out.println("Error al parsear object Sala to JSON");
+			e.printStackTrace();
+		}
+		return json;
 	}
 
 }

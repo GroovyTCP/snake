@@ -20,8 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import viborita.cliente.HiloCliente;
 import viborita.conexion.ServerRequest;
 import viborita.conexion.ServerResponse;
@@ -121,9 +119,10 @@ public class Login extends JFrame {
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				Login.this.user = new Usuario(textFieldUsuario.getText(), new String(passField.getPassword()));
-				Login.this.user.setAccionCliente(EstadoUsuarioEnum.LOGIN);
-
+				Usuario user = new Usuario(textFieldUsuario.getText(), new String(passField.getPassword()));
+				user.setAccionCliente(EstadoUsuarioEnum.LOGIN);
+				Login.this.user = user;
+				
 				ServerRequest request = new ServerRequest();
 				request.setPath(EstadoUsuarioEnum.LOGIN.name());
 				request.setBody(Login.this.user.convertirDeObjAJSON());
@@ -197,7 +196,6 @@ public class Login extends JFrame {
 			frame.dispose();
 			musica.detener();
 			iniciarLobby();
-			
 		} else {
 			JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos", "Usuario no encontrado",
 					JOptionPane.ERROR_MESSAGE);
