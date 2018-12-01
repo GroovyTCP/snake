@@ -3,82 +3,68 @@ package viborita.cliente;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.function.Consumer;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.interfaz.SalaInterfaz;
 
-public class HiloCliente implements Runnable {
+public class HiloCliente extends Thread {
 
 	Cliente cliente;
 	DataOutputStream salida;
 	SalaInterfaz sala;
+	private DataInputStream entrada;
+	private ObjectMapper objectMapper;
 	public static EstadoUsuarioEnum estadoUser;
-	
-	public HiloCliente() {
 
-	}
-	
-	public HiloCliente(Cliente cli) {
+	public HiloCliente(Cliente cli) throws IOException {
 		this.cliente = cli;
-		try {
-			this.salida = new DataOutputStream(this.cliente.getSocketCliente().getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		connectSocket();
+		this.objectMapper = new ObjectMapper();
 	}
-	
+
 	@Override
 	public void run() {
-		this.recibirData();
 	}
-	
-	public void enviarData(String json) {
-		try {
-			this.salida.writeUTF(json);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+	private void connectSocket() throws IOException {
+		this.entrada = new DataInputStream(this.cliente.getSocketCliente().getInputStream());
+		this.salida = new DataOutputStream(this.cliente.getSocketCliente().getOutputStream());
 	}
-	
-	public void recibirData() {
-		DataInputStream entrada = null;
+
+	public void doRequest(ServerRequest request, Consumer<ServerResponse> callback) {
+		this.doRequest(request, callback, null);
+	}
+
+	public void doRequest(ServerRequest request, Consumer<ServerResponse> callback, Consumer<Exception> errorCallback) {
 		try {
-			entrada = new DataInputStream(this.cliente.getSocketCliente().getInputStream());
-		} catch (IOException e) {
-			System.out.println("Error al obtener datos de entrada desde el servidor");
-			e.printStackTrace();
-		}
-		
-		boolean escuchando = true;
-		
-		while(escuchando) {
-			try {
-				if(entrada.available() != 0) {
-					String jsonEntrada = entrada.readUTF();
-					
-					ObjectMapper om = new ObjectMapper();
-					
-					
-					if(om.readValue(jsonEntrada, EstadoUsuarioEnum.class).equals(EstadoUsuarioEnum.LOGIN_OK)) {
-						try {
-							sala = new SalaInterfaz();
-							sala.setVisible(true);
-						} catch (UnsupportedAudioFileException | LineUnavailableException e) {
-							e.printStackTrace();
-						}
-					}
-					estadoUser = om.readValue(jsonEntrada, EstadoUsuarioEnum.class);
+			this.salida.writeUTF(objectMapper.writeValueAsString(request));
+			callback.accept(this.recibirData(callback, errorCallback));
+		} catch (Exception e) {
+			if (errorCallback != null)
+				errorCallback.accept(e);
+			else {
+				ServerResponse response = new ServerResponse();
+				response.setStatus(500);
+				try {
+					response.setBody(objectMapper.writeValueAsString(e));
+				} catch (JsonProcessingException e1) {
+					response.setBody(e.getMessage());
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			}			
 		}
-		
+	}
+
+	public ServerResponse recibirData(Consumer<ServerResponse> callback, Consumer<Exception> errorCallback)
+			throws JsonParseException, JsonMappingException, IOException {
+
+		return this.objectMapper.readValue(entrada.readUTF(), ServerResponse.class);
+
 	}
 
 }
