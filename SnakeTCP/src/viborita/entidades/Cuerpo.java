@@ -7,6 +7,9 @@ public class Cuerpo {
 	private ArrayList<Punto> cuerpo;
 	private int cantidad;///puede servir en un futuro
 	
+	public Cuerpo() {
+	}
+	
 	public Cuerpo(ArrayList<Punto> cuerpo) {
 		super();
 		this.cuerpo = cuerpo;
@@ -18,7 +21,6 @@ public class Cuerpo {
 		
 		for (int i = 0; i < this.cuerpo.size(); i++) {
 			aux = this.cuerpo.get(i);
-//			System.out.println(aux);
 			this.cuerpo.set(i, primerEslabon);
 			primerEslabon = aux;
 		}

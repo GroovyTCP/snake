@@ -28,7 +28,6 @@ public class Usuario implements JSONMapperInterface {
 		try {
 			json = objM.writeValueAsString((Usuario)this);
 		} catch (JsonProcessingException e) {
-			System.out.println("Error al parsear object Usuario to JSON");
 			e.printStackTrace();
 		}
 		return json;

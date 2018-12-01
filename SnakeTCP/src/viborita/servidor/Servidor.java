@@ -17,12 +17,12 @@ public class Servidor {
 		ServerSocket servidor = null;
 		try {
 			servidor = new ServerSocket(puerto);
-			System.out.println("Esperando conexiones");
+//			System.out.println("Esperando conexiones");
 			clientes = new ArrayList<Socket>();
 
 			while (true) {
 				clienteSocket = servidor.accept();
-				System.out.println("Cliente " + clienteSocket.getInetAddress().getHostName() + " conectado.");
+//				System.out.println("Cliente " + clienteSocket.getInetAddress().getHostName() + " conectado.");
 				clientes.add(clienteSocket);
 				HiloServidor sv = new HiloServidor(clienteSocket, interpreteRequests);
 				sv.start();
@@ -31,7 +31,7 @@ public class Servidor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("Cierro sv");
+//			System.out.println("Cierro sv");
 			try {
 				servidor.close();
 			} catch (IOException e) {

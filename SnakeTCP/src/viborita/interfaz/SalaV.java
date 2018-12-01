@@ -3,6 +3,7 @@ package viborita.interfaz;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,16 +16,22 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import viborita.cliente.HiloCliente;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.entidades.Cabeza;
-import viborita.entidades.Cuerpo;
 import viborita.entidades.Direcciones;
+import viborita.entidades.Login;
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
 import viborita.entidades.Sala;
 import viborita.entidades.Usuario;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
+import viborita.enums.EstadoUsuarioEnum;
 
 public class SalaV extends JFrame {
 
@@ -35,6 +42,8 @@ public class SalaV extends JFrame {
 	private HiloCliente connectionThread;
 	private Sala sala;
 	private Set<Usuario> usuarios = new HashSet<>();
+	private List<Color> colores = new ArrayList<Color>();
+	private List<Punto> direcciones = new ArrayList<Punto>();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -50,7 +59,6 @@ public class SalaV extends JFrame {
 //	}
 
 	public SalaV() {
-		initialize();
 	}
 
 	public SalaV(HiloCliente connectionThread, Sala sala) {
@@ -60,6 +68,18 @@ public class SalaV extends JFrame {
 		initialize();
 	}
 
+	protected void processIniciarPartidaResponse(ServerResponse response) {
+		if(response.getStatus() == 200) {
+			ObjectMapper om = new ObjectMapper();
+			try {
+				Ventana ventana = new Ventana(om.readValue(response.getBody(), Mapa.class));
+				ventana.setVisible(true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private void initialize() {
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -83,8 +103,21 @@ public class SalaV extends JFrame {
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(usuarios.size() >= 2) {
+				if(usuarios.size() >= 1) {
 					
+					ServerRequest request = new ServerRequest();
+					request.setPath(EstadoUsuarioEnum.INICIAR_PARTIDA.name());
+					ObjectMapper om = new ObjectMapper();
+					try {
+						request.setBody(om.writeValueAsString(usuarios));
+					} catch (JsonProcessingException e1) {
+						e1.printStackTrace();
+					}
+
+					/**
+					 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
+					 */
+					connectionThread.doRequest(request, SalaV.this::processIniciarPartidaResponse);
 				}
 //				Vibora[] snake = new Vibora[2];
 //				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);

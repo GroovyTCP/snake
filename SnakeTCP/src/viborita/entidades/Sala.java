@@ -55,7 +55,6 @@ public class Sala implements JSONMapperInterface {
 		try {
 			json = objM.writeValueAsString((Sala)this);
 		} catch (JsonProcessingException e) {
-			System.out.println("Error al parsear object Sala to JSON");
 			e.printStackTrace();
 		}
 		return json;

@@ -3,6 +3,9 @@ package viborita.entidades;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties("colorSpace")
 public class Vibora {
 
 	private int puntaje;
@@ -12,7 +15,6 @@ public class Vibora {
 	private boolean muerta;
 	private Punto direccionActual;
 	private String nombre;
-	
 	
 	///Este metodo crea una nueva vibora, sin cuerpo solo con cabeza y con el estado de muerta como false
 	public Vibora(Cabeza cabeza, Cuerpo cuerpo, Color color,Punto direccionActual) {
@@ -44,6 +46,9 @@ public class Vibora {
 		this.nombre = nombre;
 	}
 	
+	public Vibora() {
+	}
+
 	///cuando crece, siempre el colisionador debe saber para donde
 	public void comerFruta(Fruta fruta, Punto puntoCrecimiento) {
 		this.puntaje += fruta.getPuntaje();

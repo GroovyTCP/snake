@@ -4,6 +4,9 @@ public class Cabeza {
 
 	private Punto posicion;
 	
+	public Cabeza() {
+	}
+	
 	public Cabeza (Punto cabeza) {
 		this.posicion = cabeza;
 	}

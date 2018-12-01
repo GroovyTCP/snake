@@ -5,10 +5,6 @@ package viborita.conexion;
 
 import viborita.entidades.Vibora;
 
-/**
- * @author mcurrao
- *
- */
 public class UpdateVivora {
 
 	private String username;

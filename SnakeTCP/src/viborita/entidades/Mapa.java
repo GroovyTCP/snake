@@ -13,6 +13,9 @@ public class Mapa {
 	
 	private static final int anchoTablaDePuntos = 300;
 
+	public Mapa() {
+	}
+	
 	public Mapa(Vibora[] viboras, int ancho, int alto, int puntaje) {
 		super();
 		this.viboras = viboras;
@@ -42,7 +45,6 @@ public class Mapa {
 			y = (r.nextInt(this.alto - 40) / 10) * 10;
 			// Sigue hasta que encuentre una casilla vacia
 		} while (hayCuerpo(new Punto(x, y)));
-//		System.out.println(x + " " + y);
 		return new Punto(x, y);
 	}
 

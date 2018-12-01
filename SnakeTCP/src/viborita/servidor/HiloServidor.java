@@ -29,11 +29,11 @@ public class HiloServidor extends Thread {
 		this.interpreteRequests = interpreteRequests;
 
 		try {
-			System.out.println("Leyendo datos desde servidor");
+//			System.out.println("Leyendo datos desde servidor");
 			this.entrada = new DataInputStream(socket.getInputStream());
 			this.salida = new DataOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
-			System.out.println("Error al obtener datos entrada y salida");
+//			System.out.println("Error al obtener datos entrada y salida");
 			e.printStackTrace();
 		}
 	}
@@ -43,9 +43,9 @@ public class HiloServidor extends Thread {
 		boolean conexionActiva = true;
 		while (conexionActiva) {
 			try {
-				System.out.println("Estoy en el RUN de HiloServidor");
+//				System.out.println("Estoy en el RUN de HiloServidor");
 				ServerRequest svRequest = leerRequest(this.entrada);
-				System.out.println("Se recibio una request : " + svRequest.getPath());
+//				System.out.println("Se recibio una request : " + svRequest.getPath());
 				ServerResponse svResponse = procesarRequest(svRequest);
 				escribirRespuesta(svResponse);
 			} catch (SocketException e) {
@@ -75,10 +75,10 @@ public class HiloServidor extends Thread {
 	private void processUserDisconnection() {
 		String usuarioVinculado = AdministradorDeSesiones.getInstance().obtenerUsuarioVinculado(this);
 		if (usuarioVinculado != null) {
-			System.out.println("[WARN] Se desconecto un hilo, asociado al usuario " + usuarioVinculado);
+//			System.out.println("[WARN] Se desconecto un hilo, asociado al usuario " + usuarioVinculado);
 			AdministradorDeSesiones.getInstance().desconectar(this);
 		} else {
-			System.out.println("[WARN] Se desconecto un hilo. El hilo no poseia un usuario asociado.");
+//			System.out.println("[WARN] Se desconecto un hilo. El hilo no poseia un usuario asociado.");
 		}
 	}
 

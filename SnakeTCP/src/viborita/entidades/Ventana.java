@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 // Serpiente roja, se mueve con las flechitas y la otra con WASD
 
 
-public class Ventana extends JFrame implements Runnable {
+public class Ventana extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,8 +68,6 @@ public class Ventana extends JFrame implements Runnable {
 
 	private void setMovimiento(KeyEvent evento) {
 
-//		System.out.println("-------------------------------");
-
 		int viboraNumero = 0;
 		Punto direccionActual = mapa.getViboras()[viboraNumero].getDireccionActual();
 
@@ -106,24 +104,24 @@ public class Ventana extends JFrame implements Runnable {
 	}
 
 
-	@Override
-	public void run() {
-		
-//		mapa.ponerNombreViboras();
-
-		while (mapa.cantidadViborasVivas() > 0) {
-			try {
-				Thread.sleep(intervaloDeTiempo);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			mapa.evaluarMovimientoViborita();
-			repaint();
-		}
-		if(!finDelJuego)
-			mostrarGanador();
-	}
+//	@Override
+//	public void run() {
+//		
+////		mapa.ponerNombreViboras();
+//
+//		while (mapa.cantidadViborasVivas() > 0) {
+//			try {
+//				Thread.sleep(intervaloDeTiempo);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//
+//			mapa.evaluarMovimientoViborita();
+//			repaint();
+//		}
+//		if(!finDelJuego)
+//			mostrarGanador();
+//	}
 
 	private void mostrarGanador() {
 		ArrayList<Vibora> ganadoras = new ArrayList<>();

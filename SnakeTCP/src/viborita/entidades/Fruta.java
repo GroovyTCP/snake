@@ -5,6 +5,9 @@ public class Fruta {
 	private Punto posicion;
 	private int puntaje;
 	
+	public Fruta() {
+	}
+	
 	public Fruta(Punto posicion, int puntaje) {
 		super();
 		this.posicion = posicion;
