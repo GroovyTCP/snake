@@ -108,11 +108,6 @@ public class CrearSala extends JFrame {
 				 */
 				connectionThread.doRequest(request, CrearSala.this::processCreacionLobbyResponse);
 				
-//				SalaV sala = new SalaV(connectionThread);
-//				sala.setVisible(true);
-//				sala.setDescripcionSala(textPaneDescrip.getText());
-//				sala.setNomSala(textFieldNomSala.getText());
-//				sala.setIdSala(generarIdSala());
 			}
 		});
 		btnCrearSala.setBounds(189, 190, 140, 39);
@@ -122,8 +117,9 @@ public class CrearSala extends JFrame {
 	protected void processCreacionLobbyResponse(ServerResponse response) {
 		if (response.getStatus() == 200) {
 			dispose();
-			SalaV sala = new SalaV(connectionThread, salaEntidad);
-			sala.setVisible(true);
+			salaEntidad.getUsuarios().add(user);
+			SalaV salav = new SalaV(connectionThread, salaEntidad);
+			salav.setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(null, "Ya existe la sala con ese nombre. Intente nuevamente", "Error al crear sala",
 					JOptionPane.ERROR_MESSAGE);

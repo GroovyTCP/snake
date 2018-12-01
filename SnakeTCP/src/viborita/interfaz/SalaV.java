@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +22,7 @@ import viborita.entidades.Direcciones;
 import viborita.entidades.Mapa;
 import viborita.entidades.Punto;
 import viborita.entidades.Sala;
+import viborita.entidades.Usuario;
 import viborita.entidades.Ventana;
 import viborita.entidades.Vibora;
 
@@ -30,6 +34,7 @@ public class SalaV extends JFrame {
 	private JLabel lblNomDueno;
 	private HiloCliente connectionThread;
 	private Sala sala;
+	private Set<Usuario> usuarios = new HashSet<>();
 
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -49,6 +54,7 @@ public class SalaV extends JFrame {
 	}
 
 	public SalaV(HiloCliente connectionThread, Sala sala) {
+		this.usuarios = sala.getUsuarios();
 		this.connectionThread = connectionThread;
 		this.sala = sala;
 		initialize();
@@ -74,9 +80,12 @@ public class SalaV extends JFrame {
 		getContentPane().setLayout(null);
 		
 		JButton btnJugar = new JButton("Iniciar Juego");
-//		btnJugar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				
+		btnJugar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(usuarios.size() >= 2) {
+					
+				}
 //				Vibora[] snake = new Vibora[2];
 //				snake[0] = new Vibora(new Cabeza(new Punto(60, 50)), "1", Color.RED, Direcciones.DERECHA);
 //				ArrayList<Punto> cuerpo1 = new ArrayList<Punto>();
@@ -89,21 +98,21 @@ public class SalaV extends JFrame {
 //				cuerpo2.add(new Punto(550, 450));
 //				cuerpo2.add(new Punto(560, 450));
 //				snake[1].setCuerpo(new Cuerpo(cuerpo2));
-//				
-//				/*
-//				 * snake array viboras
-//				 * 600 ancho mapa
-//				 * 500 largo mapa
-//				 * 100 puntaje por comer una fruta
-//				 */
+				
+				/*
+				 * snake array viboras
+				 * 600 ancho mapa
+				 * 500 largo mapa
+				 * 100 puntaje por comer una fruta
+				 */
 //				Mapa game = new Mapa(snake, 600, 500, 100);
 //				
 //				Runnable r = new Ventana(game);
 //				Thread t = new Thread(r);
 //				t.start();
-//				
-//			}
-//		});
+				
+			}
+		});
 		btnJugar.setBounds(145, 212, 125, 38);
 		getContentPane().add(btnJugar);
 		

@@ -31,6 +31,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import viborita.cliente.HiloCliente;
 import viborita.conexion.ServerRequest;
 import viborita.conexion.ServerResponse;
@@ -93,32 +95,37 @@ public class SalaInterfaz extends JFrame {
 	 * @throws LineUnavailableException 
 	 */
 	public SalaInterfaz(HiloCliente connectionThread, Usuario user) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		initialize();
 		this.connectionThread = connectionThread;
 		this.user = user;
+		initialize();
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected void processSalasResponse(ServerResponse response) {
-		if (response.getStatus() == 200) {
-			System.out.println(response.getBody());
+		if (response.getStatus() == 200 && !response.getBody().isEmpty()) {
+			ObjectMapper om = new ObjectMapper();
+			try {
+				Sala sala = new Sala();
+				for(int i = 0; i < response.getBody().length(); i++) {
+//					String body = response.getBody().g;
+//					sala = om.readValue(response.getBody()[i], Sala.class);
+					this.salas.add(sala.getNombre());
+				}
+				this.salas = om.readValue(response.getBody(), ArrayList.class);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
-			System.out.println("Error 400 al traerme salas para lobby");
+			if(response.getBody().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "No hay salas activas en este momento", "No hay salas",
+						JOptionPane.ERROR_MESSAGE);;
+			} else {
+				//Error inesperado
+			}
 		}
 	}
 	
 	private void initialize() {
-		
-//		Sala sala = new Sala();
-//		user.setAccionCliente(EstadoUsuarioEnum.LOBBY);
-//		
-//		ServerRequest request = new ServerRequest();
-//		request.setPath(EstadoUsuarioEnum.LOGIN.name());
-//		request.setBody(null);
-
-		/**
-		 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
-		 */
-//		connectionThread.doRequest(request, SalaInterfaz.this::processSalasResponse);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1080,720);
@@ -276,7 +283,15 @@ public class SalaInterfaz extends JFrame {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		musica.reproducir();	
+		musica.reproducir();
+		
+		ServerRequest request = new ServerRequest();
+		request.setPath(EstadoUsuarioEnum.LOBBY.name());
+
+		/**
+		 * Hago la request y al volver, se ejecuta el metodo que procesa la response (processLoginResponse).
+		 */
+		connectionThread.doRequest(request, SalaInterfaz.this::processSalasResponse);
 	}
 	
 	public void ponerSalasEnLista() {
