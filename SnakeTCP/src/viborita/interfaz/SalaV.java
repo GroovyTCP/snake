@@ -121,7 +121,7 @@ public class SalaV {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int jPaneResult = JOptionPane.showConfirmDialog(null,
-						"¿Estas seguro que deseas abandonar la sala?", "¿Abandonar sala?",
+						"Estas seguro que deseas abandonar la sala?", "Abandonar sala?",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (jPaneResult == JOptionPane.YES_OPTION) {	
 					frame.dispose();
@@ -179,7 +179,7 @@ public class SalaV {
 		return this.lblNomSala.getText();
 	}
 	
-	public void setDueño(String dueño) {
-		this.lblNomDueno.setText(dueño);
+	public void setDueno(String dueno) {
+		this.lblNomDueno.setText(dueno);
 	}
 }
