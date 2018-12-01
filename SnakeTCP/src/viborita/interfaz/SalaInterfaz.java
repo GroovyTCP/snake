@@ -74,6 +74,7 @@ public class SalaInterfaz extends JFrame {
 	}
 
 	public SalaInterfaz() {
+		initialize();
 	}
 	
 	/**
