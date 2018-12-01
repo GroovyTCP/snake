@@ -1,4 +1,4 @@
-package viborita.cliente;
+package viborita.conexion;
 
 import java.util.HashMap;
 import java.util.Map;

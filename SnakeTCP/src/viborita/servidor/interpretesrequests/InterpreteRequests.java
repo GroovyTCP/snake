@@ -6,8 +6,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import viborita.cliente.ServerRequest;
-import viborita.cliente.ServerResponse;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.enums.EstadoUsuarioEnum;
 
 public abstract class InterpreteRequests {

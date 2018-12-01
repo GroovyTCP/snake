@@ -2,8 +2,8 @@ package viborita.servidor.interpretesrequests;
 
 import java.io.IOException;
 
-import viborita.cliente.ServerRequest;
-import viborita.cliente.ServerResponse;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.entidades.Usuario;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.repositorio.BaseDatos;
