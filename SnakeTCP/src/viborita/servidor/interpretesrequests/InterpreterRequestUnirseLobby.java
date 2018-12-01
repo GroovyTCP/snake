@@ -20,14 +20,14 @@ public class InterpreterRequestUnirseLobby extends InterpreteRequests {
 	public ServerResponse procesar(ServerRequest request) throws IOException {
 		Sala nuevaSala = requestComo(request, Sala.class);
 		try {
-			// Creo la nueva sala
-			LobbyService.getInstance().crearSala(nuevaSala);
+			// Me uno a la sala
+			LobbyService.getInstance().unirseASala(nuevaSala);
 			// Listo todas las salas para actualizar la lista en el cliente
 			List<Sala> salas = LobbyService.getInstance().listarSalas();
 			return new ServerResponse(200, om.writeValueAsString(salas));
 		} catch (Exception e) {
-			// Fallo al crear la sala
-			// Falto algun dato o el nombre ya existia
+			// Fallo al unirme a la sala
+			// Puede que ya este completa
 			return new ServerResponse(400, e.getMessage());
 		}
 	}
