@@ -1,4 +1,4 @@
-package viborita.cliente;
+package viborita.conexion;
 
 public class ServerResponse {
 

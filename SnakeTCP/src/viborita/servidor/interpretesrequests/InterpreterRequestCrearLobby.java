@@ -3,8 +3,8 @@ package viborita.servidor.interpretesrequests;
 import java.io.IOException;
 import java.util.List;
 
-import viborita.cliente.ServerRequest;
-import viborita.cliente.ServerResponse;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.entidades.Sala;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.repositorio.LobbyService;

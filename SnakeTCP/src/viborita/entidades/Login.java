@@ -21,8 +21,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
 import viborita.cliente.HiloCliente;
-import viborita.cliente.ServerRequest;
-import viborita.cliente.ServerResponse;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.enums.EstadoUsuarioEnum;
 import viborita.interfaz.SalaInterfaz;
 

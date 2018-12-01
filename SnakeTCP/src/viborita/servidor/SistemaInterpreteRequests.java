@@ -2,8 +2,8 @@ package viborita.servidor;
 
 import java.io.IOException;
 
-import viborita.cliente.ServerRequest;
-import viborita.cliente.ServerResponse;
+import viborita.conexion.ServerRequest;
+import viborita.conexion.ServerResponse;
 import viborita.servidor.interpretesrequests.InterpreteRequestLogin;
 import viborita.servidor.interpretesrequests.InterpreteRequestRegistro;
 import viborita.servidor.interpretesrequests.InterpreteRequests;
