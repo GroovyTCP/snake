@@ -4,13 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.util.function.Consumer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
@@ -25,15 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
-import viborita.cliente.Cliente;
 import viborita.cliente.HiloCliente;
 import viborita.cliente.ServerRequest;
 import viborita.cliente.ServerResponse;
 import viborita.enums.EstadoUsuarioEnum;
-//import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
-import viborita.repositorio.BaseDatos;
-import viborita.servidor.ConfiguracionServidor;
 
 public class Login extends JFrame {
 
@@ -54,17 +45,6 @@ public class Login extends JFrame {
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		initialize();
 		this.connectionThread = connectionThread;
-	}
-
-	protected void processLoginResponse(ServerResponse response) {
-		if (response.getStatus() == 200) {
-			frame.dispose();
-			musica.detener();
-			//doLogin();
-		} else {
-			JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos", "Usuario no encontrado",
-					JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	/**
@@ -199,6 +179,27 @@ public class Login extends JFrame {
 			}
 		});
 
+	}
+	
+	private void iniciarLobby() {
+		try {
+			sala = new SalaInterfaz(connectionThread);
+			sala.setVisible(true);
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void processLoginResponse(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			frame.dispose();
+			musica.detener();
+			iniciarLobby();
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos", "Usuario no encontrado",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	protected void processRegistrationCallback(ServerResponse response) {
