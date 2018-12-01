@@ -4,13 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.util.function.Consumer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
@@ -25,14 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 
-import viborita.cliente.Cliente;
 import viborita.cliente.HiloCliente;
 import viborita.cliente.ServerRequest;
 import viborita.cliente.ServerResponse;
 import viborita.enums.EstadoUsuarioEnum;
-//import viborita.cliente.Cliente;
 import viborita.interfaz.SalaInterfaz;
-import viborita.servidor.ConfiguracionServidor;
 
 public class Login extends JFrame {
 
@@ -41,7 +33,6 @@ public class Login extends JFrame {
 	private JPasswordField passField;
 	private Musica musica;
 	private boolean musicOn = true;
-	private BaseDatos bd = new BaseDatos();
 	private SalaInterfaz sala;
 	private HiloCliente connectionThread;
 
@@ -54,18 +45,6 @@ public class Login extends JFrame {
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		initialize();
 		this.connectionThread = connectionThread;
-	}
-
-	protected void processLoginResponse(ServerResponse response) {
-		if (response.getStatus() == 200) {
-			frame.dispose();
-//			clip.stop();
-			musica.detener();
-			//doLogin();
-		} else {
-			JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos", "Usuario no encontrado",
-					JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	/**
@@ -169,10 +148,6 @@ public class Login extends JFrame {
 				request.setBody(usuario.convertirDeObjAJSON());
 				
 				connectionThread.doRequest(request, Login.this::processRegistrationCallback);
-
-				// Hacer esto desde el sv
-//				bd.crearUsuario(usuario);
-
 			}
 		});
 
@@ -206,13 +181,40 @@ public class Login extends JFrame {
 
 	}
 	
-	public void processRegistrationCallback(ServerResponse response) {
-		
+	private void iniciarLobby() {
+		try {
+			sala = new SalaInterfaz(connectionThread);
+			sala.setVisible(true);
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void processLoginResponse(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			frame.dispose();
+			musica.detener();
+			iniciarLobby();
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "El usuario o la contraseña son incorrectos", "Usuario no encontrado",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	protected void processRegistrationCallback(ServerResponse response) {
+		if (response.getStatus() == 200) {
+			JOptionPane.showMessageDialog(null, "El registro ha sido exitoso. Ya puede iniciar sesion", "Registro exitoso",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(null, "El usuario se encuentra registrado o no ha completado todos los campos", "Error de registro",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public void run() {
 		try {
-			this.frame.setVisible(true);
+			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("No se pudo abrir pantalla login");
