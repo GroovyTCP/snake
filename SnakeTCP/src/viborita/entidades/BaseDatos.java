@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 
 public class BaseDatos {
 	
+	private static BaseDatos instancia;
+	
 	private Configuration cfg;
 	private SessionFactory factory;
 	private Session session;
@@ -103,6 +105,12 @@ public class BaseDatos {
 	
 		return EstadoUsuarioEnum.DATOS_INCORRECTOS;
 		
+	}
+	
+	public static BaseDatos getInstance() {
+		if(instancia == null)
+			instancia = new BaseDatos();
+		return instancia;
 	}
 	
 }

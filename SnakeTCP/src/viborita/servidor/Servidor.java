@@ -9,23 +9,26 @@ public class Servidor {
 
 	private ArrayList<Socket> clientes;
 	private Socket clienteSocket;
-	
+
 	public Servidor(int puerto) {
+
+		SistemaInterpreteRequests interpreteRequests = SistemaInterpreteRequests.instanciar(this);
+
 		ServerSocket servidor = null;
 		try {
 			servidor = new ServerSocket(puerto);
 			System.out.println("Esperando conexiones");
 			clientes = new ArrayList<Socket>();
-			
-			while(true) {
+
+			while (true) {
 				clienteSocket = servidor.accept();
 				System.out.println("Cliente " + clienteSocket.getInetAddress().getHostName() + " conectado.");
 				clientes.add(clienteSocket);
-				HiloServidor sv = new HiloServidor(clienteSocket);
+				HiloServidor sv = new HiloServidor(clienteSocket, interpreteRequests);
 				Thread hsv = new Thread(sv);
 				hsv.start();
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
